@@ -66,7 +66,7 @@ class LoginController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureU()
+        configureUI()
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
     }
@@ -83,7 +83,18 @@ class LoginController: UIViewController {
                 return
             }
             
-            print("Successfully logged user in...")
+            // Added this to fix -> "'keyWindow' was deprecated in iOS 13.0: Should not be used for applications that support multiple scenes as it returns a key window across all connected scenes"
+            let keyWindow = UIApplication.shared.connectedScenes
+                    .filter({$0.activationState == .foregroundActive})
+                    .map({$0 as? UIWindowScene})
+                    .compactMap({$0})
+                    .first?.windows
+                    .filter({$0.isKeyWindow}).first
+            
+            guard let controller = keyWindow?.rootViewController as? HomeController
+            else { return }
+            controller.configureUI()
+            self.dismiss(animated: true, completion: nil)
         }
     }
     
@@ -95,7 +106,7 @@ class LoginController: UIViewController {
     
     // MARK: - Helper Functions
     
-    func configureU() {
+    func configureUI() {
         configureNavigationBar()
         
         // Sets the background color of the view
