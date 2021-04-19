@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25170D19262D8ED0000AB39D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25170D18262D8ED0000AB39D /* GoogleService-Info.plist */; };
 		2571E546262D2F8A008B0073 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E545262D2F8A008B0073 /* AppDelegate.swift */; };
 		2571E548262D2F8A008B0073 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E547262D2F8A008B0073 /* SceneDelegate.swift */; };
 		2571E54A262D2F8A008B0073 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E549262D2F8A008B0073 /* ViewController.swift */; };
@@ -19,10 +20,8 @@
 		2571E583262D3091008B0073 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E57E262D3091008B0073 /* LoginController.swift */; };
 		2571E584262D3091008B0073 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E57F262D3091008B0073 /* SignUpController.swift */; };
 		2571E589262D30C5008B0073 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2571E588262D30C5008B0073 /* Assets.xcassets */; };
-		2571E591262D3194008B0073 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2571E590262D3194008B0073 /* GoogleService-Info.plist */; };
 		2573258F262D506F00FD18C6 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2573258E262D506F00FD18C6 /* HomeController.swift */; };
 		87BF44608C39A2D8FC54A5FD /* Pods_muber_v2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76599282EA482C48CC3E822 /* Pods_muber_v2.framework */; };
-		C1A815E4262D4F1E002B4441 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A815E3262D4F1E002B4441 /* HomeController.swift */; };
 		C1A815E9262D6E94002B4441 /* LocationInputActivationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A815E8262D6E94002B4441 /* LocationInputActivationView.swift */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		1410DB6CA015650CDCB3D1F0 /* Pods-muber-v2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-muber-v2.release.xcconfig"; path = "Target Support Files/Pods-muber-v2/Pods-muber-v2.release.xcconfig"; sourceTree = "<group>"; };
+		25170D18262D8ED0000AB39D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2571E542262D2F8A008B0073 /* muber-v2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "muber-v2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2571E545262D2F8A008B0073 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2571E547262D2F8A008B0073 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,10 +63,8 @@
 		2571E57E262D3091008B0073 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		2571E57F262D3091008B0073 /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		2571E588262D30C5008B0073 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		2571E590262D3194008B0073 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		2573258E262D506F00FD18C6 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		7F763BF86D0608575B463BDD /* Pods-muber-v2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-muber-v2.debug.xcconfig"; path = "Target Support Files/Pods-muber-v2/Pods-muber-v2.debug.xcconfig"; sourceTree = "<group>"; };
-		C1A815E3262D4F1E002B4441 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		C1A815E8262D6E94002B4441 /* LocationInputActivationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInputActivationView.swift; sourceTree = "<group>"; };
 		E76599282EA482C48CC3E822 /* Pods_muber_v2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_muber_v2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -133,7 +131,7 @@
 				2571E54B262D2F8A008B0073 /* Main.storyboard */,
 				2571E588262D30C5008B0073 /* Assets.xcassets */,
 				2571E550262D2F8D008B0073 /* LaunchScreen.storyboard */,
-				2571E590262D3194008B0073 /* GoogleService-Info.plist */,
+				25170D18262D8ED0000AB39D /* GoogleService-Info.plist */,
 				2571E553262D2F8D008B0073 /* Info.plist */,
 			);
 			path = "muber-v2";
@@ -321,7 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2571E552262D2F8D008B0073 /* LaunchScreen.storyboard in Resources */,
-				2571E591262D3194008B0073 /* GoogleService-Info.plist in Resources */,
+				25170D19262D8ED0000AB39D /* GoogleService-Info.plist in Resources */,
 				2571E589262D30C5008B0073 /* Assets.xcassets in Resources */,
 				2571E54D262D2F8A008B0073 /* Main.storyboard in Resources */,
 			);
@@ -394,11 +392,8 @@
 				2571E583262D3091008B0073 /* LoginController.swift in Sources */,
 				2571E584262D3091008B0073 /* SignUpController.swift in Sources */,
 				2571E582262D3091008B0073 /* AuthButton.swift in Sources */,
-
 				C1A815E9262D6E94002B4441 /* LocationInputActivationView.swift in Sources */,
-
 				2573258F262D506F00FD18C6 /* HomeController.swift in Sources */,
-
 				2571E546262D2F8A008B0073 /* AppDelegate.swift in Sources */,
 				2571E548262D2F8A008B0073 /* SceneDelegate.swift in Sources */,
 				2571E581262D3091008B0073 /* Extensions.swift in Sources */,

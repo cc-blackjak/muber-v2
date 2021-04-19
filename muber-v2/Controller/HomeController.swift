@@ -57,6 +57,12 @@ class HomeController: UIViewController {
         inputActivationView.centerX(inView: view)
         inputActivationView.setDimentions(height: 50, width: view.frame.width - 64)
         inputActivationView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
+        inputActivationView.alpha = 0
+        inputActivationView.delegate = self  // Add delegate or else it wont work
+        
+        UIView.animate(withDuration: 2) {
+            self.inputActivationView.alpha = 1
+        }
     }
    
     func configureMapView(){
@@ -97,5 +103,11 @@ extension HomeController: CLLocationManagerDelegate {
             locationManager.requestAlwaysAuthorization()
         }
 
+    }
+}
+
+extension HomeController: LocatationInputActivationViewDelegate {
+    func presentLocationInputView() {
+        print("DEBUG: Handle present location input view..")
     }
 }
