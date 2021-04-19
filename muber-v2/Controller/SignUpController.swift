@@ -127,7 +127,18 @@ class SignUpController: UIViewController {
             let values = ["firstName": firstName, "lastName": lastName, "email": email, "accountType": accountTypeIndex] as [String : Any]
             
             Database.database().reference().child("users").child(uid).updateChildValues(values) { (error, ref) in
-                print("Successfully registered user and saved data...")
+                // Added this to fix -> "'keyWindow' was deprecated in iOS 13.0: Should not be used for applications that support multiple scenes as it returns a key window across all connected scenes"
+                let keyWindow = UIApplication.shared.connectedScenes
+                        .filter({$0.activationState == .foregroundActive})
+                        .map({$0 as? UIWindowScene})
+                        .compactMap({$0})
+                        .first?.windows
+                        .filter({$0.isKeyWindow}).first
+                
+                guard let controller = keyWindow?.rootViewController as? HomeController
+                else { return }
+                controller.configureUI()
+                self.dismiss(animated: true, completion: nil)
             }
         }
     }

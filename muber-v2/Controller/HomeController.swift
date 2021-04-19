@@ -2,7 +2,7 @@
 //  HomeController.swift
 //  muber-v2
 //
-//  Created by 田中翔 on 2021/04/19.
+//  Created by LucySD on 2021/04/19.
 //
 
 import UIKit
@@ -11,35 +11,37 @@ import MapKit
 
 class HomeController: UIViewController {
     
-    //MARK: - Properties
-    
-    private let mapView = MKMapView()
+
+    // MARK: - Properties
     private let locationManager = CLLocationManager()
+    private let mapView = MKMapView()
     private let inputActivationView = LocatationInputActivationView()
     
-    //MARK: - Lifecycle
+    // MARK: - Selectors
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkIfUserIsLoggedIn()
         enableLocationservices()
         configureUI()
+//        signOut()
     }
     
-    //MARK: - API
+    // MARK: - API
     
-//    func checkIfUserIsLoggedIn(){
-//        if Auth.auth().currentUser?.uid == nil{
-//            DispatchQueue.main.async {
-//                let nav = UINavigationController(rootViewController: LoginController())
-//                self.present(nav, animated: true, completion: nil)
-//            }
-//
-//        }else {
-//            print("DEBUG: USER id is \(Auth.auth().currentUser?.uid)")
-//        }
-//    }
+    func checkIfUserIsLoggedIn(){
+        if Auth.auth().currentUser?.uid == nil {
+            DispatchQueue.main.async {
+                let nav = UINavigationController(rootViewController: LoginController())
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true, completion: nil)
+            }
+        } else {
+            configureUI()
+        }
+    }
     
-    func signOut(){
+    func signOut() {
         do {
             try Auth.auth().signOut()
         } catch {
@@ -47,6 +49,7 @@ class HomeController: UIViewController {
         }
     }
     
+
     //MARK: - Helper Functions
     func configureUI(){
         configureMapView()
@@ -85,6 +88,7 @@ extension HomeController: CLLocationManagerDelegate {
         @unknown default:
             break
         }
+
         
     }
     // 長期間appを開かなかったときに、位置情報をどうするかを確認するfunc
@@ -92,5 +96,6 @@ extension HomeController: CLLocationManagerDelegate {
         if status == .authorizedWhenInUse {
             locationManager.requestAlwaysAuthorization()
         }
+
     }
 }

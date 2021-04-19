@@ -4,9 +4,9 @@
 <dict>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Please allow us to access your location so we can find you rides nearby</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Please allow us to access your location so we can find you rides nearby</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Please allow us to access your location so we can find you rides nearby</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Please allow us to access your location so we can find you rides nearby</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
