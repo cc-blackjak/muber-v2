@@ -12,7 +12,7 @@ import MapKit
 class HomeController: UIViewController {
     
     // MARK: - Properties
-    
+    private let locationManager = CLLocationManager()
     private let mapView = MKMapView()
     
     // MARK: - Selectors
@@ -51,5 +51,24 @@ class HomeController: UIViewController {
         view.addSubview(mapView)
         mapView.frame = view.frame
     }
-    
+}
+
+// MARK: - LocationServices
+private extension HomeController {
+    func enableLocationServices(_ manager: CLLocationManager) {
+        switch manager.authorizationStatus {
+        case .notDetermined:
+            print("DEBUG: Not determined..")
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+            break
+        case .authorizedAlways:
+            print("DEBUG: Auth always..")
+        case .authorizedWhenInUse:
+            print("DEBUG: Auth when in use..")
+            locationManager.requestAlwaysAuthorization()
+        @unknown default:
+            break
+        }
+    }
 }
