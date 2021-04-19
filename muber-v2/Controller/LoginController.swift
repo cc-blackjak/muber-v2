@@ -66,7 +66,7 @@ class LoginController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureU()
+        configureUI()
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
     }
@@ -95,7 +95,7 @@ class LoginController: UIViewController {
     
     // MARK: - Helper Functions
     
-    func configureU() {
+    func configureUI() {
         configureNavigationBar()
         
         // Sets the background color of the view
