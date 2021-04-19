@@ -11,15 +11,19 @@ import MapKit
 
 class HomeController: UIViewController {
     
+
     // MARK: - Properties
     private let locationManager = CLLocationManager()
     private let mapView = MKMapView()
+    private let inputActivationView = LocatationInputActivationView()
     
     // MARK: - Selectors
     
     override func viewDidLoad() {
         super.viewDidLoad()
         checkIfUserIsLoggedIn()
+        enableLocationservices()
+        configureUI()
 //        signOut()
     }
     
@@ -45,18 +49,30 @@ class HomeController: UIViewController {
         }
     }
     
-    // MARK: - Helper Functions
-    
-    func configureUI() {
+
+    //MARK: - Helper Functions
+    func configureUI(){
+        configureMapView()
+        view.addSubview(inputActivationView)
+        inputActivationView.centerX(inView: view)
+        inputActivationView.setDimentions(height: 50, width: view.frame.width - 64)
+        inputActivationView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
+    }
+   
+    func configureMapView(){
         view.addSubview(mapView)
         mapView.frame = view.frame
+        mapView.showsUserLocation = true
+        mapView.userTrackingMode = .follow
     }
 }
 
-// MARK: - LocationServices
-private extension HomeController {
-    func enableLocationServices(_ manager: CLLocationManager) {
-        switch manager.authorizationStatus {
+//MARK: - LocationServices
+
+extension HomeController: CLLocationManagerDelegate {
+    func enableLocationservices() {
+        locationManager.delegate = self
+        switch CLLocationManager.authorizationStatus() {
         case .notDetermined:
             print("DEBUG: Not determined..")
             locationManager.requestWhenInUseAuthorization()
@@ -64,11 +80,22 @@ private extension HomeController {
             break
         case .authorizedAlways:
             print("DEBUG: Auth always..")
+            locationManager.startUpdatingLocation()
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
         case .authorizedWhenInUse:
             print("DEBUG: Auth when in use..")
             locationManager.requestAlwaysAuthorization()
         @unknown default:
             break
         }
+
+        
+    }
+    // 長期間appを開かなかったときに、位置情報をどうするかを確認するfunc
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
+            locationManager.requestAlwaysAuthorization()
+        }
+
     }
 }
