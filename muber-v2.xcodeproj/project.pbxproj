@@ -11,10 +11,16 @@
 		2571E548262D2F8A008B0073 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E547262D2F8A008B0073 /* SceneDelegate.swift */; };
 		2571E54A262D2F8A008B0073 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E549262D2F8A008B0073 /* ViewController.swift */; };
 		2571E54D262D2F8A008B0073 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2571E54B262D2F8A008B0073 /* Main.storyboard */; };
-		2571E54F262D2F8D008B0073 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2571E54E262D2F8D008B0073 /* Assets.xcassets */; };
 		2571E552262D2F8D008B0073 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2571E550262D2F8D008B0073 /* LaunchScreen.storyboard */; };
 		2571E55D262D2F8E008B0073 /* muber_v2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E55C262D2F8E008B0073 /* muber_v2Tests.swift */; };
 		2571E568262D2F8E008B0073 /* muber_v2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E567262D2F8E008B0073 /* muber_v2UITests.swift */; };
+		2571E581262D3091008B0073 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E57A262D3091008B0073 /* Extensions.swift */; };
+		2571E582262D3091008B0073 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E57C262D3091008B0073 /* AuthButton.swift */; };
+		2571E583262D3091008B0073 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E57E262D3091008B0073 /* LoginController.swift */; };
+		2571E584262D3091008B0073 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E57F262D3091008B0073 /* SignUpController.swift */; };
+		2571E589262D30C5008B0073 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2571E588262D30C5008B0073 /* Assets.xcassets */; };
+		2571E591262D3194008B0073 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2571E590262D3194008B0073 /* GoogleService-Info.plist */; };
+		87BF44608C39A2D8FC54A5FD /* Pods_muber_v2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76599282EA482C48CC3E822 /* Pods_muber_v2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,12 +41,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1410DB6CA015650CDCB3D1F0 /* Pods-muber-v2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-muber-v2.release.xcconfig"; path = "Target Support Files/Pods-muber-v2/Pods-muber-v2.release.xcconfig"; sourceTree = "<group>"; };
 		2571E542262D2F8A008B0073 /* muber-v2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "muber-v2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2571E545262D2F8A008B0073 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2571E547262D2F8A008B0073 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		2571E549262D2F8A008B0073 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2571E54C262D2F8A008B0073 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		2571E54E262D2F8D008B0073 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2571E551262D2F8D008B0073 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2571E553262D2F8D008B0073 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2571E558262D2F8E008B0073 /* muber-v2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "muber-v2Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,6 +55,14 @@
 		2571E563262D2F8E008B0073 /* muber-v2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "muber-v2UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2571E567262D2F8E008B0073 /* muber_v2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = muber_v2UITests.swift; sourceTree = "<group>"; };
 		2571E569262D2F8E008B0073 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2571E57A262D3091008B0073 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		2571E57C262D3091008B0073 /* AuthButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
+		2571E57E262D3091008B0073 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		2571E57F262D3091008B0073 /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
+		2571E588262D30C5008B0073 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../Muber/Muber/Assets.xcassets; sourceTree = "<group>"; };
+		2571E590262D3194008B0073 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		7F763BF86D0608575B463BDD /* Pods-muber-v2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-muber-v2.debug.xcconfig"; path = "Target Support Files/Pods-muber-v2/Pods-muber-v2.debug.xcconfig"; sourceTree = "<group>"; };
+		E76599282EA482C48CC3E822 /* Pods_muber_v2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_muber_v2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87BF44608C39A2D8FC54A5FD /* Pods_muber_v2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +98,8 @@
 				2571E55B262D2F8E008B0073 /* muber-v2Tests */,
 				2571E566262D2F8E008B0073 /* muber-v2UITests */,
 				2571E543262D2F8A008B0073 /* Products */,
+				89D69AEBC3073E62CA471FB3 /* Pods */,
+				65523C8EFE94974CC9E423CB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,12 +116,18 @@
 		2571E544262D2F8A008B0073 /* muber-v2 */ = {
 			isa = PBXGroup;
 			children = (
+				2571E57D262D3091008B0073 /* Controller */,
+				2571E580262D3091008B0073 /* Model */,
+				2571E578262D3091008B0073 /* Service */,
+				2571E579262D3091008B0073 /* Utils */,
+				2571E57B262D3091008B0073 /* View */,
 				2571E545262D2F8A008B0073 /* AppDelegate.swift */,
 				2571E547262D2F8A008B0073 /* SceneDelegate.swift */,
 				2571E549262D2F8A008B0073 /* ViewController.swift */,
 				2571E54B262D2F8A008B0073 /* Main.storyboard */,
-				2571E54E262D2F8D008B0073 /* Assets.xcassets */,
+				2571E588262D30C5008B0073 /* Assets.xcassets */,
 				2571E550262D2F8D008B0073 /* LaunchScreen.storyboard */,
+				2571E590262D3194008B0073 /* GoogleService-Info.plist */,
 				2571E553262D2F8D008B0073 /* Info.plist */,
 			);
 			path = "muber-v2";
@@ -128,6 +151,63 @@
 			path = "muber-v2UITests";
 			sourceTree = "<group>";
 		};
+		2571E578262D3091008B0073 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		2571E579262D3091008B0073 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2571E57A262D3091008B0073 /* Extensions.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		2571E57B262D3091008B0073 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2571E57C262D3091008B0073 /* AuthButton.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2571E57D262D3091008B0073 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2571E57E262D3091008B0073 /* LoginController.swift */,
+				2571E57F262D3091008B0073 /* SignUpController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2571E580262D3091008B0073 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		65523C8EFE94974CC9E423CB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E76599282EA482C48CC3E822 /* Pods_muber_v2.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		89D69AEBC3073E62CA471FB3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7F763BF86D0608575B463BDD /* Pods-muber-v2.debug.xcconfig */,
+				1410DB6CA015650CDCB3D1F0 /* Pods-muber-v2.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,9 +215,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2571E56C262D2F8E008B0073 /* Build configuration list for PBXNativeTarget "muber-v2" */;
 			buildPhases = (
+				3367760673AC54E82C5763FF /* [CP] Check Pods Manifest.lock */,
 				2571E53E262D2F8A008B0073 /* Sources */,
 				2571E53F262D2F8A008B0073 /* Frameworks */,
 				2571E540262D2F8A008B0073 /* Resources */,
+				1350058B71443DB08707A759 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -232,7 +314,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2571E552262D2F8D008B0073 /* LaunchScreen.storyboard in Resources */,
-				2571E54F262D2F8D008B0073 /* Assets.xcassets in Resources */,
+				2571E591262D3194008B0073 /* GoogleService-Info.plist in Resources */,
+				2571E589262D30C5008B0073 /* Assets.xcassets in Resources */,
 				2571E54D262D2F8A008B0073 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -253,14 +336,60 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1350058B71443DB08707A759 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-muber-v2/Pods-muber-v2-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-muber-v2/Pods-muber-v2-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-muber-v2/Pods-muber-v2-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3367760673AC54E82C5763FF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-muber-v2-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2571E53E262D2F8A008B0073 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				2571E54A262D2F8A008B0073 /* ViewController.swift in Sources */,
+				2571E583262D3091008B0073 /* LoginController.swift in Sources */,
+				2571E584262D3091008B0073 /* SignUpController.swift in Sources */,
+				2571E582262D3091008B0073 /* AuthButton.swift in Sources */,
 				2571E546262D2F8A008B0073 /* AppDelegate.swift in Sources */,
 				2571E548262D2F8A008B0073 /* SceneDelegate.swift in Sources */,
+				2571E581262D3091008B0073 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,6 +562,7 @@
 		};
 		2571E56D262D2F8E008B0073 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7F763BF86D0608575B463BDD /* Pods-muber-v2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -452,6 +582,7 @@
 		};
 		2571E56E262D2F8E008B0073 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1410DB6CA015650CDCB3D1F0 /* Pods-muber-v2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
