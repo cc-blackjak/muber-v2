@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -59,7 +59,7 @@
 		2571E57C262D3091008B0073 /* AuthButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 		2571E57E262D3091008B0073 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		2571E57F262D3091008B0073 /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
-		2571E588262D30C5008B0073 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../Muber/Muber/Assets.xcassets; sourceTree = "<group>"; };
+		2571E588262D30C5008B0073 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2571E590262D3194008B0073 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		7F763BF86D0608575B463BDD /* Pods-muber-v2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-muber-v2.debug.xcconfig"; path = "Target Support Files/Pods-muber-v2/Pods-muber-v2.debug.xcconfig"; sourceTree = "<group>"; };
 		E76599282EA482C48CC3E822 /* Pods_muber_v2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_muber_v2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -204,7 +204,6 @@
 				7F763BF86D0608575B463BDD /* Pods-muber-v2.debug.xcconfig */,
 				1410DB6CA015650CDCB3D1F0 /* Pods-muber-v2.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
