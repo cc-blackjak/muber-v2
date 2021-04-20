@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>176643618680-0hl30n47v4ardl8h1kqb7lpjvereb8q3.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.176643618680-0hl30n47v4ardl8h1kqb7lpjvereb8q3</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBOzL6uEF3VW1bjP8ozmyYg6Kvc2y_relU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>176643618680</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.blackjak.muber-v2</string>
+	<key>PROJECT_ID</key>
+	<string>muber2-blackjak</string>
+	<key>STORAGE_BUCKET</key>
+	<string>muber2-blackjak.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:176643618680:ios:222fbe2167c51e0f02fa8d</string>
+	<key>DATABASE_URL</key>
+	<string>https://muber2-blackjak-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
