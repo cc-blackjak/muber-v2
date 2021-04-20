@@ -8,6 +8,7 @@
 //import Foundation
 
 import UIKit
+import Firebase
 
 class ContainerController: UIViewController{
     // MARK: - Properties
@@ -16,27 +17,43 @@ class ContainerController: UIViewController{
     private let menuController = MenuController()
     private var isExpanded = false
     
+    // ***fetch関連
 //    private var user: User?{
 //        didSet{
-//
+//          guard let user = user else { return }
+//            homeController.user = user
+//            configureMenuController(withUser: user)
+
 //        }
 //    }
+    
     // MARK: -Lifecycle
+    
+    // ***fetch関連
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//    }
     
     override func viewDidLoad(){
         super.viewDidLoad()
         
+        view.backgroundColor = .backgroundColor
+        // ***** fetch関連
+//        fetchUserData()
         configureHomeController()
+        // ↓↓↓↓↓ fetch 繋がったら消す
         configureMenuController()
+        // ↑↑↑↑↑↑ fetch 繋がったら消す
+        
     }
     
     // MARK: -Selectors
     
     // MARK: -API
-    
+    // ***** fetch関連
 //    func fetchUserData(){
-//        guard let current Uid = Auth.auth().currentUser?.uid else { return }
-//        Service.shared.fetchUserData(uid: currentUid) {use in
+//        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+//        Service.shared.fetchUserData(uid: currentUid) { user in
 //            self.user = user
 //        }
 //    }
@@ -45,6 +62,8 @@ class ContainerController: UIViewController{
     
     //LoginController is position 1
     func configureHomeController(){
+        // ***** fetch関連
+//    func configureHomeController(withUser user: User){
         self.addChild(homeController)
         self.view.addSubview(homeController.view!)
         homeController.didMove(toParent: self)
@@ -52,10 +71,12 @@ class ContainerController: UIViewController{
     }
     //MenuController is position 0
     func configureMenuController(){
-        self.addChild(menuController)
-        self.view.insertSubview(menuController.view!, at: 0)
+        // ***** fetch関連
+//    func configureMenuController(withUser user: User){
+//        menuController = MenuController(coder: user)
+        addChild(menuController)
         menuController.didMove(toParent: self)
-        print("menucontroller")
+        view.insertSubview(menuController.view!, at: 0)
     }
     
     func animateMenu(shouldExpand: Bool){
@@ -72,6 +93,9 @@ class ContainerController: UIViewController{
         
     }
 }
+
+//MARK: -HomeControllerDelegate
+
 extension ContainerController: HomeControllerDelegate{
     func handleMenuToggle() {
         isExpanded.toggle()

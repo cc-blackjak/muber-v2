@@ -30,6 +30,20 @@ class HomeController: UIViewController {
     }()
     
     weak var delegate: HomeControllerDelegate?
+    
+//     var user: User? {
+//        didSet {
+//            locationInputView.use = user
+//
+//            if user?.accountType == .passenger {
+//                fetchDrivers()
+//                configureLocationInputActivationView()
+//                observeCurrentTrip()
+//            }else{
+//                observeTrips()
+//            }
+//        }
+//    }
 
     // MARK: - Selectors
     

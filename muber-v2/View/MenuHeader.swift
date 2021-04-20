@@ -9,13 +9,8 @@ import UIKit
 
 class MenuHeader: UIView{
     //MARK: -Properties
-    // *****homeControllerでUSER取得したら動くようになる
-//    var user: User?{
-//        didSet {
-//            fullnameLabel.text = user?.fullname
-//            emailLabel.text = user?.email
-//        }
-//    }
+// ***fetch関連
+//    private let user: User
     
     private let profileImageView: UIImageView = {
         let iv = UIImageView()
@@ -23,27 +18,31 @@ class MenuHeader: UIView{
         return iv
     }()
     
-    private let fullnameLabel: UILabel = {
+    private lazy var fullnameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .white
         label.text = "Arisa Nakaji"
+//        label.text = user.fullname
         return label
     }()
     
-    private let emailLabel: UILabel = {
+    private lazy var emailLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .white
         label.text = "Arisa@test.com"
+//        label.text = user.email
         return label
     }()
     
     //MARK: -Lifecycle
-    
     override init(frame:CGRect){
+        //     ***fetch関連？
+//        init(user: User, frame:CGRect){
+//        self.user = user
         super.init(frame: frame)
-        
+
         backgroundColor = .backgroundColor
         
         addSubview(profileImageView)
@@ -57,14 +56,9 @@ class MenuHeader: UIView{
         stack.spacing = 4
         stack.axis = .vertical
         addSubview(stack)
-        // ****centerYの当て方がわからない。Extensinosに入ってない？でも、完成からコピってきても
-        // error消えなかった。。。
-//        stack.centerY(inView: profileImageView,
-//                      leftAnchor: profileImageView.rightAnchor,
-//                      paddingLeft: 12)
-        // ****とりあえずの代替案　微妙にしか出てないwwww
-        stack.anchor(top: profileImageView.bottomAnchor, left: profileImageView.leftAnchor,
-                     right: profileImageView.rightAnchor)
+        stack.centerY(inView: profileImageView,
+                      leftAnchor: profileImageView.rightAnchor,
+                      paddingLeft: 12)
     }
     
     required init?(coder aDecoder:NSCoder){

@@ -11,10 +11,30 @@ import UIKit
 
 private let reuseIdentifier = "MenuCell"
 
+private enum MenuOptions: Int, CaseIterable, CustomStringConvertible {
+    case yourTrips
+    case settings
+    case logout
+    
+    var description: String {
+        switch self {
+        
+        case .yourTrips:
+            return "Your Trips"
+        case .settings:
+            return "settings"
+        case .logout:
+            return "logout"
+        }
+    }
+}
+
 class MenuController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     // MARK: - Properties
     
     private let tableView = UITableView()
+    
+//    private let user: User
     
     private lazy var menuHeader: MenuHeader = {
         let frame = CGRect(x: 0,
@@ -22,10 +42,20 @@ class MenuController: UIViewController, UITableViewDelegate, UITableViewDataSour
                            width: self.view.frame.width - 80,
                            height: 140)
         let view = MenuHeader(frame: frame)
+//        let view = MenuHeader(user: user, frame: frame)
         return view
     }()
     
     // MARK: -Lifecycle
+    
+//    init(user: User){
+//        self.user = user
+//        super.init(nibName: nil, bundle: nil)
+//    }
+    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -54,7 +84,7 @@ class MenuController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return MenuOptions.allCases.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
