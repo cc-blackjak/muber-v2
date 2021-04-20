@@ -9,6 +9,9 @@ import UIKit
 import Firebase
 import MapKit
 
+protocol HomeControllerDelegate: class {
+    func handleMenuToggle()
+}
 private let reuseIdentifier = "LocationCell"
 
 class HomeController: UIViewController {
@@ -27,6 +30,29 @@ class HomeController: UIViewController {
         didSet { locationInputView.user = user }
     }
     
+    private let actionButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "baseline_menu_black_36dp"), for: .normal)
+        button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
+        return button
+    }()
+    
+    weak var delegate: HomeControllerDelegate?
+    
+//     var user: User? {
+//        didSet {
+//            locationInputView.use = user
+//
+//            if user?.accountType == .passenger {
+//                fetchDrivers()
+//                configureLocationInputActivationView()
+//                observeCurrentTrip()
+//            }else{
+//                observeTrips()
+//            }
+//        }
+//    }
+
     // MARK: - Selectors
     
     override func viewDidLoad() {
@@ -66,14 +92,24 @@ class HomeController: UIViewController {
         }
     }
     
+    @objc func actionButtonPressed(){
+        print("pressed!")
+        delegate?.handleMenuToggle()
+    }
+    
 
     //MARK: - Helper Functions
     func configureUI(){
         configureMapView()
+
+        view.addSubview(actionButton)
+        actionButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                            paddingTop: 16, paddingLeft:16, width:30, height: 30)
+
         view.addSubview(inputActivationView)
         inputActivationView.centerX(inView: view)
         inputActivationView.setDimentions(height: 50, width: view.frame.width - 64)
-        inputActivationView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
+        inputActivationView.anchor(top: actionButton.bottomAnchor, paddingTop: 32)
         inputActivationView.alpha = 0
         inputActivationView.delegate = self  // Add delegate or else it wont work
         

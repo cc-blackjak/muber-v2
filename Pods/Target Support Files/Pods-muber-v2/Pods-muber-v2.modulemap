@@ -1,0 +1,6 @@
+framework module Pods_muber_v2 {
+  umbrella header "Pods-muber-v2-umbrella.h"
+
+  export *
+  module * { export * }
+}
