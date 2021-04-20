@@ -12,6 +12,8 @@ class SignUpController: UIViewController {
     
     // MARK: - Properties
     
+    private var location = LocationHandler.shared.locationManager.location
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Muber"
@@ -103,6 +105,7 @@ class SignUpController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureU()
+
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
     }
@@ -126,20 +129,17 @@ class SignUpController: UIViewController {
             
             let values = ["firstName": firstName, "lastName": lastName, "email": email, "accountType": accountTypeIndex] as [String : Any]
             
-            Database.database().reference().child("users").child(uid).updateChildValues(values) { (error, ref) in
-                // Added this to fix -> "'keyWindow' was deprecated in iOS 13.0: Should not be used for applications that support multiple scenes as it returns a key window across all connected scenes"
-                let keyWindow = UIApplication.shared.connectedScenes
-                        .filter({$0.activationState == .foregroundActive})
-                        .map({$0 as? UIWindowScene})
-                        .compactMap({$0})
-                        .first?.windows
-                        .filter({$0.isKeyWindow}).first
-                
-                guard let controller = keyWindow?.rootViewController as? HomeController
-                else { return }
-                controller.configure()
-                self.dismiss(animated: true, completion: nil)
+            // Need Geofire to implement
+//            if accountTypeIndex == 1 {
+//
+//
+//            }
+
+            REF_USERS.child(uid).updateChildValues(values) { (error, ref) in
+                self.uploadUserDataAndShowHomeController(uid: uid, values: values)
             }
+            
+            self.uploadUserDataAndShowHomeController(uid: uid, values: values)
         }
     }
     
@@ -149,6 +149,23 @@ class SignUpController: UIViewController {
     }
     
     // MARK: - Helper Functions
+    
+    func uploadUserDataAndShowHomeController(uid: String, values: [String: Any]){
+        REF_USERS.child(uid).updateChildValues(values) { (error, ref) in
+            // Added this to fix -> "'keyWindow' was deprecated in iOS 13.0: Should not be used for applications that support multiple scenes as it returns a key window across all connected scenes"
+            let keyWindow = UIApplication.shared.connectedScenes
+                    .filter({$0.activationState == .foregroundActive})
+                    .map({$0 as? UIWindowScene})
+                    .compactMap({$0})
+                    .first?.windows
+                    .filter({$0.isKeyWindow}).first
+            
+            guard let controller = keyWindow?.rootViewController as? HomeController
+            else { return }
+            controller.configure()
+            self.dismiss(animated: true, completion: nil)
+    }
+}
     
     func configureU() {
 //        configureNavigationBar()
@@ -183,3 +200,4 @@ class SignUpController: UIViewController {
         
     }
 }
+
