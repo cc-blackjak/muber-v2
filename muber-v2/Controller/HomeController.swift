@@ -11,6 +11,16 @@ import MapKit
 
 private let reuseIdentifier = "LocationCell"
 
+private enum actionButtonConfiguration {
+    case showMenu
+    case dismissActionView
+    
+    init() {
+        self = .showMenu
+    }
+    
+}
+
 class HomeController: UIViewController {
     
 
@@ -20,10 +30,22 @@ class HomeController: UIViewController {
     private let inputActivationView = LocatationInputActivationView()
     private let locationInputView = LocationInputView()
     private let tableView = UITableView()
-    
+    private var searchResults = [MKPlacemark]()
     private final let locationInputViewHeight: CGFloat = 200
+    private var actionButttonConfig = actionButtonConfiguration()
     
-    // MARK: - Selectors
+//    private var user: User? {
+//        didSet {locationInputView.user = user}
+//    }
+    
+    private let actionButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "baseline_menu_black_36dp").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
+        return button
+    }()
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +53,12 @@ class HomeController: UIViewController {
         enableLocationservices()
         configureUI()
 //        signOut()
+    }
+    
+    //MARK: - Selector
+    
+    @objc func actionButtonPressed() {
+        print("DEBUG: Handle action utton pressed..")
     }
     
     // MARK: - API
@@ -59,10 +87,16 @@ class HomeController: UIViewController {
     //MARK: - Helper Functions
     func configureUI(){
         configureMapView()
+        
+        view.addSubview(actionButton)
+        actionButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                            paddingTop: 16, paddingLeft: 20, width: 30, height: 30)
+        
+        
         view.addSubview(inputActivationView)
         inputActivationView.centerX(inView: view)
         inputActivationView.setDimentions(height: 50, width: view.frame.width - 64)
-        inputActivationView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
+        inputActivationView.anchor(top: actionButton.bottomAnchor, paddingTop: 32)
         inputActivationView.alpha = 0
         inputActivationView.delegate = self  // Add delegate or else it wont work
         
@@ -105,6 +139,36 @@ class HomeController: UIViewController {
         tableView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: height)
         
         view.addSubview(tableView)
+    }
+    
+    func dismissLocationView(completion: ((Bool) -> Void)? = nil) {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.locationInputView.alpha = 0
+            self.tableView.frame.origin.y = self.view.frame.height //tableを畳んだ時に見えなくする
+            self.locationInputView.removeFromSuperview()
+        }, completion: completion)
+    }
+}
+
+//MARK: - Map Helper Functions
+
+private extension HomeController {
+    func searchBy(naturalLanguageQuery: String, completion: @escaping([MKPlacemark]) -> Void) {
+        var results = [MKPlacemark]()
+        
+        let request = MKLocalSearch.Request()
+        request.region = mapView.region
+        request.naturalLanguageQuery = naturalLanguageQuery
+        
+        let search = MKLocalSearch(request: request)
+        search.start { (response, error) in
+            guard let response = response else {return}
+            
+            response.mapItems.forEach({ item in
+                results.append(item.placemark)
+            })
+            completion(results)
+        }
     }
 }
 
@@ -153,21 +217,21 @@ extension HomeController: LocatationInputActivationViewDelegate {
 // MARK: - LocationInputViewDelegate
     
 extension HomeController: LocationInputViewDelegate {
+    func executeSearch(query: String) {
+        searchBy(naturalLanguageQuery: query) { (results) in
+            self.searchResults = results
+            self.tableView.reloadData()
+        }
+    }
+    
     func dismissLocationInputView() {
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            self.locationInputView.alpha = 0
-            self.tableView.frame.origin.y = self.view.frame.height //tableを畳んだ時に見えなくする
-            
-        }) { _ in
-            self.locationInputView.removeFromSuperview()
+        dismissLocationView { _ in 
             UIView.animate(withDuration: 0.3, animations: {
                 self.inputActivationView.alpha = 1
             })
         }
     }
 }
-
 // MARK: - UITableViewDelegate/dataSource
 
 extension HomeController: UITableViewDelegate, UITableViewDataSource {
@@ -180,11 +244,29 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 2 : 5
+        return section == 0 ? 2 : searchResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! LocationCell
+        if indexPath.section == 1 {
+            cell.placemark = searchResults[indexPath.row]
+        }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedPlacemark = searchResults[indexPath.row]
+        
+        actionButton.setImage(#imageLiteral(resourceName: "baseline_arrow_back_black_36dp-1").withRenderingMode(.alwaysOriginal), for: .normal)
+        actionButttonConfig = .dismissActionView
+        
+        print("DEBUG: Selected placemark is \(selectedPlacemark)")
+        dismissLocationView {_ in
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = selectedPlacemark.coordinate
+            self.mapView.addAnnotation(annotation)
+            self.mapView.selectAnnotation(annotation, animated: true)
+        }
     }
 }
