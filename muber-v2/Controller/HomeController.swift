@@ -18,6 +18,10 @@ class HomeController: UIViewController {
     private let inputActivationView = LocatationInputActivationView()
     private let locationInputView = LocationInputView()
     
+    private var user: User? {
+        didSet { locationInputView.user = user }
+    }
+    
     // MARK: - Selectors
     
     override func viewDidLoad() {
@@ -25,10 +29,17 @@ class HomeController: UIViewController {
         checkIfUserIsLoggedIn()
         enableLocationservices()
         configureUI()
+        fetchUserData()
 //        signOut()
     }
     
     // MARK: - API
+    
+    func fetchUserData() {
+        Service.shared.fetchUserData { user in
+            self.user = user
+        }
+    }
     
     func checkIfUserIsLoggedIn(){
         if Auth.auth().currentUser?.uid == nil {
