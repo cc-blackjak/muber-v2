@@ -41,9 +41,9 @@ class ContainerController: UIViewController{
         // ***** fetch関連
 //        fetchUserData()
         configureHomeController()
-        // ↓↓↓↓↓ fetch 繋がったら消す
+        // ↓↓↓↓↓ fetch 繋がったら消す？
         configureMenuController()
-        // ↑↑↑↑↑↑ fetch 繋がったら消す
+        // ↑↑↑↑↑↑ fetch 繋がったら消す？
         
     }
     
@@ -58,7 +58,21 @@ class ContainerController: UIViewController{
 //        }
 //    }
     
+    func signOut() {
+        print("logOut")
+//        do {
+//            try Auth.auth().signOut()
+//        } catch {
+//            print("DEBUG: Error signing out")
+        }
+    
     // MARK: -Helper Functions
+    
+    func configure() {
+        view.backgroundColor = .backgroundColor
+//        configureHomeController()
+//        fetchUserData()
+    }
     
     //LoginController is position 1
     func configureHomeController(){
@@ -79,7 +93,7 @@ class ContainerController: UIViewController{
         view.insertSubview(menuController.view!, at: 0)
     }
     
-    func animateMenu(shouldExpand: Bool){
+    func animateMenu(shouldExpand: Bool, completion:((Bool) -> Void)? = nil){
         if shouldExpand{
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
                 self.homeController.view.frame.origin.x = self.view.frame.width - 80
@@ -94,11 +108,40 @@ class ContainerController: UIViewController{
     }
 }
 
-//MARK: -HomeControllerDelegate
+// MARK: -HomeControllerDelegate
 
 extension ContainerController: HomeControllerDelegate{
     func handleMenuToggle() {
         isExpanded.toggle()
         animateMenu(shouldExpand: isExpanded)
+    }
+}
+
+extension ContainerController: MenuControllerDelegate {
+    func didSelect() {
+//    func didSelect(option: MenuOptions) {
+        isExpanded.toggle()
+        animateMenu(shouldExpand: isExpanded){ _ in
+//            switch option {
+//            case .yourTrips:
+//                break
+//            case .settings:
+//                break
+//            case .logout:
+//                print("logout")
+//                let alert = UIAlertController(title: nil,
+//                                              message: "Are you sure you want to log out?",
+//                                              preferredStyle: .actionSheet)
+//
+//                alert.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { _ in
+//                    self.signOut()
+//                }))
+//
+//                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//
+//                self.present(alert, animated:true, completion: nil)
+//            }
+        }
+            
     }
 }

@@ -11,7 +11,8 @@ import UIKit
 
 private let reuseIdentifier = "MenuCell"
 
-private enum MenuOptions: Int, CaseIterable, CustomStringConvertible {
+//private enum MenuOptions: Int, CaseIterable, CustomStringConvertible {
+enum MenuOptions: Int, CaseIterable, CustomStringConvertible {
     case yourTrips
     case settings
     case logout
@@ -29,12 +30,53 @@ private enum MenuOptions: Int, CaseIterable, CustomStringConvertible {
     }
 }
 
+protocol MenuControllerDelegate: class {
+    func didSelect()
+//    func didSelect(option: MenuOptions)
+}
+
+weak var delegate: MenuControllerDelegate?
+
 class MenuController: UIViewController, UITableViewDelegate, UITableViewDataSource{
-    // MARK: - Properties
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return MenuOptions.allCases.count
+    }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+
+        guard let option = MenuOptions(rawValue: indexPath.row) else {return UITableViewCell()}
+        cell.textLabel?.text = option.description
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard (MenuOptions(rawValue: indexPath.row) != nil) else {return}
+        print("DEBUG\(indexPath.row)")
+        delegate?.didSelect()
+        // ** sidebar"yourTrips"の処理
+        if((indexPath.row) == 0){
+            print("your Trips!")
+        }
+        // ** sidebar"settings"の処理
+        if((indexPath.row) == 1){
+            print("setting!")
+        }
+        // ** sidebar"logout"の処理
+        if((indexPath.row) == 2){
+            print("logout!")
+        }
+
+
+    }
+    
+    // MARK: - Properties
     private let tableView = UITableView()
     
 //    private let user: User
+    weak var delegate: MenuControllerDelegate?
+
     
     private lazy var menuHeader: MenuHeader = {
         let frame = CGRect(x: 0,
@@ -83,13 +125,13 @@ class MenuController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.tableHeaderView = menuHeader
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return MenuOptions.allCases.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
-        cell.textLabel?.text = "Menu Option"
-        return cell
-    }
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return MenuOptions.allCases.count
+//    }
+//    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+//        cell.textLabel?.text = "Menu Option"
+//        return cell
+//    }
 }
