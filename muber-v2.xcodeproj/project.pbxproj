@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25170D1E262D9E05000AB39D /* LocationInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25170D1D262D9E05000AB39D /* LocationInputView.swift */; };
+		25170D6C262E7004000AB39D /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25170D6B262E7004000AB39D /* Service.swift */; };
+		25170D72262E703C000AB39D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25170D71262E703C000AB39D /* User.swift */; };
+		25170DF9262EB144000AB39D /* LocationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25170DF8262EB144000AB39D /* LocationHandler.swift */; };
 		2571E546262D2F8A008B0073 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E545262D2F8A008B0073 /* AppDelegate.swift */; };
 		2571E548262D2F8A008B0073 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E547262D2F8A008B0073 /* SceneDelegate.swift */; };
 		2571E54A262D2F8A008B0073 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E549262D2F8A008B0073 /* ViewController.swift */; };
@@ -19,8 +23,14 @@
 		2571E583262D3091008B0073 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E57E262D3091008B0073 /* LoginController.swift */; };
 		2571E584262D3091008B0073 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E57F262D3091008B0073 /* SignUpController.swift */; };
 		2571E589262D30C5008B0073 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2571E588262D30C5008B0073 /* Assets.xcassets */; };
-		2571E591262D3194008B0073 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2571E590262D3194008B0073 /* GoogleService-Info.plist */; };
+		2573258F262D506F00FD18C6 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2573258E262D506F00FD18C6 /* HomeController.swift */; };
+		67A69999262E5E8C00E178BC /* ContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A69998262E5E8C00E178BC /* ContainerController.swift */; };
+		67A699A1262E5E9C00E178BC /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A699A0262E5E9C00E178BC /* MenuController.swift */; };
+		67A699A6262E5ED800E178BC /* MenuHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A699A5262E5ED800E178BC /* MenuHeader.swift */; };
 		87BF44608C39A2D8FC54A5FD /* Pods_muber_v2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76599282EA482C48CC3E822 /* Pods_muber_v2.framework */; };
+		C1A815E9262D6E94002B4441 /* LocationInputActivationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A815E8262D6E94002B4441 /* LocationInputActivationView.swift */; };
+		C1A815F4262E591E002B4441 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1A815F3262E591E002B4441 /* GoogleService-Info.plist */; };
+		C1A815F9262E6271002B4441 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A815F8262E6271002B4441 /* LocationCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +52,10 @@
 
 /* Begin PBXFileReference section */
 		1410DB6CA015650CDCB3D1F0 /* Pods-muber-v2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-muber-v2.release.xcconfig"; path = "Target Support Files/Pods-muber-v2/Pods-muber-v2.release.xcconfig"; sourceTree = "<group>"; };
+		25170D1D262D9E05000AB39D /* LocationInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInputView.swift; sourceTree = "<group>"; };
+		25170D6B262E7004000AB39D /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		25170D71262E703C000AB39D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		25170DF8262EB144000AB39D /* LocationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHandler.swift; sourceTree = "<group>"; };
 		2571E542262D2F8A008B0073 /* muber-v2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "muber-v2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2571E545262D2F8A008B0073 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2571E547262D2F8A008B0073 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,8 +74,14 @@
 		2571E57E262D3091008B0073 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		2571E57F262D3091008B0073 /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		2571E588262D30C5008B0073 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		2571E590262D3194008B0073 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		2573258E262D506F00FD18C6 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		67A69998262E5E8C00E178BC /* ContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerController.swift; sourceTree = "<group>"; };
+		67A699A0262E5E9C00E178BC /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
+		67A699A5262E5ED800E178BC /* MenuHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHeader.swift; sourceTree = "<group>"; };
 		7F763BF86D0608575B463BDD /* Pods-muber-v2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-muber-v2.debug.xcconfig"; path = "Target Support Files/Pods-muber-v2/Pods-muber-v2.debug.xcconfig"; sourceTree = "<group>"; };
+		C1A815E8262D6E94002B4441 /* LocationInputActivationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInputActivationView.swift; sourceTree = "<group>"; };
+		C1A815F3262E591E002B4441 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "muber-v2/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		C1A815F8262E6271002B4441 /* LocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
 		E76599282EA482C48CC3E822 /* Pods_muber_v2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_muber_v2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -91,6 +111,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		25170D70262E701F000AB39D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				25170D71262E703C000AB39D /* User.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		2571E539262D2F8A008B0073 = {
 			isa = PBXGroup;
 			children = (
@@ -117,7 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				2571E57D262D3091008B0073 /* Controller */,
-				2571E580262D3091008B0073 /* Model */,
+				25170D70262E701F000AB39D /* Model */,
 				2571E578262D3091008B0073 /* Service */,
 				2571E579262D3091008B0073 /* Utils */,
 				2571E57B262D3091008B0073 /* View */,
@@ -127,7 +155,7 @@
 				2571E54B262D2F8A008B0073 /* Main.storyboard */,
 				2571E588262D30C5008B0073 /* Assets.xcassets */,
 				2571E550262D2F8D008B0073 /* LaunchScreen.storyboard */,
-				2571E590262D3194008B0073 /* GoogleService-Info.plist */,
+				C1A815F3262E591E002B4441 /* GoogleService-Info.plist */,
 				2571E553262D2F8D008B0073 /* Info.plist */,
 			);
 			path = "muber-v2";
@@ -154,6 +182,7 @@
 		2571E578262D3091008B0073 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				25170D6B262E7004000AB39D /* Service.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -162,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				2571E57A262D3091008B0073 /* Extensions.swift */,
+				25170DF8262EB144000AB39D /* LocationHandler.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -170,6 +200,9 @@
 			isa = PBXGroup;
 			children = (
 				2571E57C262D3091008B0073 /* AuthButton.swift */,
+				C1A815E8262D6E94002B4441 /* LocationInputActivationView.swift */,
+				25170D1D262D9E05000AB39D /* LocationInputView.swift */,
+				67A699A5262E5ED800E178BC /* MenuHeader.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -177,17 +210,13 @@
 		2571E57D262D3091008B0073 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				67A69997262E5E7000E178BC /* sidemenu */,
 				2571E57E262D3091008B0073 /* LoginController.swift */,
 				2571E57F262D3091008B0073 /* SignUpController.swift */,
+				2573258E262D506F00FD18C6 /* HomeController.swift */,
+				C1A815F8262E6271002B4441 /* LocationCell.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		2571E580262D3091008B0073 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		65523C8EFE94974CC9E423CB /* Frameworks */ = {
@@ -196,6 +225,15 @@
 				E76599282EA482C48CC3E822 /* Pods_muber_v2.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		67A69997262E5E7000E178BC /* sidemenu */ = {
+			isa = PBXGroup;
+			children = (
+				67A69998262E5E8C00E178BC /* ContainerController.swift */,
+				67A699A0262E5E9C00E178BC /* MenuController.swift */,
+			);
+			path = sidemenu;
 			sourceTree = "<group>";
 		};
 		89D69AEBC3073E62CA471FB3 /* Pods */ = {
@@ -313,7 +351,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2571E552262D2F8D008B0073 /* LaunchScreen.storyboard in Resources */,
-				2571E591262D3194008B0073 /* GoogleService-Info.plist in Resources */,
+				C1A815F4262E591E002B4441 /* GoogleService-Info.plist in Resources */,
 				2571E589262D30C5008B0073 /* Assets.xcassets in Resources */,
 				2571E54D262D2F8A008B0073 /* Main.storyboard in Resources */,
 			);
@@ -386,8 +424,18 @@
 				2571E583262D3091008B0073 /* LoginController.swift in Sources */,
 				2571E584262D3091008B0073 /* SignUpController.swift in Sources */,
 				2571E582262D3091008B0073 /* AuthButton.swift in Sources */,
+				67A699A1262E5E9C00E178BC /* MenuController.swift in Sources */,
+				67A699A6262E5ED800E178BC /* MenuHeader.swift in Sources */,
+				25170DF9262EB144000AB39D /* LocationHandler.swift in Sources */,
+				25170D1E262D9E05000AB39D /* LocationInputView.swift in Sources */,
+				C1A815E9262D6E94002B4441 /* LocationInputActivationView.swift in Sources */,
+				C1A815F9262E6271002B4441 /* LocationCell.swift in Sources */,
+				2573258F262D506F00FD18C6 /* HomeController.swift in Sources */,
 				2571E546262D2F8A008B0073 /* AppDelegate.swift in Sources */,
+				25170D72262E703C000AB39D /* User.swift in Sources */,
+				25170D6C262E7004000AB39D /* Service.swift in Sources */,
 				2571E548262D2F8A008B0073 /* SceneDelegate.swift in Sources */,
+				67A69999262E5E8C00E178BC /* ContainerController.swift in Sources */,
 				2571E581262D3091008B0073 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
