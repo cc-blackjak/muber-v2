@@ -17,4 +17,6 @@ GoogleService-Info.plist
 
 # tmp
 Podfile.lock
-*.xcodeproj
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcworkspace/contents.xcworkspacedata
