@@ -26,7 +26,7 @@ class HomeController: UIViewController {
     
     private final let locationInputViewHeight: CGFloat = 200
     
-    private var user: User? {
+    var user: User? {
         didSet { locationInputView.user = user }
     }
     
@@ -65,7 +65,8 @@ class HomeController: UIViewController {
     // MARK: - API
     
     func fetchUserData() {
-        Service.shared.fetchUserData { user in
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        Service.shared.fetchUserData(uid: currentUid) { user in
             self.user = user
         }
     }
@@ -82,17 +83,7 @@ class HomeController: UIViewController {
         }
     }
     
-    func signOut() {
-        do {
-            try Auth.auth().signOut()
-//            DispatchQueue.main.async {
-//                let nav = UINavigationController(rootViewController: LoginController())
-//                nav.modalPresentationStyle = .fullScreen
-//                self.present(nav, animated: true, completion: nil)
-        } catch {
-            print("DEBUG: Error signing out")
-        }
-    }
+    
     
     @objc func actionButtonPressed(){
         print("pressed!")
