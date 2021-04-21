@@ -16,7 +16,9 @@ class ContainerController: UIViewController{
     private let homeController = HomeController()
     private var menuController: MenuController! = nil
     private var isExpanded = false
-    
+    private let shadedView = UIView()
+    private lazy var xOrigin = self.view.frame.width - 80
+
     // ***fetch関連
     private var user: User? {
         didSet {
@@ -27,28 +29,24 @@ class ContainerController: UIViewController{
     }
     
     // MARK: -Lifecycle
-    
-    // ***fetch関連
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//    }
-    
+        
     override func viewDidLoad(){
         super.viewDidLoad()
         checkIfUserIsLoggedIn()
-
-        
-//        view.backgroundColor = .backgroundColor
-        // ***** fetch関連
-//        fetchUserData()
-//        configureHomeController()
-        // ↓↓↓↓↓ fetch 繋がったら消す
-//        configureMenuController(withUser: <#User#>)
-        // ↑↑↑↑↑↑ fetch 繋がったら消す
-        
     }
     
-    // MARK: -Selectors
+    override var prefersStatusBarHidden: Bool {
+        return isExpanded
+    }
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .slide
+    }
+    
+    @objc func dismissMenu() {
+        isExpanded = false
+        animateMenu(shouldExpand: isExpanded)
+    }
     
     // MARK: -API
     
@@ -77,6 +75,16 @@ class ContainerController: UIViewController{
     }
     
     // MARK: -Helper Functions
+    
+    func configureShadedView() {
+        self.shadedView.frame = CGRect(x: xOrigin, y: 0, width: 80, height: self.view.frame.height)
+        shadedView.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        shadedView.alpha = 0
+        view.addSubview(shadedView)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissMenu))
+        shadedView.addGestureRecognizer(tap)
+    }
     
     func presentLoginController() {
         DispatchQueue.main.async {
@@ -114,20 +122,32 @@ class ContainerController: UIViewController{
         menuController.view.frame = CGRect(x: 0, y: 40, width: self.view.frame.width, height: self.view.frame.height - 40)
         view.insertSubview(menuController.view!, at: 0)
         menuController.delegate = self
+        configureShadedView()
     }
     
     func animateMenu(shouldExpand: Bool, completion: ((Bool) -> Void)? = nil){
+        
         if shouldExpand{
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
-                self.homeController.view.frame.origin.x = self.view.frame.width - 80
+                self.homeController.view.frame.origin.x = self.xOrigin
+                self.shadedView.alpha = 1
             }, completion: nil)
-        }else{
+        } else {
+            self.shadedView.alpha = 0
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
                 self.homeController.view.frame.origin.x = 0
             }, completion: completion)
 
         }
         
+        animateStatusBar()
+        
+    }
+    
+    func animateStatusBar () {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }, completion: nil)
     }
 }
 
