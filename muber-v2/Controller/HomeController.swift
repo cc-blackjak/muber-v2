@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseAuth
 import MapKit
 
 protocol HomeControllerDelegate: class {
@@ -39,7 +39,7 @@ class HomeController: UIViewController {
     private var route: MKRoute?
     
     
-    private var user: User? {
+    var user: User? {
         didSet { locationInputView.user = user }
     }
     
@@ -80,7 +80,7 @@ class HomeController: UIViewController {
     @objc func actionButtonPressed() {
         switch actionButttonConfig {
         case .showMenu:
-            print("DEBUG: Handle show menu..")
+            delegate?.handleMenuToggle()
         case .dismissActionView:
             removeAnnotationsAndOverlays()
             mapView.showAnnotations(mapView.annotations, animated: true)
@@ -95,7 +95,8 @@ class HomeController: UIViewController {
     // MARK: - API
     
     func fetchUserData() {
-        Service.shared.fetchUserData { user in
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        Service.shared.fetchUserData(uid: currentUid) { user in
             self.user = user
         }
     }
@@ -112,22 +113,7 @@ class HomeController: UIViewController {
         }
     }
     
-    func signOut() {
-        do {
-            try Auth.auth().signOut()
-//            DispatchQueue.main.async {
-//                let nav = UINavigationController(rootViewController: LoginController())
-//                nav.modalPresentationStyle = .fullScreen
-//                self.present(nav, animated: true, completion: nil)
-        } catch {
-            print("DEBUG: Error signing out")
-        }
-    }
     
-    @objc func actionButtonPressed(){
-        print("pressed!")
-        delegate?.handleMenuToggle()
-    }
     
 
     //MARK: - Helper Functions
@@ -141,6 +127,7 @@ class HomeController: UIViewController {
             actionButton.setImage(#imageLiteral(resourceName: "baseline_arrow_back_black_36dp-1").withRenderingMode(.alwaysOriginal), for: .normal)
             actionButttonConfig = .dismissActionView
         }
+    }
 
     
     func configure() {
@@ -369,19 +356,20 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
             let annotation = MKPointAnnotation()
             annotation.coordinate = selectedPlacemark.coordinate
             self.mapView.addAnnotation(annotation)
-            self.mapView.selectAnnotation(annotation, animated: true)
-        
-            self.mapView.annotations.forEach{(annotation) in
-                if let anno = annotation as? MKUserLocation {
-                    annotations.append(anno)
+                self.mapView.selectAnnotation(annotation, animated: true)
+
+                self.mapView.annotations.forEach{(annotation) in
+                    if let anno = annotation as? MKUserLocation {
+                        annotations.append(anno)
+                    }
+
+                    if let anno = annotation as? MKPointAnnotation {
+                        annotations.append(anno)
+                    }
                 }
 
-                if let anno = annotation as? MKPointAnnotation {
-                    annotations.append(anno)
-                }
-            }
-            
             self.mapView.showAnnotations(annotations, animated: true)
         }
     }
 }
+

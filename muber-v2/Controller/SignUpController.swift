@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseAuth
 
 class SignUpController: UIViewController {
     
@@ -160,7 +160,7 @@ class SignUpController: UIViewController {
                     .first?.windows
                     .filter({$0.isKeyWindow}).first
             
-            guard let controller = keyWindow?.rootViewController as? HomeController
+            guard let controller = keyWindow?.rootViewController as? ContainerController
             else { return }
             controller.configure()
             self.dismiss(animated: true, completion: nil)
