@@ -22,4 +22,8 @@ struct Service {
             completion(user)
         }
     }
+    
+    func uploadTrip () {
+        print("DEBUG: Handle upload trip here..")
+    }
 }
