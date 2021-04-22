@@ -124,11 +124,6 @@ class HomeController: UIViewController {
         }
     }
     
-    @objc func actionButtonPressed(){
-        print("pressed!")
-        delegate?.handleMenuToggle()
-    }
-    
 
     //MARK: - Helper Functions
 
@@ -141,6 +136,7 @@ class HomeController: UIViewController {
             actionButton.setImage(#imageLiteral(resourceName: "baseline_arrow_back_black_36dp-1").withRenderingMode(.alwaysOriginal), for: .normal)
             actionButttonConfig = .dismissActionView
         }
+    }
 
     
     func configure() {
@@ -369,19 +365,20 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
             let annotation = MKPointAnnotation()
             annotation.coordinate = selectedPlacemark.coordinate
             self.mapView.addAnnotation(annotation)
-            self.mapView.selectAnnotation(annotation, animated: true)
-        
-            self.mapView.annotations.forEach{(annotation) in
-                if let anno = annotation as? MKUserLocation {
-                    annotations.append(anno)
+                self.mapView.selectAnnotation(annotation, animated: true)
+
+                self.mapView.annotations.forEach{(annotation) in
+                    if let anno = annotation as? MKUserLocation {
+                        annotations.append(anno)
+                    }
+
+                    if let anno = annotation as? MKPointAnnotation {
+                        annotations.append(anno)
+                    }
                 }
 
-                if let anno = annotation as? MKPointAnnotation {
-                    annotations.append(anno)
-                }
-            }
-            
             self.mapView.showAnnotations(annotations, animated: true)
         }
     }
 }
+
