@@ -30,6 +30,12 @@ class CalendarAndListView: UIView {
         
     }()
     
+    private let calendar: UIDatePicker = {
+        let calendar1 = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
+        calendar1.preferredDatePickerStyle = .compact
+        return calendar1
+    }()
+
  
     // MARK: - Lifecycle
     
@@ -40,7 +46,7 @@ class CalendarAndListView: UIView {
         backgroundColor = .white
         addShadow()
         
-        let stack = UIStackView(arrangedSubviews: [titleLabel, addressLabel])
+        let stack = UIStackView(arrangedSubviews: [titleLabel, addressLabel,calendar])
         stack.axis = .vertical
         stack.spacing = 4
         stack.distribution = .fillEqually
@@ -48,6 +54,7 @@ class CalendarAndListView: UIView {
         addSubview(stack)
         stack.centerX(inView: self)
         stack.anchor(top: topAnchor, paddingTop: 12)
+        
     }
     
     required init?(coder: NSCoder) {
