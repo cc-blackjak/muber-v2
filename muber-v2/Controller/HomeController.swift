@@ -9,6 +9,9 @@ import UIKit
 import Firebase
 import MapKit
 
+protocol HomeControllerDelegate: class {
+    func handleMenuToggle()
+}
 private let reuseIdentifier = "LocationCell"
 
 private enum actionButtonConfiguration {
@@ -25,7 +28,7 @@ class HomeController: UIViewController {
     
 
     // MARK: - Properties
-    private let locationManager = CLLocationManager()
+    private let locationManager = LocationHandler.shared.locationManager
     private let mapView = MKMapView()
     private let inputActivationView = LocatationInputActivationView()
     private let locationInputView = LocationInputView()
@@ -35,9 +38,10 @@ class HomeController: UIViewController {
     private var actionButttonConfig = actionButtonConfiguration()
     private var route: MKRoute?
     
-//    private var user: User? {
-//        didSet {locationInputView.user = user}
-//    }
+    
+    private var user: User? {
+        didSet { locationInputView.user = user }
+    }
     
     private let actionButton: UIButton = {
         let button = UIButton(type: .system)
@@ -46,13 +50,28 @@ class HomeController: UIViewController {
         return button
     }()
     
-    // MARK: - Lifecycle
+
+    weak var delegate: HomeControllerDelegate?   
+//     var user: User? {
+//        didSet {
+//            locationInputView.use = user
+//
+//            if user?.accountType == .passenger {
+//                fetchDrivers()
+//                configureLocationInputActivationView()
+//                observeCurrentTrip()
+//            }else{
+//                observeTrips()
+//            }
+//        }
+//    }
+
+    // MARK: - Selectors
     
     override func viewDidLoad() {
         super.viewDidLoad()
         checkIfUserIsLoggedIn()
         enableLocationservices()
-        configureUI()
 //        signOut()
     }
     
@@ -75,6 +94,12 @@ class HomeController: UIViewController {
     
     // MARK: - API
     
+    func fetchUserData() {
+        Service.shared.fetchUserData { user in
+            self.user = user
+        }
+    }
+    
     func checkIfUserIsLoggedIn(){
         if Auth.auth().currentUser?.uid == nil {
             DispatchQueue.main.async {
@@ -83,20 +108,30 @@ class HomeController: UIViewController {
                 self.present(nav, animated: true, completion: nil)
             }
         } else {
-            configureUI()
+            configure()
         }
     }
     
     func signOut() {
         do {
             try Auth.auth().signOut()
+//            DispatchQueue.main.async {
+//                let nav = UINavigationController(rootViewController: LoginController())
+//                nav.modalPresentationStyle = .fullScreen
+//                self.present(nav, animated: true, completion: nil)
         } catch {
             print("DEBUG: Error signing out")
         }
     }
     
+    @objc func actionButtonPressed(){
+        print("pressed!")
+        delegate?.handleMenuToggle()
+    }
+    
 
     //MARK: - Helper Functions
+
     fileprivate func configureActionButton(config: actionButtonConfiguration) {
         switch config {
         case .showMenu:
@@ -106,16 +141,21 @@ class HomeController: UIViewController {
             actionButton.setImage(#imageLiteral(resourceName: "baseline_arrow_back_black_36dp-1").withRenderingMode(.alwaysOriginal), for: .normal)
             actionButttonConfig = .dismissActionView
         }
+
+    
+    func configure() {
+        configureUI()
+        fetchUserData()
+//        fetchDrivers()
+
     }
     
     func configureUI(){
         configureMapView()
-        
         view.addSubview(actionButton)
         actionButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
-                            paddingTop: 16, paddingLeft: 20, width: 30, height: 30)
-        
-        
+                            paddingTop: 16, paddingLeft:16, width:30, height: 30)
+
         view.addSubview(inputActivationView)
         inputActivationView.centerX(inView: view)
         inputActivationView.setDimentions(height: 50, width: view.frame.width - 64)
@@ -242,35 +282,28 @@ extension HomeController: MKMapViewDelegate {
 }
 //MARK: - LocationServices
 
-extension HomeController: CLLocationManagerDelegate {
+extension HomeController {
     func enableLocationservices() {
-        locationManager.delegate = self
         switch CLLocationManager.authorizationStatus() {
         case .notDetermined:
             print("DEBUG: Not determined..")
-            locationManager.requestWhenInUseAuthorization()
+            locationManager?.requestWhenInUseAuthorization()
         case .restricted, .denied:
             break
         case .authorizedAlways:
             print("DEBUG: Auth always..")
-            locationManager.startUpdatingLocation()
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager?.startUpdatingLocation()
+            locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         case .authorizedWhenInUse:
             print("DEBUG: Auth when in use..")
-            locationManager.requestAlwaysAuthorization()
+            locationManager?.requestAlwaysAuthorization()
         @unknown default:
             break
         }
 
         
     }
-    // 長期間appを開かなかったときに、位置情報をどうするかを確認するfunc
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse {
-            locationManager.requestAlwaysAuthorization()
-        }
-
-    }
+    
 }
 
 // MARK: - LocatationInputActivationViewDelegate
