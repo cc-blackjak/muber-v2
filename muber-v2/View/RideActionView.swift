@@ -6,15 +6,28 @@
 //
 
 import UIKit
+import MapKit
+
+protocol RideActionViewDelegate: class {
+    func uploadtrip()
+}
 
 class RideActionView: UIView {
 
     // MARK: - Properties
     
+    var destination: MKPlacemark? {
+        didSet {
+            titleLabel.text = destination?.name
+            addressLabel.text = destination?.address
+        }
+    }
+    
+    weak var delegate: RideActionViewDelegate?
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
-        label.text = "Test Adress Title"
         label.textAlignment = .center
         return label
     }()
@@ -23,7 +36,6 @@ class RideActionView: UIView {
         let label = UILabel()
         label.textColor = .lightGray
         label.font = UIFont.systemFont(ofSize: 16)
-        label.text = "Tokyo-to, Minato-ku, Nishi-Azabu 1-2-3"
         label.textAlignment = .center
         return label
         
@@ -109,6 +121,6 @@ class RideActionView: UIView {
     // MARK: - Selectors
     
     @objc func actionButtonPressed() {
-        print("DEBUG: 123")
+        delegate?.uploadtrip()
     }
 }
