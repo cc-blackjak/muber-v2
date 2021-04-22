@@ -33,6 +33,7 @@ class HomeController: UIViewController {
     private var searchResults = [MKPlacemark]()
     private final let locationInputViewHeight: CGFloat = 200
     private var actionButttonConfig = actionButtonConfiguration()
+    private var route: MKRoute?
     
 //    private var user: User? {
 //        didSet {locationInputView.user = user}
@@ -55,10 +56,21 @@ class HomeController: UIViewController {
 //        signOut()
     }
     
-    //MARK: - Selector
+    //MARK: - Selectors
     
     @objc func actionButtonPressed() {
-        print("DEBUG: Handle action utton pressed..")
+        switch actionButttonConfig {
+        case .showMenu:
+            print("DEBUG: Handle show menu..")
+        case .dismissActionView:
+            removeAnnotationsAndOverlays()
+            mapView.showAnnotations(mapView.annotations, animated: true)
+            
+                UIView.animate(withDuration: 0.3) {
+                    self.inputActivationView.alpha = 1
+                    self.configureActionButton(config: .showMenu)
+                }
+            }
     }
     
     // MARK: - API
@@ -85,6 +97,17 @@ class HomeController: UIViewController {
     
 
     //MARK: - Helper Functions
+    fileprivate func configureActionButton(config: actionButtonConfiguration) {
+        switch config {
+        case .showMenu:
+            self.actionButton.setImage(#imageLiteral(resourceName: "baseline_menu_black_36dp").withRenderingMode(.alwaysOriginal), for: .normal)
+            self.actionButttonConfig = .showMenu
+        case .dismissActionView:
+            actionButton.setImage(#imageLiteral(resourceName: "baseline_arrow_back_black_36dp-1").withRenderingMode(.alwaysOriginal), for: .normal)
+            actionButttonConfig = .dismissActionView
+        }
+    }
+    
     func configureUI(){
         configureMapView()
         
@@ -112,6 +135,7 @@ class HomeController: UIViewController {
         mapView.frame = view.frame
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .follow
+        mapView.delegate = self
     }
     
     func configureLocationInputView() {
@@ -170,8 +194,52 @@ private extension HomeController {
             completion(results)
         }
     }
+    
+    func generatePolyline(toDestination destination: MKMapItem) {
+        let request = MKDirections.Request()
+        request.source = MKMapItem.forCurrentLocation()
+        request.destination = destination
+        request.transportType = .automobile
+        
+        let directionRequest = MKDirections(request: request)
+        directionRequest.calculate{(response, error) in
+            guard let response = response else { return }
+            self.route = response.routes[0]
+            guard let polyline = self.route?.polyline else { return }
+            self.mapView.addOverlay(polyline)
+        }
+    }
+    
+    func removeAnnotationsAndOverlays() {
+        mapView.annotations.forEach{(annotation) in
+            if let anno = annotation as? MKPointAnnotation {
+                mapView.removeAnnotation(anno)
+            }
+        }
+        
+        if mapView.overlays.count > 0 {
+            mapView.removeOverlay(mapView.overlays[0])
+        }
+    }
 }
 
+//MARK: MKMapViewDeligate
+
+extension HomeController: MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if let route = self.route {
+            let polyline = route.polyline
+            let lineRenderer = MKPolylineRenderer(overlay: polyline)
+            lineRenderer.strokeColor = .mainBlueTint
+            lineRenderer.lineWidth = 4
+            print("polyline")
+            return lineRenderer
+            
+        }
+        return MKOverlayRenderer()
+    }
+}
 //MARK: - LocationServices
 
 extension HomeController: CLLocationManagerDelegate {
@@ -257,16 +325,30 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedPlacemark = searchResults[indexPath.row]
+        var annotations = [MKAnnotation]()
         
-        actionButton.setImage(#imageLiteral(resourceName: "baseline_arrow_back_black_36dp-1").withRenderingMode(.alwaysOriginal), for: .normal)
-        actionButttonConfig = .dismissActionView
+        configureActionButton(config: .dismissActionView)
         
-        print("DEBUG: Selected placemark is \(selectedPlacemark)")
+        let destination = MKMapItem(placemark: selectedPlacemark)
+        generatePolyline(toDestination: destination)
+        
         dismissLocationView {_ in
             let annotation = MKPointAnnotation()
             annotation.coordinate = selectedPlacemark.coordinate
             self.mapView.addAnnotation(annotation)
             self.mapView.selectAnnotation(annotation, animated: true)
+        
+            self.mapView.annotations.forEach{(annotation) in
+                if let anno = annotation as? MKUserLocation {
+                    annotations.append(anno)
+                }
+
+                if let anno = annotation as? MKPointAnnotation {
+                    annotations.append(anno)
+                }
+            }
+            
+            self.mapView.showAnnotations(annotations, animated: true)
         }
     }
 }
