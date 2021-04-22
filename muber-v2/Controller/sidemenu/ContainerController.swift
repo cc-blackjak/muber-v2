@@ -8,7 +8,7 @@
 //import Foundation
 
 import UIKit
-import Firebase
+import FirebaseAuth
 
 class ContainerController: UIViewController{
     // MARK: - Properties

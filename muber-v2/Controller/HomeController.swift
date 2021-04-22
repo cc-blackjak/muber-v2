@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseAuth
 import MapKit
 
 protocol HomeControllerDelegate: class {
@@ -80,7 +80,7 @@ class HomeController: UIViewController {
     @objc func actionButtonPressed() {
         switch actionButttonConfig {
         case .showMenu:
-            print("DEBUG: Handle show menu..")
+            delegate?.handleMenuToggle()
         case .dismissActionView:
             removeAnnotationsAndOverlays()
             mapView.showAnnotations(mapView.annotations, animated: true)
