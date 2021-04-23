@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 
 protocol RideActionViewDelegate: class {
-    func uploadtrip()
+    func proceedToSetDateAndUploadAddress(_ view: RideActionView)
 }
 
 class RideActionView: UIView {
@@ -121,6 +121,6 @@ class RideActionView: UIView {
     // MARK: - Selectors
     
     @objc func actionButtonPressed() {
-        delegate?.uploadtrip()
+        delegate?.proceedToSetDateAndUploadAddress(self)
     }
 }

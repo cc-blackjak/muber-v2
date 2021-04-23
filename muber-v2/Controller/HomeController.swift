@@ -425,8 +425,21 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension HomeController: RideActionViewDelegate {
-    func uploadtrip() {
+    
+    func proceedToSetDateAndUploadAddress(_ view: RideActionView){
+        guard let pickupCoordinates = locationManager?.location?.coordinate else { return }
+        guard let destinationCoordinates = view.destination?.coordinate else { return }
+        
+        Service.shared.uploadAddress(pickupCoordinates, destinationCoordinates) { (error, ref) in
+            if let error = error {
+                print("DEBUG: Failed to upload trip with error \(error)")
+                return
+            }
+            print("DEBUG: Did upload trip successfully")
+
+        }
         self.animateCalendarAndListView(shouldShow: true)
+        
     }
 }
 
