@@ -33,6 +33,7 @@ class HomeController: UIViewController {
     private let inputActivationView = LocatationInputActivationView()
     private let rideActionView = RideActionView()
     private let calendarAndListView = CalendarAndListView()
+    private let items = ItemsView()
     private let locationInputView = LocationInputView()
     private let tableView = UITableView()
     private var searchResults = [MKPlacemark]()
@@ -95,6 +96,7 @@ class HomeController: UIViewController {
                     self.configureActionButton(config: .showMenu)
                     self.animateRideActionView(shouldShow: false)
                     self.animateCalendarAndListView(shouldShow: false)
+                    self.animateItemsView(shouldShow: false)
                 }
             }
     }
@@ -150,6 +152,7 @@ class HomeController: UIViewController {
         configureMapView()
         configureRideActionView()
         configureCalendarAndListView()
+        configureItemsView()
         
         view.addSubview(actionButton)
         actionButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
@@ -178,10 +181,17 @@ class HomeController: UIViewController {
     
     func configureCalendarAndListView() {
         view.addSubview(calendarAndListView)
+        calendarAndListView.delegate = self
         calendarAndListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
         print("DEBUG: test2")
     }
-   
+
+    func configureItemsView() {
+        view.addSubview(items)
+        items.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
+        print("DEBUG: test3")
+    }
+    
     func configureMapView(){
         view.addSubview(mapView)
         mapView.frame = view.frame
@@ -245,6 +255,15 @@ class HomeController: UIViewController {
         
         UIView.animate(withDuration: 0.3) {
             self.calendarAndListView.frame.origin.y = yOrigin
+        }
+    }
+    
+    func animateItemsView(shouldShow: Bool) {
+        let yOrigin = shouldShow ? self.view.frame.height - self.calendarAndListViewHeight :
+            self.view.frame.height
+        
+        UIView.animate(withDuration: 0.3) {
+            self.items.frame.origin.y = yOrigin
         }
     }
 }
@@ -425,7 +444,6 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension HomeController: RideActionViewDelegate {
-    
     func proceedToSetDateAndUploadAddress(_ view: RideActionView){
         guard let pickupCoordinates = locationManager?.location?.coordinate else { return }
         guard let destinationCoordinates = view.destination?.coordinate else { return }
@@ -438,8 +456,15 @@ extension HomeController: RideActionViewDelegate {
             print("DEBUG: Did upload trip successfully")
 
         }
+        print("Hello")
         self.animateCalendarAndListView(shouldShow: true)
         
     }
 }
 
+extension HomeController: CalendarAndListViewDelegate {
+    func proceedToItemsView(_ view: CalendarAndListView) {
+        print("proceeding to items...")
+        self.animateItemsView(shouldShow: true)
+    }
+}

@@ -27,6 +27,7 @@
 		2571E584262D3091008B0073 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E57F262D3091008B0073 /* SignUpController.swift */; };
 		2571E589262D30C5008B0073 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2571E588262D30C5008B0073 /* Assets.xcassets */; };
 		2573258F262D506F00FD18C6 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2573258E262D506F00FD18C6 /* HomeController.swift */; };
+		67912935263292C500AF98B9 /* ItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67912934263292C500AF98B9 /* ItemsView.swift */; };
 		67A69999262E5E8C00E178BC /* ContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A69998262E5E8C00E178BC /* ContainerController.swift */; };
 		67A699A1262E5E9C00E178BC /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A699A0262E5E9C00E178BC /* MenuController.swift */; };
 		67A699A6262E5ED800E178BC /* MenuHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A699A5262E5ED800E178BC /* MenuHeader.swift */; };
@@ -81,6 +82,7 @@
 		2571E57F262D3091008B0073 /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		2571E588262D30C5008B0073 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2573258E262D506F00FD18C6 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		67912934263292C500AF98B9 /* ItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsView.swift; sourceTree = "<group>"; };
 		67A69998262E5E8C00E178BC /* ContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerController.swift; sourceTree = "<group>"; };
 		67A699A0262E5E9C00E178BC /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		67A699A5262E5ED800E178BC /* MenuHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHeader.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				67A699A5262E5ED800E178BC /* MenuHeader.swift */,
 				25170F012631137A000AB39D /* RideActionView.swift */,
 				2566DF1D2631522900B8CAFE /* CalendarAndListView.swift */,
+				67912934263292C500AF98B9 /* ItemsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -441,6 +444,7 @@
 				2571E54A262D2F8A008B0073 /* ViewController.swift in Sources */,
 				2571E583262D3091008B0073 /* LoginController.swift in Sources */,
 				2571E584262D3091008B0073 /* SignUpController.swift in Sources */,
+				67912935263292C500AF98B9 /* ItemsView.swift in Sources */,
 				2571E582262D3091008B0073 /* AuthButton.swift in Sources */,
 				67A699A1262E5E9C00E178BC /* MenuController.swift in Sources */,
 				67A699A6262E5ED800E178BC /* MenuHeader.swift in Sources */,
