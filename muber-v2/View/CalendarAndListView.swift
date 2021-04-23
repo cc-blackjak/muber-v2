@@ -74,6 +74,9 @@ class CalendarAndListView: UIView {
         addSubview(separatorView)
         separatorView.anchor(top: calendar.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 8, height: 0.75)
         
+        addSubview(actionButton)
+        actionButton.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 40, paddingRight: 12, height: 50)
+
     }
     
     required init?(coder: NSCoder) {
