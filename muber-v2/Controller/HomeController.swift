@@ -45,8 +45,30 @@ class HomeController: UIViewController {
     
     
     var user: User? {
-        didSet { locationInputView.user = user }
+        didSet {
+            locationInputView.user = user
+            
+            if user?.accountType == .passenger {
+                print("HomeC > User > didSet > passenger login")
+            } else {
+                print("HomeC > User > didSet > not passenger login")
+            }
+            
+        }
     }
+    //     var user: User? {
+    //        didSet {
+    //            locationInputView.use = user
+    //
+    //            if user?.accountType == .passenger {
+    //                fetchDrivers()
+    //                configureLocationInputActivationView()
+    //                observeCurrentTrip()
+    //            }else{
+    //                observeTrips()
+    //            }
+    //        }
+    //    }
     
     private let actionButton: UIButton = {
         let button = UIButton(type: .system)
@@ -54,22 +76,8 @@ class HomeController: UIViewController {
         button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
         return button
     }()
-    
 
     weak var delegate: HomeControllerDelegate?   
-//     var user: User? {
-//        didSet {
-//            locationInputView.use = user
-//
-//            if user?.accountType == .passenger {
-//                fetchDrivers()
-//                configureLocationInputActivationView()
-//                observeCurrentTrip()
-//            }else{
-//                observeTrips()
-//            }
-//        }
-//    }
 
     // MARK: - Selectors
     
@@ -79,8 +87,6 @@ class HomeController: UIViewController {
         enableLocationservices()
 //        signOut()
     }
-    
-    //MARK: - Selectors
     
     @objc func actionButtonPressed() {
         switch actionButttonConfig {
@@ -139,25 +145,24 @@ class HomeController: UIViewController {
     
     func configure() {
         configureUI()
-   
-
         fetchUserData()
 //        fetchDrivers()
-
     }
     
     func configureUI(){
         configureMapView()
+        
         configureRideActionView()
         configureCalendarAndListView()
         
         view.addSubview(actionButton)
         actionButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                             paddingTop: 16, paddingLeft:16, width:30, height: 30)
-
+        
+        // configureLocationInputActivationView() in tutorial
         view.addSubview(inputActivationView)
         inputActivationView.centerX(inView: view)
-        inputActivationView.setDimentions(height: 50, width: view.frame.width - 64)
+        inputActivationView.setDimensions(height: 50, width: view.frame.width - 64)
         inputActivationView.anchor(top: actionButton.bottomAnchor, paddingTop: 32)
         inputActivationView.alpha = 0
         inputActivationView.delegate = self  // Add delegate or else it wont work
@@ -169,10 +174,26 @@ class HomeController: UIViewController {
         configureTableiew()
     }
     
+    func configureLocationInputActivationView() {
+        view.addSubview(inputActivationView)
+        inputActivationView.centerX(inView: view)
+        inputActivationView.setDimensions(height: 50, width: view.frame.width - 64)
+        inputActivationView.anchor(top: actionButton.bottomAnchor, paddingTop: 32)
+        inputActivationView.alpha = 0
+        inputActivationView.delegate = self
+        
+        UIView.animate(withDuration: 2) {
+            self.inputActivationView.alpha = 1
+        }
+    }
+    
     func configureRideActionView() {
         view.addSubview(rideActionView)
         rideActionView.delegate = self
-        rideActionView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: rideActionViewHeight)
+        rideActionView.frame = CGRect(x: 0,
+                                      y: view.frame.height,
+                                      width: view.frame.width,
+                                      height: rideActionViewHeight)
         print("DEBUG: test1")
     }
     
@@ -315,7 +336,10 @@ extension HomeController: MKMapViewDelegate {
         return MKOverlayRenderer()
     }
 }
+
 //MARK: - LocationServices
+
+// allow
 
 extension HomeController {
     func enableLocationservices() {
@@ -340,6 +364,8 @@ extension HomeController {
     }
     
 }
+
+// MARK: - Delegates
 
 // MARK: - LocatationInputActivationViewDelegate
 
@@ -368,6 +394,7 @@ extension HomeController: LocationInputViewDelegate {
         }
     }
 }
+
 // MARK: - UITableViewDelegate/dataSource
 
 extension HomeController: UITableViewDelegate, UITableViewDataSource {

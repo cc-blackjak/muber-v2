@@ -106,11 +106,10 @@ extension UIView {
         }
     }
     
-    func setDimentions(height: CGFloat, width: CGFloat){
+    func setDimensions(height: CGFloat, width: CGFloat) {
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: height).isActive = true
         widthAnchor.constraint(equalToConstant: width).isActive = true
-
     }
     
     func addShadow() {

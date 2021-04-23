@@ -96,7 +96,7 @@ class RideActionView: UIView {
         addSubview(infoView)
         infoView.centerX(inView: self)
         infoView.anchor(top: stack.bottomAnchor, paddingTop: 16)
-        infoView.setDimentions(height: 60, width: 60)
+        infoView.setDimensions(height: 60, width: 60)
         infoView.layer.cornerRadius = 60 / 2
         
         addSubview(muberLabel)
