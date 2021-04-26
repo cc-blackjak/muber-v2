@@ -62,6 +62,10 @@ class MoverWaitingView: UIView {
         backgroundColor = .white
         addShadow()
         
+//        let scroll = UIScrollView()
+//        scroll.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
+//        addSubview(scroll)
+        
         let stack = UIStackView(arrangedSubviews: [titleLabel, addressLabel])
         stack.axis = .vertical
         stack.spacing = 4
@@ -69,7 +73,11 @@ class MoverWaitingView: UIView {
         
         addSubview(stack)
         stack.centerX(inView: self)
-        stack.anchor(top: topAnchor, paddingTop: 0)
+        stack.anchor(top: topAnchor, paddingTop: 12)
+//        stack.anchor(top: scroll.topAnchor,
+//                     left: scroll.leftAnchor,
+//                     bottom: scroll.bottomAnchor,
+//                     right: scroll.rightAnchor)
         
         addSubview(muberLabel)
         muberLabel.anchor(top: stack.bottomAnchor, paddingTop: 8)
