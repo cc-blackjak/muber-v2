@@ -5,7 +5,7 @@
 //  Created by Jun Gao on 2021/04/26.
 //
 
-var tmpTrips = ["Trip1", "Trip2", "Trip3"]
+var tripsArray : [Trip] = []
 
 import UIKit
 
@@ -58,21 +58,22 @@ class TripsListController: UITableViewController {
 
 extension TripsListController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tmpTrips.count
+        return tripsArray.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TripsMenuCell", for: indexPath)
         
 //        guard let option = MenuOptions(rawValue: indexPath.row) else { return UITableViewCell() }
-        cell.textLabel?.text = tmpTrips[indexPath.row]
+//        cell.textLabel?.text = tmpTrips[indexPath.row]
+        cell.textLabel?.text = "\(indexPath.row) / \(tripsArray[indexPath.row].passengerUid!)"
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Selected indexPath.row is: ",indexPath.row)
-        print("Selected value is: ",tmpTrips[indexPath.row])
+//        print("Selected value is: ",tmpTrips[indexPath.row])
 //        guard let option = MenuOptions(rawValue: indexPath.row) else { return }
         delegate?.tripSelected(selectedRow: indexPath.row)
     }

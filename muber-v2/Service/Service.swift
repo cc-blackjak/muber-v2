@@ -37,3 +37,30 @@ struct Service {
         print(values, uid)
     }
 }
+
+struct DriverService {
+    static let shared = DriverService()
+    
+    // 全旅行をフェッチし、ステータスが0のものを旅行リストにいれる。処理完了後、念の為ステータスをStringで返し、テーブル表示を行う
+    func observeTrips(completion: @escaping(String) -> Void) {
+        print("\n\(loadedNumber). DriverService > observeTrips is loaded.")
+        loadedNumber += 1
+        
+        REF_TRIPS.observe(.value) { (snapshot) in
+            for child in snapshot.children {
+                print("child: ", child)
+                guard let childData = child as? DataSnapshot else { return }
+                guard let dictionary = childData.value as? NSDictionary else { return }
+                let uid = childData.key
+                
+                let trip = Trip(passengerUid: uid, dictionary: dictionary as! [String : Any])
+                if trip.state.rawValue == 0 {
+                    tripsArray.append(trip)
+                }
+            }
+            completion("Done")
+            print("observeTrips in Driver service DONE.")
+        }
+        
+    }
+}

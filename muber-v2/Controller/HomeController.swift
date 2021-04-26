@@ -50,7 +50,6 @@ class HomeController: UIViewController {
             locationInputView.user = user
             
             if user?.accountType == .passenger {
-                
                 // Riderが必要な画面
                 print("\n\(loadedNumber). \(String(describing: type(of: self))) > User didSet > .passenger is loaded.")
                 loadedNumber += 1
@@ -60,7 +59,6 @@ class HomeController: UIViewController {
                 configureCalendarAndListView()
                 configureLocationInputActivationView()
                 
-                
                 configureTableiew()
             } else {
                 // Moverが必要な画面
@@ -68,25 +66,11 @@ class HomeController: UIViewController {
                 loadedNumber += 1
                 
                 print("HomeC > User > didSet > not passenger login")
-                
-                configureTripsListView()
+                // obseveTrips は非同期処理なので、他の画面読み込みはobserveTripsクロージャ内にて行う
+                observeTrips()
             }
         }
     }
-    //     チュートリアル完成形
-    //     var user: User? {
-    //        didSet {
-    //            locationInputView.use = user
-    //
-    //            if user?.accountType == .passenger {
-    //                fetchDrivers()
-    //                configureLocationInputActivationView()
-    //                observeCurrentTrip()
-    //            }else{
-    //                observeTrips()
-    //            }
-    //        }
-    //    }
     
     private let actionButton: UIButton = {
         let button = UIButton(type: .system)
@@ -119,8 +103,7 @@ class HomeController: UIViewController {
         case .dismissActionView:
             removeAnnotationsAndOverlays()
             mapView.showAnnotations(mapView.annotations, animated: true)
-            
-                UIView.animate(withDuration: 0.3) {
+            UIView.animate(withDuration: 0.3) {
                     self.inputActivationView.alpha = 1
                     self.configureActionButton(config: .showMenu)
                     self.animateRideActionView(shouldShow: false)
@@ -167,6 +150,7 @@ class HomeController: UIViewController {
         case .dismissActionView:
             actionButton.setImage(#imageLiteral(resourceName: "baseline_arrow_back_black_36dp-1").withRenderingMode(.alwaysOriginal), for: .normal)
             actionButttonConfig = .dismissActionView
+            
         }
     }
 
@@ -340,9 +324,10 @@ private extension HomeController {
         }
     }
     
-    func generatePolyline(toDestination destination: MKMapItem) {
+    // Mover用に、指定地点からのルートを表示可能に。デフォルト(Riderでの使用時)は現在地を取得
+    func generatePolyline(fromOrigin origin: MKMapItem = MKMapItem.forCurrentLocation(), toDestination destination: MKMapItem) {
         let request = MKDirections.Request()
-        request.source = MKMapItem.forCurrentLocation()
+        request.source = origin
         request.destination = destination
         request.transportType = .automobile
         
@@ -543,15 +528,67 @@ extension HomeController: TripsListControllerDelegate {
         tripsListController.delegate = self
     }
     
+    func observeTrips() {
+        DriverService.shared.observeTrips { status in
+            print("\n\(loadedNumber). \(String(describing: type(of: self))) > observeTrips(calling observeTrips) is loaded.")
+            loadedNumber += 1
+            
+            print("observeTrips > print tripsArray: ",tripsArray)
+            self.configureTripsListView()
+        }
+    }
+    
     func tripSelected(selectedRow: Int) {
         print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureCalendarAndListView is loaded.")
         loadedNumber += 1
         
+        // テーブルビューを透明にすることでごまかす
         print("Delegate success.")
         UIView.animate(withDuration: 0.3) {
             self.tripsListController.view.alpha = 0
         }
-        tripsListController.view.removeFromSuperview()
         
+        // マップにルートを表示させる
+//        tripsListController.view.removeFromSuperview()
+        
+        var annotations = [MKAnnotation]()
+        
+        // 戻るボタン。Mover用に要改変
+        configureActionButton(config: .dismissActionView)
+        
+        // 行き先は元から指定していたので、流用
+        let selectedPlacemark = MKPlacemark(coordinate: tripsArray[selectedRow].destinationCoordinates)
+        let destination = MKMapItem(placemark: selectedPlacemark)
+        
+        // 出発地点はなかったので、新規作成
+        let pickupPlacemark = MKPlacemark(coordinate: tripsArray[selectedRow].pickupCoodinates)
+        let origin = MKMapItem(placemark: pickupPlacemark)
+        
+        // Originの指定を元関数に追加し、指定
+        generatePolyline(fromOrigin: origin, toDestination: destination)
+        
+        dismissLocationView {_ in
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = selectedPlacemark.coordinate
+            self.mapView.addAnnotation(annotation)
+                self.mapView.selectAnnotation(annotation, animated: true)
+
+                self.mapView.annotations.forEach{(annotation) in
+                    if let anno = annotation as? MKUserLocation {
+                        annotations.append(anno)
+                    }
+
+                    if let anno = annotation as? MKPointAnnotation {
+                        annotations.append(anno)
+                    }
+                }
+
+            self.mapView.zoomToFit(annotations: annotations)
+            
+            self.animateRideActionView(shouldShow: true, destination: selectedPlacemark)
+            
+        }
+        
+        // 確認画面へのボタンを表示
     }
 }
