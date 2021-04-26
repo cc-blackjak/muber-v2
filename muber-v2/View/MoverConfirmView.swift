@@ -37,14 +37,26 @@ class MoverConfirmView: UIView {
     let muberLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
-        
-        var tmpText = "TmpRiderName"
-        if selectedTripRow != nil {
-            tmpText = tripsArray[selectedTripRow!].passengerUid
-        }
-        
-        label.text = tmpText // tripsArray[selectedTripRow!].passengerUid ??
+        label.text = "Moving details"
         label.textAlignment = .center
+        return label
+    }()
+    
+    let dateLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.text = "TmpRiderName"
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    let itemsLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.text = "TmpRiderName"
+        label.textAlignment = .left
+        label.numberOfLines = 0
         return label
     }()
     
@@ -80,6 +92,12 @@ class MoverConfirmView: UIView {
         muberLabel.anchor(top: stack.bottomAnchor, paddingTop: 8)
         muberLabel.centerX(inView: self)
         
+        addSubview(dateLabel)
+        dateLabel.anchor(top: muberLabel.bottomAnchor, left: leftAnchor, paddingTop: 30, paddingLeft: 20)
+        
+        addSubview(itemsLabel)
+        itemsLabel.anchor(top: dateLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 20, paddingRight: 20)
+        
         let separatorView = UIView()
         separatorView.backgroundColor = .lightGray
         addSubview(separatorView)
@@ -101,3 +119,23 @@ class MoverConfirmView: UIView {
         delegate?.proceedToConfirmAndUpload(self)
     }
 }
+
+
+var tmpItems : [[String : String]] = [
+    ["title" : "冷蔵庫",
+     "memo" : "とても重い",
+    ],
+    ["title" : "ダンボール",
+     "memo" : "中くらいのが8箱",
+    ],
+    ["title" : "文庫本",
+     "memo" : """
+とても長い長い説明が続く。
+吾輩わがはいは猫である。名前はまだ無い。
+　どこで生れたかとんと見当けんとうがつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪どうあくな種族であったそうだ。
+""",
+    ],
+    ["title" : "テレビ",
+     "memo" : "そこそこ",
+    ],
+]

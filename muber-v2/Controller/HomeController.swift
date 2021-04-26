@@ -625,6 +625,20 @@ extension HomeController: MoverActionViewDelegate {
         print("\n\(loadedNumber). \(String(describing: type(of: self))) > proceedToConfirmView is loaded.")
         loadedNumber += 1
         
+        // Format detail
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy年MM月dd日 H:mm"
+        moverConfirmView.dateLabel.text = "Day: \(formatter.string(from: Date()))"
+        
+        var tmpText = "Items:"
+        for item in tmpItems {
+            print(item)
+            tmpText += "\n\t - "
+            tmpText += "\(item["title"] ?? "")"
+            tmpText += "\n\t\t - \(item["memo"] ?? "")"
+        }
+        moverConfirmView.itemsLabel.text = tmpText
+        
         animateMoverActionView(shouldShow: false)
         animateMoverConfirmView(shouldShow: true)
     }
