@@ -12,6 +12,8 @@ let DB_REF = Database.database().reference()
 let REF_USERS = DB_REF.child("users")
 let REF_TRIPS = DB_REF.child("trips")
 
+var loginUid : String? = nil
+
 struct Service {
     
     static let shared = Service()
@@ -21,6 +23,7 @@ struct Service {
             guard let dictionary = snapshot.value as? [String: Any] else { return }
             let uid = snapshot.key
             let user = User(uid: uid, dictionary: dictionary)
+            loginUid = user.uid
             completion(user)
         }
     }
@@ -51,10 +54,16 @@ struct DriverService {
                 print("child: ", child)
                 guard let childData = child as? DataSnapshot else { return }
                 guard let dictionary = childData.value as? NSDictionary else { return }
-                let uid = childData.key
+                let puid = childData.key
                 
-                let trip = Trip(passengerUid: uid, dictionary: dictionary as! [String : Any])
-                if trip.state.rawValue == 0 {
+                let trip = Trip(passengerUid: puid, dictionary: dictionary as! [String : Any])
+                // ステータスが 1 = 予約済みで、MoverUIDがログイン中のMoverのものがあれば保存、表示判定に利用
+                if trip.state.rawValue == 1 && trip.driverUid == loginUid! {
+                    reservedTrip = trip
+                }
+                
+                // Moverとして予約済みのものがないのであれば、ステータスが 0 = 未予約のものを全て取得
+                if trip.state.rawValue == 0 && reservedTrip == nil {
                     tripsArray.append(trip)
                 }
             }

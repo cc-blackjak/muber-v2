@@ -21,9 +21,9 @@ struct Trip {
 //    let destinationAddress: String!
 //    let dateAndTime: Date!
     let passengerUid: String!
-//    var driverUid: String?
+    var driverUid: String?
     var state: TripState!
-//    var items: [[String:String]]?
+    var items: [[String:String]]?
 
     init(passengerUid: String, dictionary: [String: Any]) {
         self.passengerUid = passengerUid
@@ -33,8 +33,8 @@ struct Trip {
 //        self.destinationAddress = dictionary["destinationAddress"] as? String ?? ""
 //
 //        self.dateAndTime = dictionary["dateAndTime"] as? Date
-//
-//        self.items = dictionary["items"] as? [[String:String]]
+
+        self.items = dictionary["items"] as? [[String:String]] ?? tmpItems
 
         if let pickupCoordinates = dictionary["pickupCoordinates"] as? NSArray {
             guard let lat = pickupCoordinates[0] as? CLLocationDegrees else { return }
@@ -50,7 +50,7 @@ struct Trip {
 
         }
 
-//        self.driverUid = dictionary["driverUid"] as? String ?? ""
+        self.driverUid = dictionary["driverUid"] as? String ?? ""
 
         if let state = dictionary["state"] as? Int {
             self.state = TripState(rawValue: state)

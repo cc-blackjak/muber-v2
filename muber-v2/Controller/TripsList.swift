@@ -7,6 +7,7 @@
 
 var tripsArray : [Trip] = []
 var selectedTripRow : Int? = nil
+var reservedTrip : Trip? = nil
 
 import UIKit
 

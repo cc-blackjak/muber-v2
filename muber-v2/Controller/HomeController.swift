@@ -34,6 +34,7 @@ class HomeController: UIViewController {
     private let rideActionView = RideActionView()
     private let moverActionView = MoverActionView()
     private let moverConfirmView = MoverConfirmView()
+    private let moverWaitingView = MoverWaitingView()
     private let calendarAndListView = CalendarAndListView()
     private let locationInputView = LocationInputView()
     private let tableView = UITableView()
@@ -533,8 +534,15 @@ extension HomeController: TripsListControllerDelegate {
             print("\n\(loadedNumber). \(String(describing: type(of: self))) > observeTrips(calling observeTrips) is loaded.")
             loadedNumber += 1
             
-            print("observeTrips > print tripsArray: ",tripsArray)
-            self.configureTripsListView()
+            print("observeTrips > print tripsArray: ", tripsArray)
+            print("observeTrips > print reservedTrip: ", reservedTrip)
+            if reservedTrip == nil {
+                self.configureTripsListView()
+            } else {
+                self.configureMoverWaitingView()
+                self.configureMoverWaitingView()
+                self.animateMoverWaitingView(shouldShow:true)
+            }
         }
     }
     
@@ -674,7 +682,122 @@ extension HomeController: MoverConfirmViewDelegate {
         print("\n\(loadedNumber). \(String(describing: type(of: self))) > proceedToConfirmAndUpload is loaded.")
         loadedNumber += 1
         
+        // 更新すべき内容記載してアップロードする
+        let updateDic = [
+            "someaddkey" : "someaddval",
+            "driverUid" : loginUid!,
+            "state" : 1
+        ] as [String : Any]
+        
+        REF_TRIPS.child(tripsArray[selectedTripRow!].passengerUid).updateChildValues(updateDic)
+        animateMoverConfirmView(shouldShow: false)
+    }
+}
+
+// Mover用の予約後画面を表示, デリゲートは追加するかもしれないので、Extensionとして切り出し
+extension HomeController {
+    func configureMoverWaitingView() {
+        print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureMoverDetailView is loaded.")
+        loadedNumber += 1
+        
+        view.addSubview(moverWaitingView)
+//        moverWaitingView.delegate = self
+        moverWaitingView.frame = CGRect(x: 0,
+                                      y: view.frame.height,
+                                      width: view.frame.width,
+                                      height: view.frame.height)
+        
+        // reservedTrip より内容を反映
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy年MM月dd日 H:mm"
+        moverWaitingView.dateLabel.text = "Day: \(formatter.string(from: Date()))"
+        
+        var tmpText = "Items:"
+        for item in reservedTrip?.items as! [[String:String]] {
+            print(item)
+            tmpText += "\n\t - "
+            tmpText += "\(item["title"] ?? "")"
+            tmpText += "\n\t\t - \(item["memo"] ?? "")"
+        }
+        moverWaitingView.itemsLabel.text = tmpText
+        
+        // マップにルートを表示させる
+        var annotations = [MKAnnotation]()
+        
+//        // 戻るボタン。Mover用に要改変
+//        configureActionButton(config: .dismissActionView)
+        
+        // 行き先は元から指定していたので、流用
+        let selectedPlacemark = MKPlacemark(coordinate: (reservedTrip?.destinationCoordinates)!)
+        let destination = MKMapItem(placemark: selectedPlacemark)
+        
+        // 出発地点はなかったので、新規作成
+        let pickupPlacemark = MKPlacemark(coordinate: (reservedTrip?.pickupCoodinates)!)
+        let origin = MKMapItem(placemark: pickupPlacemark)
+        
+        // Originの指定を元関数に追加し、指定
+        generatePolyline(fromOrigin: origin, toDestination: destination)
+        
+        dismissLocationView {_ in
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = selectedPlacemark.coordinate
+            self.mapView.addAnnotation(annotation)
+                self.mapView.selectAnnotation(annotation, animated: true)
+
+                self.mapView.annotations.forEach{(annotation) in
+                    if let anno = annotation as? MKUserLocation {
+                        annotations.append(anno)
+                    }
+
+                    if let anno = annotation as? MKPointAnnotation {
+                        annotations.append(anno)
+                    }
+                }
+
+            self.mapView.zoomToFit(annotations: annotations)
+        }
         
     }
     
+    func animateMoverWaitingView(shouldShow: Bool) {
+        let yOrigin = shouldShow ? 500 :
+            self.view.frame.height
+        
+//        moverActionView.muberLabel.text = tripsArray[selectedTripRow!].passengerUid
+        
+        UIView.animate(withDuration: 0.3) {
+            self.moverWaitingView.frame.origin.y = yOrigin
+        }
+    }
 }
+
+
+//
+//func uploadAddress(_ pickupCoordinates: CLLocationCoordinate2D, _ destinationCoordinates: CLLocationCoordinate2D, completion: @escaping(Error?, DatabaseReference) -> Void) {
+//    guard let uid = Auth.auth().currentUser?.uid else { return }
+//
+//    let pickupArray = [pickupCoordinates.latitude, pickupCoordinates.longitude]
+//    let destinationArray = [destinationCoordinates.latitude, destinationCoordinates.longitude]
+//
+////        let tmpDate = Date()
+////        let tmpDateString = Timestamp(date: Date())
+//
+//    let record = Date()
+//    let encoder = JSONEncoder()
+//    var jsonstr : String?
+//    do {
+//        let data = try encoder.encode(record)
+//        jsonstr = String(data: data, encoding: .utf8)!
+//        print(jsonstr)
+//    } catch {
+//        print(error.localizedDescription)
+//    }
+//
+//    let values = ["pickupCoordinates": pickupArray,
+//                  "destinationCoordinates": destinationArray,
+//                  "state": TripState.requested.rawValue,
+//                  "timeAndDate": jsonstr!] as [String : Any]
+//
+//    REF_TRIPS.child(uid).updateChildValues(values , withCompletionBlock: completion)
+//    print(values, uid)
+//}
