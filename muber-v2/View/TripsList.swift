@@ -9,16 +9,16 @@ var tmpTrips = ["Trip1", "Trip2", "Trip3"]
 
 import UIKit
 
-//protocol TripsListControllerDelegate: class {
-//    func didSelect(option: "selected")
-//}
+protocol TripsListControllerDelegate: class {
+    func tripSelected(selectedRow: Int)
+}
 
 class TripsListController: UITableViewController {
     
     // MARK: - Properties
     
 //    private let user: User
-//    weak var delegate: TripsListControllerDelegate?
+    weak var delegate: TripsListControllerDelegate?
     
 //    private lazy var menuHeader: MenuHeader = {
 //        let frame = CGRect(x: 0,
@@ -71,7 +71,9 @@ extension TripsListController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Selected indexPath.row is: ",indexPath.row)
+        print("Selected value is: ",tmpTrips[indexPath.row])
 //        guard let option = MenuOptions(rawValue: indexPath.row) else { return }
-//        delegate?.didSelect(option: option)
+        delegate?.tripSelected(selectedRow: indexPath.row)
     }
 }

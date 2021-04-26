@@ -26,6 +26,7 @@ private enum actionButtonConfiguration {
 
 class HomeController: UIViewController {
     
+    
     // MARK: - Properties
     private let locationManager = LocationHandler.shared.locationManager
     private let mapView = MKMapView()
@@ -34,7 +35,6 @@ class HomeController: UIViewController {
     private let calendarAndListView = CalendarAndListView()
     private let locationInputView = LocationInputView()
     private let tableView = UITableView()
-    private let tripsListView = UITableView()
     private var tripsListController: TripsListController!
     private var searchResults = [MKPlacemark]()
     private final let locationInputViewHeight: CGFloat = 200
@@ -50,16 +50,20 @@ class HomeController: UIViewController {
             locationInputView.user = user
             
             if user?.accountType == .passenger {
+                
+                // Riderが必要な画面
                 print("\n\(loadedNumber). \(String(describing: type(of: self))) > User didSet > .passenger is loaded.")
                 loadedNumber += 1
                 
                 print("HomeC > User > didSet > passenger login")
                 configureRideActionView()
-                
+                configureCalendarAndListView()
                 configureLocationInputActivationView()
+                
                 
                 configureTableiew()
             } else {
+                // Moverが必要な画面
                 print("\n\(loadedNumber). \(String(describing: type(of: self))) > User didSet > else is loaded.")
                 loadedNumber += 1
                 
@@ -186,8 +190,8 @@ class HomeController: UIViewController {
 //        // ライダー用画面層 class RideActionView を読み出し
 //        configureRideActionView()
         
-        // カレンダー/リスト層 class CalendarAndListView を読み出し
-        configureCalendarAndListView()
+//        // カレンダー/リスト層 class CalendarAndListView を読み出し
+//        configureCalendarAndListView()
         
         // ハンバーガーメニューボタンを直で付け足し
         view.addSubview(actionButton)
@@ -202,6 +206,7 @@ class HomeController: UIViewController {
 //        configureTableiew()
     }
     
+    // ライダー用 入力画面 Where部分
     func configureLocationInputActivationView() {
         view.addSubview(inputActivationView)
         inputActivationView.centerX(inView: view)
@@ -210,12 +215,12 @@ class HomeController: UIViewController {
         inputActivationView.alpha = 0
         inputActivationView.delegate = self
         
-        UIView.animate(withDuration: 2) {
+        UIView.animate(withDuration: 0.5) {
             self.inputActivationView.alpha = 1
         }
     }
     
-    // rideActionView = ライダー用の画面を表示
+    // rideActionView = ライダー用の画面???を表示
     func configureRideActionView() {
         print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureRideActionView is loaded.")
         loadedNumber += 1
@@ -251,7 +256,7 @@ class HomeController: UIViewController {
         mapView.delegate = self
     }
     
-    // Whereを表示
+    // ライダー用入力後画面???を表示
     func configureLocationInputView() {
         locationInputView.delegate = self
         view.addSubview(locationInputView)
@@ -263,19 +268,6 @@ class HomeController: UIViewController {
                 self.tableView.frame.origin.y = self.locationInputViewHeight
             })
         }
-    }
-    
-    // Mover用 ListItems
-    func configureTripsListView() {
-        print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureTripsListView is loaded.")
-        loadedNumber += 1
-        
-        tripsListController = TripsListController()
-        addChild(tripsListController)
-        tripsListController.didMove(toParent: self)
-        tripsListController.view.frame = CGRect(x: 0, y: 120, width: self.view.frame.width, height: self.view.frame.height)
-        view.insertSubview(tripsListController.view!, at: 1)
-//        tripsListController.delegate = self
     }
     
     func configureTableiew() {
@@ -533,3 +525,33 @@ extension HomeController: RideActionViewDelegate {
     }
 }
 
+// MARK: - Mover's actions / TripsListControllerDelegate
+
+extension HomeController: TripsListControllerDelegate {
+    
+    // Mover用 ListItemsを表示
+    func configureTripsListView() {
+        print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureTripsListView is loaded.")
+        loadedNumber += 1
+        
+        tripsListController = TripsListController()
+        addChild(tripsListController)
+        tripsListController.didMove(toParent: self)
+        tripsListController.view.frame = CGRect(x: 0, y: 120, width: self.view.frame.width, height: self.view.frame.height)
+        view.insertSubview(tripsListController.view!, at: 1)
+        self.tripsListController.view.alpha = 1
+        tripsListController.delegate = self
+    }
+    
+    func tripSelected(selectedRow: Int) {
+        print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureCalendarAndListView is loaded.")
+        loadedNumber += 1
+        
+        print("Delegate success.")
+        UIView.animate(withDuration: 0.3) {
+            self.tripsListController.view.alpha = 0
+        }
+        tripsListController.view.removeFromSuperview()
+        
+    }
+}
