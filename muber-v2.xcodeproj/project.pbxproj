@@ -224,7 +224,6 @@
 				67A699A5262E5ED800E178BC /* MenuHeader.swift */,
 				25170F012631137A000AB39D /* RideActionView.swift */,
 				2566DF1D2631522900B8CAFE /* CalendarAndListView.swift */,
-				BF9A502226368D3800D3EF60 /* TripsList.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -235,6 +234,7 @@
 				25170EFA26311307000AB39D /* Authentication */,
 				67A69997262E5E7000E178BC /* Sidemenu */,
 				2573258E262D506F00FD18C6 /* HomeController.swift */,
+				BF9A502226368D3800D3EF60 /* TripsList.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
