@@ -6,6 +6,7 @@
 //
 
 var tripsArray : [Trip] = []
+var selectedTripRow : Int? = nil
 
 import UIKit
 
@@ -75,6 +76,7 @@ extension TripsListController {
         print("Selected indexPath.row is: ",indexPath.row)
 //        print("Selected value is: ",tmpTrips[indexPath.row])
 //        guard let option = MenuOptions(rawValue: indexPath.row) else { return }
+        selectedTripRow = indexPath.row
         delegate?.tripSelected(selectedRow: indexPath.row)
     }
 }

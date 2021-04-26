@@ -32,6 +32,7 @@ class HomeController: UIViewController {
     private let mapView = MKMapView()
     private let inputActivationView = LocatationInputActivationView()
     private let rideActionView = RideActionView()
+    private let moverActionView = MoverActionView()
     private let calendarAndListView = CalendarAndListView()
     private let locationInputView = LocationInputView()
     private let tableView = UITableView()
@@ -67,6 +68,7 @@ class HomeController: UIViewController {
                 
                 print("HomeC > User > didSet > not passenger login")
                 // obseveTrips は非同期処理なので、他の画面読み込みはobserveTripsクロージャ内にて行う
+                configureMoverActionView()
                 observeTrips()
             }
         }
@@ -114,6 +116,7 @@ class HomeController: UIViewController {
     
     // MARK: - API
     
+    // ユーザ取得処理はControllerと重複して
 //    func fetchUserData() {
 //        guard let currentUid = Auth.auth().currentUser?.uid else { return }
 //        Service.shared.fetchUserData(uid: currentUid) { user in
@@ -136,12 +139,8 @@ class HomeController: UIViewController {
 //        }
 //    }
     
-    
-    
-
     //MARK: - Helper Functions
 
-    
     fileprivate func configureActionButton(config: actionButtonConfiguration) {
         switch config {
         case .showMenu:
@@ -154,7 +153,7 @@ class HomeController: UIViewController {
         }
     }
 
-    
+    // Rider/Mover別の処理を実現するために、Rider用のConfigureを分解、よりDidShowViewとユーザ読み込み時に分けて、細かく指定
 //    func configure() {
 //        print("\n\(loadedNumber). \(String(describing: type(of: self))) > enableLocationservices is loaded.")
 //        loadedNumber += 1
@@ -185,7 +184,7 @@ class HomeController: UIViewController {
         UIView.animate(withDuration: 2) {
             self.inputActivationView.alpha = 1
         }
-//
+
 //        // ライダー用のテーブルビュー
 //        configureTableiew()
     }
@@ -204,7 +203,7 @@ class HomeController: UIViewController {
         }
     }
     
-    // rideActionView = ライダー用の画面???を表示
+    // ライダー用のマップルートビューを表示
     func configureRideActionView() {
         print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureRideActionView is loaded.")
         loadedNumber += 1
@@ -512,8 +511,7 @@ extension HomeController: RideActionViewDelegate {
 
 // MARK: - Mover's actions / TripsListControllerDelegate
 
-extension HomeController: TripsListControllerDelegate {
-    
+extension HomeController: TripsListControllerDelegate, MoverActionViewDelegate {
     // Mover用 ListItemsを表示
     func configureTripsListView() {
         print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureTripsListView is loaded.")
@@ -538,6 +536,35 @@ extension HomeController: TripsListControllerDelegate {
         }
     }
     
+    // Mover用のマップルートビューを表示
+    func configureMoverActionView() {
+        print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureMoverActionView is loaded.")
+        loadedNumber += 1
+        
+        view.addSubview(moverActionView)
+        moverActionView.delegate = self
+        moverActionView.frame = CGRect(x: 0,
+                                      y: view.frame.height,
+                                      width: view.frame.width,
+                                      height: rideActionViewHeight)
+    }
+    
+    func animateMoverActionView(shouldShow: Bool, destination: MKPlacemark? = nil) {
+        let yOrigin = shouldShow ? self.view.frame.height - self.rideActionViewHeight :
+            self.view.frame.height
+        
+        moverActionView.muberLabel.text = tripsArray[selectedTripRow!].passengerUid
+        
+        if shouldShow {
+            guard let destination = destination else { return }
+            moverActionView.destination = destination
+        }
+        
+        UIView.animate(withDuration: 0.3) {
+            self.moverActionView.frame.origin.y = yOrigin
+        }
+    }
+    
     func tripSelected(selectedRow: Int) {
         print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureCalendarAndListView is loaded.")
         loadedNumber += 1
@@ -547,10 +574,9 @@ extension HomeController: TripsListControllerDelegate {
         UIView.animate(withDuration: 0.3) {
             self.tripsListController.view.alpha = 0
         }
+        tripsListController.view.removeFromSuperview()
         
         // マップにルートを表示させる
-//        tripsListController.view.removeFromSuperview()
-        
         var annotations = [MKAnnotation]()
         
         // 戻るボタン。Mover用に要改変
@@ -584,11 +610,38 @@ extension HomeController: TripsListControllerDelegate {
                 }
 
             self.mapView.zoomToFit(annotations: annotations)
-            
-            self.animateRideActionView(shouldShow: true, destination: selectedPlacemark)
-            
         }
         
-        // 確認画面へのボタンを表示
+        configureMoverActionView()
+        animateMoverActionView(shouldShow: true, destination: selectedPlacemark)
     }
+    
+    // See detail ボタンが押されたら、DetailViewを更新した上で表示させる
+    func proceedToConfirmView(_ view: MoverActionView) {
+        print("\n\(loadedNumber). \(String(describing: type(of: self))) > proceedToConfirmView is loaded.")
+        loadedNumber += 1
+        
+//        Service.shared.uploadAddress(pickupCoordinates, destinationCoordinates) { (error, ref) in
+//            if let error = error {
+//                print("DEBUG: Failed to upload trip with error \(error)")
+//                return
+//            }
+//            print("DEBUG: Did upload trip successfully")
+//
+//        }
+//        self.animateCalendarAndListView(shouldShow: true)
+    }
+    
+//    // Mover用のマップルートビューを表示
+//    func configureMoverDetailView() {
+//        print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureMoverActionView is loaded.")
+//        loadedNumber += 1
+//        
+//        view.addSubview(moverActionView)
+//        moverActionView.delegate = self
+//        moverActionView.frame = CGRect(x: 0,
+//                                      y: view.frame.height,
+//                                      width: view.frame.width,
+//                                      height: rideActionViewHeight)
+//    }
 }
