@@ -34,6 +34,7 @@ class HomeController: UIViewController {
     private let rideActionView = RideActionView()
     private let calendarAndListView = CalendarAndListView()
     private let items = ItemsView()
+    private let detailItem = DetailItemView()
     private let locationInputView = LocationInputView()
     private let tableView = UITableView()
     private var searchResults = [MKPlacemark]()
@@ -97,6 +98,7 @@ class HomeController: UIViewController {
                     self.animateRideActionView(shouldShow: false)
                     self.animateCalendarAndListView(shouldShow: false)
                     self.animateItemsView(shouldShow: false)
+                    self.animateDetailItemView(shouldShow: false)
                 }
             }
     }
@@ -153,6 +155,7 @@ class HomeController: UIViewController {
         configureRideActionView()
         configureCalendarAndListView()
         configureItemsView()
+        configureDetailItemView()
         
         view.addSubview(actionButton)
         actionButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
@@ -190,6 +193,13 @@ class HomeController: UIViewController {
         view.addSubview(items)
         items.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
         print("DEBUG: test3")
+    }
+    
+    func configureDetailItemView() {
+        view.addSubview(detailItem)
+        items.delegate = self
+        detailItem.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
+        print("DEBUG: test4")
     }
     
     func configureMapView(){
@@ -259,11 +269,22 @@ class HomeController: UIViewController {
     }
     
     func animateItemsView(shouldShow: Bool) {
+        print("animateItemsView")
         let yOrigin = shouldShow ? self.view.frame.height - self.calendarAndListViewHeight :
             self.view.frame.height
         
         UIView.animate(withDuration: 0.3) {
             self.items.frame.origin.y = yOrigin
+        }
+    }
+    
+    func animateDetailItemView(shouldShow: Bool) {
+        print("animateDetailItemView")
+        let yOrigin = shouldShow ? self.view.frame.height - self.calendarAndListViewHeight :
+            self.view.frame.height
+        
+        UIView.animate(withDuration: 0.3) {
+            self.detailItem.frame.origin.y = yOrigin
         }
     }
 }
@@ -462,9 +483,20 @@ extension HomeController: RideActionViewDelegate {
     }
 }
 
+// CalendarAndListView -> ItemsView
 extension HomeController: CalendarAndListViewDelegate {
     func proceedToItemsView(_ view: CalendarAndListView) {
         print("proceeding to items...")
         self.animateItemsView(shouldShow: true)
     }
 }
+
+// ItemsView -> DetailItemView
+extension HomeController: ItemsViewDelegate {
+    func proceedToDetailItemView(_ view: ItemsView) {
+        print("proceeding to detailitem...")
+        self.animateDetailItemView(shouldShow: true)
+    }
+}
+
+// ItemsView -> ConfirmView
