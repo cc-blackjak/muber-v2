@@ -11,7 +11,6 @@ class CalendarAndListView: UIView {
 
     // MARK: - Properties
     
-        
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)

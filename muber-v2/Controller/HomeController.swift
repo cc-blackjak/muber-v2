@@ -34,6 +34,8 @@ class HomeController: UIViewController {
     private let calendarAndListView = CalendarAndListView()
     private let locationInputView = LocationInputView()
     private let tableView = UITableView()
+    private let tripsListView = UITableView()
+    private var tripsListController: TripsListController!
     private var searchResults = [MKPlacemark]()
     private final let locationInputViewHeight: CGFloat = 200
     private final let rideActionViewHeight: CGFloat = 300
@@ -52,13 +54,18 @@ class HomeController: UIViewController {
                 loadedNumber += 1
                 
                 print("HomeC > User > didSet > passenger login")
+                configureRideActionView()
+                
                 configureLocationInputActivationView()
+                
+                configureTableiew()
             } else {
                 print("\n\(loadedNumber). \(String(describing: type(of: self))) > User didSet > else is loaded.")
                 loadedNumber += 1
                 
                 print("HomeC > User > didSet > not passenger login")
                 
+                configureTripsListView()
             }
         }
     }
@@ -88,6 +95,7 @@ class HomeController: UIViewController {
 
     // MARK: - Selectors
     
+    // ライダー/Mover共通画面処理
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -146,6 +154,7 @@ class HomeController: UIViewController {
 
     //MARK: - Helper Functions
 
+    
     fileprivate func configureActionButton(config: actionButtonConfiguration) {
         switch config {
         case .showMenu:
@@ -158,14 +167,14 @@ class HomeController: UIViewController {
     }
 
     
-    func configure() {
-        print("\n\(loadedNumber). \(String(describing: type(of: self))) > enableLocationservices is loaded.")
-        loadedNumber += 1
-        
-        configureUI()
-//        fetchUserData()
-//        fetchDrivers()
-    }
+//    func configure() {
+//        print("\n\(loadedNumber). \(String(describing: type(of: self))) > enableLocationservices is loaded.")
+//        loadedNumber += 1
+//
+//        configureUI()
+////        fetchUserData()
+////        fetchDrivers()
+//    }
     
     func configureUI(){
         print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureUI is loaded.")
@@ -174,8 +183,8 @@ class HomeController: UIViewController {
         // マップ層 MKMapView を読み出し
         configureMapView()
         
-        // ライダー用画面層 class RideActionView を読み出し
-        configureRideActionView()
+//        // ライダー用画面層 class RideActionView を読み出し
+//        configureRideActionView()
         
         // カレンダー/リスト層 class CalendarAndListView を読み出し
         configureCalendarAndListView()
@@ -188,9 +197,9 @@ class HomeController: UIViewController {
         UIView.animate(withDuration: 2) {
             self.inputActivationView.alpha = 1
         }
-        
-        // ??? なんのためのテーブルビュー???
-        configureTableiew()
+//
+//        // ライダー用のテーブルビュー
+//        configureTableiew()
     }
     
     func configureLocationInputActivationView() {
@@ -206,7 +215,7 @@ class HomeController: UIViewController {
         }
     }
     
-    // rideActionView = ライダー用の画面を用意
+    // rideActionView = ライダー用の画面を表示
     func configureRideActionView() {
         print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureRideActionView is loaded.")
         loadedNumber += 1
@@ -220,6 +229,7 @@ class HomeController: UIViewController {
         print("DEBUG: test1 RideAction View loaded")
     }
     
+    // カレンダー/アイテムリスト表示
     func configureCalendarAndListView() {
         print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureCalendarAndListView is loaded.")
         loadedNumber += 1
@@ -229,6 +239,7 @@ class HomeController: UIViewController {
         print("DEBUG: test2 Calendar And List View loaded")
     }
    
+    // Mapを表示
     func configureMapView(){
         print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureMapView is loaded.")
         loadedNumber += 1
@@ -240,6 +251,7 @@ class HomeController: UIViewController {
         mapView.delegate = self
     }
     
+    // Whereを表示
     func configureLocationInputView() {
         locationInputView.delegate = self
         view.addSubview(locationInputView)
@@ -251,6 +263,19 @@ class HomeController: UIViewController {
                 self.tableView.frame.origin.y = self.locationInputViewHeight
             })
         }
+    }
+    
+    // Mover用 ListItems
+    func configureTripsListView() {
+        print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureTripsListView is loaded.")
+        loadedNumber += 1
+        
+        tripsListController = TripsListController()
+        addChild(tripsListController)
+        tripsListController.didMove(toParent: self)
+        tripsListController.view.frame = CGRect(x: 0, y: 120, width: self.view.frame.width, height: self.view.frame.height)
+        view.insertSubview(tripsListController.view!, at: 1)
+//        tripsListController.delegate = self
     }
     
     func configureTableiew() {
@@ -431,7 +456,10 @@ extension HomeController: LocationInputViewDelegate {
 
 extension HomeController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "test"
+        print("\n\(loadedNumber). \(String(describing: type(of: self))) > tableView(UITableViewDelegate/dataSource) is loaded.")
+        loadedNumber += 1
+        
+        return "Please select your destination."
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -451,6 +479,9 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("\n\(loadedNumber). \(String(describing: type(of: self))) > tableView > indexPath is loaded.")
+        loadedNumber += 1
+        
         let selectedPlacemark = searchResults[indexPath.row]
         var annotations = [MKAnnotation]()
         
