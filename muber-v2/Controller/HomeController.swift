@@ -26,7 +26,6 @@ private enum actionButtonConfiguration {
 
 class HomeController: UIViewController {
     
-
     // MARK: - Properties
     private let locationManager = LocationHandler.shared.locationManager
     private let mapView = MKMapView()
@@ -49,13 +48,21 @@ class HomeController: UIViewController {
             locationInputView.user = user
             
             if user?.accountType == .passenger {
+                print("\n\(loadedNumber). \(String(describing: type(of: self))) > User didSet > .passenger is loaded.")
+                loadedNumber += 1
+                
                 print("HomeC > User > didSet > passenger login")
+                configureLocationInputActivationView()
             } else {
+                print("\n\(loadedNumber). \(String(describing: type(of: self))) > User didSet > else is loaded.")
+                loadedNumber += 1
+                
                 print("HomeC > User > didSet > not passenger login")
+                
             }
-            
         }
     }
+    //     チュートリアル完成形
     //     var user: User? {
     //        didSet {
     //            locationInputView.use = user
@@ -83,9 +90,14 @@ class HomeController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkIfUserIsLoggedIn()
+        
+        print("\n\(loadedNumber). HomeController > viewDidLoad is loaded.")
+        loadedNumber += 1
+        
+//        checkIfUserIsLoggedIn()
         enableLocationservices()
-//        signOut()
+//        configure()
+        configureUI()
     }
     
     @objc func actionButtonPressed() {
@@ -107,24 +119,27 @@ class HomeController: UIViewController {
     
     // MARK: - API
     
-    func fetchUserData() {
-        guard let currentUid = Auth.auth().currentUser?.uid else { return }
-        Service.shared.fetchUserData(uid: currentUid) { user in
-            self.user = user
-        }
-    }
+//    func fetchUserData() {
+//        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+//        Service.shared.fetchUserData(uid: currentUid) { user in
+//            self.user = user
+//        }
+//    }
     
-    func checkIfUserIsLoggedIn(){
-        if Auth.auth().currentUser?.uid == nil {
-            DispatchQueue.main.async {
-                let nav = UINavigationController(rootViewController: LoginController())
-                nav.modalPresentationStyle = .fullScreen
-                self.present(nav, animated: true, completion: nil)
-            }
-        } else {
-            configure()
-        }
-    }
+//    func checkIfUserIsLoggedIn(){
+//        print("\n\(loadedNumber). \(String(describing: type(of: self))) > extension checkIfUserIsLoggedIn is loaded.")
+//        loadedNumber += 1
+//
+//        if Auth.auth().currentUser?.uid == nil {
+//            DispatchQueue.main.async {
+//                let nav = UINavigationController(rootViewController: LoginController())
+//                nav.modalPresentationStyle = .fullScreen
+//                self.present(nav, animated: true, completion: nil)
+//            }
+//        } else {
+//            configure()
+//        }
+//    }
     
     
     
@@ -144,33 +159,37 @@ class HomeController: UIViewController {
 
     
     func configure() {
+        print("\n\(loadedNumber). \(String(describing: type(of: self))) > enableLocationservices is loaded.")
+        loadedNumber += 1
+        
         configureUI()
-        fetchUserData()
+//        fetchUserData()
 //        fetchDrivers()
     }
     
     func configureUI(){
+        print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureUI is loaded.")
+        loadedNumber += 1
+        
+        // マップ層 MKMapView を読み出し
         configureMapView()
         
+        // ライダー用画面層 class RideActionView を読み出し
         configureRideActionView()
+        
+        // カレンダー/リスト層 class CalendarAndListView を読み出し
         configureCalendarAndListView()
         
+        // ハンバーガーメニューボタンを直で付け足し
         view.addSubview(actionButton)
         actionButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                             paddingTop: 16, paddingLeft:16, width:30, height: 30)
-        
-        // configureLocationInputActivationView() in tutorial
-        view.addSubview(inputActivationView)
-        inputActivationView.centerX(inView: view)
-        inputActivationView.setDimensions(height: 50, width: view.frame.width - 64)
-        inputActivationView.anchor(top: actionButton.bottomAnchor, paddingTop: 32)
-        inputActivationView.alpha = 0
-        inputActivationView.delegate = self  // Add delegate or else it wont work
         
         UIView.animate(withDuration: 2) {
             self.inputActivationView.alpha = 1
         }
         
+        // ??? なんのためのテーブルビュー???
         configureTableiew()
     }
     
@@ -187,23 +206,33 @@ class HomeController: UIViewController {
         }
     }
     
+    // rideActionView = ライダー用の画面を用意
     func configureRideActionView() {
+        print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureRideActionView is loaded.")
+        loadedNumber += 1
+        
         view.addSubview(rideActionView)
         rideActionView.delegate = self
         rideActionView.frame = CGRect(x: 0,
                                       y: view.frame.height,
                                       width: view.frame.width,
                                       height: rideActionViewHeight)
-        print("DEBUG: test1")
+        print("DEBUG: test1 RideAction View loaded")
     }
     
     func configureCalendarAndListView() {
+        print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureCalendarAndListView is loaded.")
+        loadedNumber += 1
+        
         view.addSubview(calendarAndListView)
         calendarAndListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
-        print("DEBUG: test2")
+        print("DEBUG: test2 Calendar And List View loaded")
     }
    
     func configureMapView(){
+        print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureMapView is loaded.")
+        loadedNumber += 1
+        
         view.addSubview(mapView)
         mapView.frame = view.frame
         mapView.showsUserLocation = true
@@ -225,6 +254,9 @@ class HomeController: UIViewController {
     }
     
     func configureTableiew() {
+        print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureTableiew is loaded.")
+        loadedNumber += 1
+        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -343,6 +375,9 @@ extension HomeController: MKMapViewDelegate {
 
 extension HomeController {
     func enableLocationservices() {
+        print("\n\(loadedNumber). \(String(describing: type(of: self))) > enableLocationservices is loaded.")
+        loadedNumber += 1
+        
         switch CLLocationManager.authorizationStatus() {
         case .notDetermined:
             print("DEBUG: Not determined..")
@@ -359,10 +394,7 @@ extension HomeController {
         @unknown default:
             break
         }
-
-        
     }
-    
 }
 
 // MARK: - Delegates
