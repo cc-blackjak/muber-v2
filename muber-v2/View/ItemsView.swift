@@ -14,7 +14,7 @@ protocol ItemsViewDelegate: AnyObject {
 //var itemsList: [String] = ["jun", "bilaal","kakeru", "arisa"]
 var itemsList: [[String : String]] = []
 
-var selectedRow: Int? = nil
+var selectedItemRow: Int? = nil
 
 class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
     
@@ -40,8 +40,10 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     // 選択したアイテムの行番号を取得
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = itemsList[indexPath.row]
-        print("item: ", item)
+//        let item = itemsList[indexPath.row]
+        selectedItemRow = indexPath.row
+        print("selectedRow: ", selectedItemRow!)
+        delegate?.proceedToDetailItemView(self)
     }
 
     private let titleLabel: UILabel = {
@@ -154,7 +156,7 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
     // MARK: - Selectors
     
     @objc func addButtonPressed() {
-        selectedRow = nil
+        selectedItemRow = nil
         delegate?.proceedToDetailItemView(self)
 //        tableView.reloadData() // Addボタン時、リロードは不要
         print("addbutton pressed")
