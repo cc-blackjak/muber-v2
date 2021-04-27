@@ -7,13 +7,18 @@
 
 import UIKit
 
-//protocol DetailItemViewDelegate: class {
-//    func presentDetailInputView()
+protocol DetailItemViewDelegate: AnyObject {
+    func returnToItemsView(_ view: DetailItemView)
+}
+
+//protocol DetailItemViewDelegate2: AnyObject {
+//    func refreshItemList(_ view: DetailItemView)
 //}
 
 class DetailItemView: UIView, UITextFieldDelegate {
     
-//    weak var delegate: DetailItemViewDelegate?
+    weak var delegate: DetailItemViewDelegate?
+//    weak var delegate2: DetailItemViewDelegate2?
 
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -36,7 +41,7 @@ class DetailItemView: UIView, UITextFieldDelegate {
     private let okButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .black
-        button.setTitle("ok", for: .normal)
+        button.setTitle("OK", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(okButtonPressed), for: .touchUpInside)
@@ -126,23 +131,24 @@ class DetailItemView: UIView, UITextFieldDelegate {
                                     left: leftAnchor,
                                     right: rightAnchor,
                                     paddingTop: 12,
-                                    paddingLeft: 40,
-                                    paddingRight: 40,
-                                    height: 40)
+                                    paddingLeft: 12,
+                                    paddingRight: 12,
+                                    height: 50)
 
         addSubview(detailItemInformationTextField)
         detailItemInformationTextField.anchor(top: detailItemTitleTextField.bottomAnchor,
                                     left: leftAnchor,
                                     right: rightAnchor,
                                     paddingTop: 12,
-                                    paddingLeft: 40,
-                                    paddingRight: 40,
-                                    height: 400)
+                                    paddingLeft: 12,
+                                    paddingRight: 12,
+                                    height: 500)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     // MARK: - Selectors
     @objc func okButtonPressed() {
         print("okbutton pressed!")
@@ -152,9 +158,17 @@ class DetailItemView: UIView, UITextFieldDelegate {
             itemsList[selectedRow!]["title"]! = detailItemTitleTextField.text!
             itemsList[selectedRow!]["memo"]! = detailItemInformationTextField.text
         }
+        print("itemsList: ", itemsList)
+        delegate?.returnToItemsView(self)
+//        delegate2?.refreshItemList(self)
+
     }
     
     @objc func deleteButtonPressed() {
         print("deletebutton pressed!")
+        if selectedRow != nil {
+            itemsList.remove(at: (selectedRow!))
+        }
+        delegate?.returnToItemsView(self)
     }
 }

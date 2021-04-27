@@ -198,6 +198,7 @@ class HomeController: UIViewController {
     func configureDetailItemView() {
         view.addSubview(detailItem)
         items.delegate = self
+        detailItem.delegate = self
         detailItem.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
         print("DEBUG: test4")
     }
@@ -260,6 +261,7 @@ class HomeController: UIViewController {
     }
     
     func animateCalendarAndListView(shouldShow: Bool) {
+        print("animateCalendarAndListView")
         let yOrigin = shouldShow ? self.view.frame.height - self.calendarAndListViewHeight :
             self.view.frame.height
         
@@ -498,5 +500,14 @@ extension HomeController: ItemsViewDelegate {
         self.animateDetailItemView(shouldShow: true)
     }
 }
+
+// DetailItemView -> ItemsView
+extension HomeController: DetailItemViewDelegate {
+    func returnToItemsView(_ view: DetailItemView) {
+        print("return to item...")
+        self.animateDetailItemView(shouldShow: false)
+    }
+}
+
 
 // ItemsView -> ConfirmView

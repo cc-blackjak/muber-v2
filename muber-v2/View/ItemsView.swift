@@ -7,12 +7,12 @@
 
 import UIKit
 
-protocol ItemsViewDelegate: class {
+protocol ItemsViewDelegate: AnyObject {
     func proceedToDetailItemView(_ view: ItemsView)
 }
 
 //var itemsList: [String] = ["jun", "bilaal","kakeru", "arisa"]
-    var itemsList: [[String : String]] = []
+var itemsList: [[String : String]] = []
 
 var selectedRow: Int? = nil
 
@@ -21,18 +21,23 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
     // MARK: - Properties
     
     weak var delegate: ItemsViewDelegate?
+
     
     var tableView = UITableView()
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("countaaaa: ", itemsList.count)
         return itemsList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         cell.textLabel?.text = itemsList[indexPath.row]["title"]
+        print("title: ", cell)
         return cell
     }
+    
+    
     // 選択したアイテムの行番号を取得
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = itemsList[indexPath.row]
@@ -80,7 +85,7 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        
         backgroundColor = .white
 
         addShadow()
@@ -135,6 +140,11 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
         fatalError("init(coder:) has not been implemented")
     }
     
+//    override func updateConstraints() {
+//        print("updateConstraints is called")
+//        super.updateConstraints()
+//    }
+    
     func setup() {
         tableView = UITableView(frame: CGRect(x: 0, y: 120, width: 450, height: 800))
         tableView.layer.backgroundColor = UIColor.black.cgColor
@@ -146,6 +156,7 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
     @objc func addButtonPressed() {
         selectedRow = nil
         delegate?.proceedToDetailItemView(self)
+        tableView.reloadData()
         print("addbutton pressed")
 
     }
