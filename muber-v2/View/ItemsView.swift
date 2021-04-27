@@ -26,14 +26,14 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
     var tableView = UITableView()
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("countaaaa: ", itemsList.count)
+        print("count: ", itemsList.count)
         return itemsList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-        cell.textLabel?.text = itemsList[indexPath.row]["title"]
-        print("title: ", cell)
+        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = "\(itemsList[indexPath.row]["title"] ?? "nil")"
+        print("title: ", itemsList[indexPath.row]["title"] ?? "nil")
         return cell
     }
     
@@ -64,7 +64,7 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
 
     }()
     
-    private let addButton: UIButton = {
+    private lazy var addButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .black
         button.setTitle("add", for: .normal)
@@ -75,7 +75,7 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
     }()
     
     // to comfirm
-    private let actionButton: UIButton = {
+    private lazy var actionButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .black
         button.setTitle("confirm", for: .normal)
@@ -156,10 +156,10 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
     // MARK: - Selectors
     
     @objc func addButtonPressed() {
-        selectedItemRow = nil
-        delegate?.proceedToDetailItemView(self)
-//        tableView.reloadData() // Addボタン時、リロードは不要
         print("addbutton pressed")
+        delegate?.proceedToDetailItemView(self)
+        selectedItemRow = nil
+//        tableView.reloadData() // Addボタン時、リロードは不要
 
     }
     

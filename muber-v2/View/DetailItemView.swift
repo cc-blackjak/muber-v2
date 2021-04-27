@@ -155,13 +155,17 @@ class DetailItemView: UIView, UITextFieldDelegate {
         if(selectedItemRow == nil){
             itemsList.append(["title":detailItemTitleTextField.text!, "memo":detailItemInformationTextField.text])
         } else {
-            itemsList[selectedItemRow!]["title"]! = detailItemTitleTextField.text!
-            itemsList[selectedItemRow!]["memo"]! = detailItemInformationTextField.text
+            itemsList[selectedItemRow!]["title"] = detailItemTitleTextField.text
+            itemsList[selectedItemRow!]["memo"] = detailItemInformationTextField.text
         }
+        
+        detailItemTitleTextField.text = ""
+        detailItemInformationTextField.text = ""
+        
+        selectedItemRow = nil
+        
         print("itemsList: ", itemsList)
         delegate?.returnToItemsView(self)
-//        delegate2?.refreshItemList(self)
-
     }
     
     @objc func deleteButtonPressed() {
@@ -169,6 +173,12 @@ class DetailItemView: UIView, UITextFieldDelegate {
         if selectedItemRow != nil {
             itemsList.remove(at: (selectedItemRow!))
         }
+        
+        detailItemTitleTextField.text = ""
+        detailItemInformationTextField.text = ""
+        
+        selectedItemRow = nil
+        
         delegate?.returnToItemsView(self)
     }
 }
