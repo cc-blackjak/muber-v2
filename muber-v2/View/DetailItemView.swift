@@ -58,7 +58,7 @@ class DetailItemView: UIView, UITextFieldDelegate {
         return button
     }()
     
-    private lazy var detailItemTitleTextField: UITextField = {
+    lazy var detailItemTitleTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Please enter item.."
         tf.backgroundColor = .systemGroupedBackground
@@ -73,7 +73,7 @@ class DetailItemView: UIView, UITextFieldDelegate {
         return tf
     }()
     
-    private lazy var detailItemInformationTextField: UITextView = {
+    lazy var detailItemInformationTextField: UITextView = {
         let tf = UITextView()
         tf.backgroundColor = .systemGroupedBackground
         tf.returnKeyType = .search
@@ -152,11 +152,11 @@ class DetailItemView: UIView, UITextFieldDelegate {
     // MARK: - Selectors
     @objc func okButtonPressed() {
         print("okbutton pressed!")
-        if(selectedRow == nil){
+        if(selectedItemRow == nil){
             itemsList.append(["title":detailItemTitleTextField.text!, "memo":detailItemInformationTextField.text])
         } else {
-            itemsList[selectedRow!]["title"]! = detailItemTitleTextField.text!
-            itemsList[selectedRow!]["memo"]! = detailItemInformationTextField.text
+            itemsList[selectedItemRow!]["title"]! = detailItemTitleTextField.text!
+            itemsList[selectedItemRow!]["memo"]! = detailItemInformationTextField.text
         }
         print("itemsList: ", itemsList)
         delegate?.returnToItemsView(self)
@@ -166,8 +166,8 @@ class DetailItemView: UIView, UITextFieldDelegate {
     
     @objc func deleteButtonPressed() {
         print("deletebutton pressed!")
-        if selectedRow != nil {
-            itemsList.remove(at: (selectedRow!))
+        if selectedItemRow != nil {
+            itemsList.remove(at: (selectedItemRow!))
         }
         delegate?.returnToItemsView(self)
     }

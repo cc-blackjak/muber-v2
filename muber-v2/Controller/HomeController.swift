@@ -505,6 +505,14 @@ extension HomeController: CalendarAndListViewDelegate {
 extension HomeController: ItemsViewDelegate {
     func proceedToDetailItemView(_ view: ItemsView) {
         print("proceeding to detailitem...")
+        
+        // selectedRow がnil でない場合、DetailItemViewのTextBoxを入れておく
+        
+        if selectedItemRow != nil {
+            self.detailItem.detailItemTitleTextField.text = itemsList[selectedItemRow!]["title"]!
+            self.detailItem.detailItemInformationTextField.text = itemsList[selectedItemRow!]["memo"]!
+        }
+        
         self.animateDetailItemView(shouldShow: true)
     }
 }
