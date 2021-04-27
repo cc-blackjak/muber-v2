@@ -142,11 +142,8 @@ class HomeController: UIViewController {
     
     func configure() {
         configureUI()
-   
-
         fetchUserData()
 //        fetchDrivers()
-
     }
     
     func configureUI(){
@@ -486,7 +483,7 @@ extension HomeController: RideActionViewDelegate {
             print("DEBUG: Did upload trip successfully")
 
         }
-        print("Hello")
+        print("HomeController > proceedToSetDateAndUploadAddress")
         self.animateCalendarAndListView(shouldShow: true)
         
     }
@@ -507,7 +504,6 @@ extension HomeController: ItemsViewDelegate {
         print("proceeding to detailitem...")
         
         // selectedRow がnil でない場合、DetailItemViewのTextBoxを入れておく
-        
         if selectedItemRow != nil {
             self.detailItem.detailItemTitleTextField.text = itemsList[selectedItemRow!]["title"]!
             self.detailItem.detailItemInformationTextField.text = itemsList[selectedItemRow!]["memo"]!
@@ -521,8 +517,8 @@ extension HomeController: ItemsViewDelegate {
 extension HomeController: DetailItemViewDelegate {
     func returnToItemsView(_ view: DetailItemView) {
         self.items.tableView.reloadData()
-        print("return to item...")
         self.animateDetailItemView(shouldShow: false)
+        print("HomeController > returnToItemsView called.")
     }
 }
 
