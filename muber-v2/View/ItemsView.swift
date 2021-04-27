@@ -11,6 +11,10 @@ protocol ItemsViewDelegate: AnyObject {
     func proceedToDetailItemView(_ view: ItemsView)
 }
 
+protocol ItemsViewDelegate2: AnyObject {
+    func proceedToConfirmationPageView(_ view: ItemsView)
+}
+
 //var itemsList: [String] = ["jun", "bilaal","kakeru", "arisa"]
 var itemsList: [[String : String]] = []
 
@@ -21,6 +25,7 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
     // MARK: - Properties
     
     weak var delegate: ItemsViewDelegate?
+    weak var delegate2: ItemsViewDelegate2?
 
     
     var tableView = UITableView()
@@ -78,10 +83,10 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
     private let actionButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .black
-        button.setTitle("confirm", for: .normal)
+        button.setTitle("PROCEED TO CONFIRMATION", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(confirmButtonPressed), for: .touchUpInside)
         return button
     }()
 
@@ -163,7 +168,8 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
 
     }
     
-    @objc func actionButtonPressed() {
-        print("button pressed to comfirm!")
+    @objc func confirmButtonPressed() {
+        print("confirm button pressed")
+        delegate2?.proceedToConfirmationPageView(self)
     }
 }

@@ -35,6 +35,7 @@ class HomeController: UIViewController {
     private let calendarAndListView = CalendarAndListView()
     private let items = ItemsView()
     private let detailItem = DetailItemView()
+    private let confirmationPageView = ConfirmationPageView()
     private let locationInputView = LocationInputView()
     private let tableView = UITableView()
     private var searchResults = [MKPlacemark]()
@@ -47,6 +48,10 @@ class HomeController: UIViewController {
     
     var user: User? {
         didSet { locationInputView.user = user }
+    }
+    
+    var trip: Trip? {
+        didSet { confirmationPageView.trip = trip}
     }
     
     private let actionButton: UIButton = {
@@ -98,6 +103,7 @@ class HomeController: UIViewController {
                     self.animateCalendarAndListView(shouldShow: false)
                     self.animateItemsView(shouldShow: false)
                     self.animateDetailItemView(shouldShow: false)
+                    self.animateConfirmationPageView(shouldShow: false)
                 }
             }
     }
@@ -108,6 +114,13 @@ class HomeController: UIViewController {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
         Service.shared.fetchUserData(uid: currentUid) { user in
             self.user = user
+        }
+    }
+    
+    func fetchUserTripData() {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        Service.shared.fetchUserTripData(uid: currentUid) { trip in
+            self.trip = trip
         }
     }
     
@@ -145,6 +158,7 @@ class HomeController: UIViewController {
    
 
         fetchUserData()
+        fetchUserTripData()
 //        fetchDrivers()
 
     }
@@ -154,7 +168,9 @@ class HomeController: UIViewController {
         configureRideActionView()
         configureCalendarAndListView()
         configureItemsView()
+        configureConfirmationPageView()
         configureDetailItemView()
+        
         
         view.addSubview(actionButton)
         actionButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
@@ -190,16 +206,23 @@ class HomeController: UIViewController {
 
     func configureItemsView() {
         view.addSubview(items)
+        items.delegate = self
+        items.delegate2 = self
         items.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
         print("DEBUG: test3")
     }
     
     func configureDetailItemView() {
         view.addSubview(detailItem)
-        items.delegate = self
         detailItem.delegate = self
         detailItem.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
         print("DEBUG: test4")
+    }
+    
+    func configureConfirmationPageView() {
+        view.addSubview(confirmationPageView)
+        confirmationPageView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
+        print("DEBUG: test5")
     }
     
     func configureMapView(){
@@ -286,6 +309,16 @@ class HomeController: UIViewController {
         
         UIView.animate(withDuration: 0.3) {
             self.detailItem.frame.origin.y = yOrigin
+        }
+    }
+    
+    func animateConfirmationPageView(shouldShow: Bool) {
+        print("animateConfirmationPageView")
+        let yOrigin = shouldShow ? self.view.frame.height - self.calendarAndListViewHeight :
+            self.view.frame.height
+        
+        UIView.animate(withDuration: 0.3) {
+            self.confirmationPageView.frame.origin.y = yOrigin
         }
     }
 }
@@ -517,6 +550,14 @@ extension HomeController: ItemsViewDelegate {
     }
 }
 
+// ItemsView -> ConfirmView
+extension HomeController: ItemsViewDelegate2 {
+    func proceedToConfirmationPageView(_ view: ItemsView) {
+        print("proceeding to confirmation page...")
+        self.animateConfirmationPageView(shouldShow: true)
+    }
+}
+
 // DetailItemView -> ItemsView
 extension HomeController: DetailItemViewDelegate {
     func returnToItemsView(_ view: DetailItemView) {
@@ -526,4 +567,4 @@ extension HomeController: DetailItemViewDelegate {
     }
 }
 
-// ItemsView -> ConfirmView
+
