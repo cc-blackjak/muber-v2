@@ -512,10 +512,10 @@ extension HomeController: ItemsViewDelegate {
 // DetailItemView -> ItemsView
 extension HomeController: DetailItemViewDelegate {
     func returnToItemsView(_ view: DetailItemView) {
+        self.items.tableView.reloadData()
         print("return to item...")
         self.animateDetailItemView(shouldShow: false)
     }
 }
-
 
 // ItemsView -> ConfirmView

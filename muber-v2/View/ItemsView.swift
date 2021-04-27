@@ -156,7 +156,7 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
     @objc func addButtonPressed() {
         selectedRow = nil
         delegate?.proceedToDetailItemView(self)
-        tableView.reloadData()
+//        tableView.reloadData() // Addボタン時、リロードは不要
         print("addbutton pressed")
 
     }
