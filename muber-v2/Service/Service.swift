@@ -26,6 +26,16 @@ struct Service {
         }
     }
     
+    func fetchUserTripData(uid: String, completion: @escaping(Trip) -> Void) {
+        REF_TRIPS.child(uid).observeSingleEvent(of: .value) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            let uid = snapshot.key
+            let trips = Trip(passengerUid: uid, dictionary: dictionary)
+            completion(trips)
+//            print(trips)
+        }
+    }
+    
     func uploadDestinationAddressAndName(destinationAddress: String, destinationName: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
