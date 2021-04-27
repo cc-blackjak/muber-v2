@@ -7,10 +7,16 @@
 
 import UIKit
 
+protocol CalendarAndListViewDelegate: class {
+    func proceedToItemsView(_ view: CalendarAndListView)
+}
+
 class CalendarAndListView: UIView {
 
     // MARK: - Properties
     
+    weak var delegate: CalendarAndListViewDelegate?
+        
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
@@ -34,11 +40,11 @@ class CalendarAndListView: UIView {
         calendar1.preferredDatePickerStyle = .compact
         return calendar1
     }()
-    
+
     private let actionButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .black
-        button.setTitle("CONFIRM BOOKING", for: .normal)
+        button.setTitle("items", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
@@ -73,6 +79,9 @@ class CalendarAndListView: UIView {
         addSubview(separatorView)
         separatorView.anchor(top: calendar.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 8, height: 0.75)
         
+        // itemsを入れたい
+//        _ = UICollectionViewFlowLayout()
+        
         addSubview(actionButton)
         actionButton.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 40, paddingRight: 12, height: 50)
 
@@ -84,8 +93,6 @@ class CalendarAndListView: UIView {
     
     // MARK: - Selectors
     @objc func actionButtonPressed() {
-        
+        delegate?.proceedToItemsView(self)
     }
 }
-
-

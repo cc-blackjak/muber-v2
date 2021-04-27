@@ -27,9 +27,11 @@
 		2571E584262D3091008B0073 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E57F262D3091008B0073 /* SignUpController.swift */; };
 		2571E589262D30C5008B0073 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2571E588262D30C5008B0073 /* Assets.xcassets */; };
 		2573258F262D506F00FD18C6 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2573258E262D506F00FD18C6 /* HomeController.swift */; };
+		67912935263292C500AF98B9 /* ItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67912934263292C500AF98B9 /* ItemsView.swift */; };
 		67A69999262E5E8C00E178BC /* ContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A69998262E5E8C00E178BC /* ContainerController.swift */; };
 		67A699A1262E5E9C00E178BC /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A699A0262E5E9C00E178BC /* MenuController.swift */; };
 		67A699A6262E5ED800E178BC /* MenuHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A699A5262E5ED800E178BC /* MenuHeader.swift */; };
+		67EBD4AD2633FE610034CAB7 /* DetailItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EBD4AC2633FE610034CAB7 /* DetailItemView.swift */; };
 		87BF44608C39A2D8FC54A5FD /* Pods_muber_v2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76599282EA482C48CC3E822 /* Pods_muber_v2.framework */; };
 		BF9A502326368D3800D3EF60 /* TripsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9A502226368D3800D3EF60 /* TripsList.swift */; };
 		BFD735272637302200D06888 /* MoverActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD735262637302200D06888 /* MoverActionView.swift */; };
@@ -85,9 +87,11 @@
 		2571E57F262D3091008B0073 /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		2571E588262D30C5008B0073 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2573258E262D506F00FD18C6 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		67912934263292C500AF98B9 /* ItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsView.swift; sourceTree = "<group>"; };
 		67A69998262E5E8C00E178BC /* ContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerController.swift; sourceTree = "<group>"; };
 		67A699A0262E5E9C00E178BC /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		67A699A5262E5ED800E178BC /* MenuHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHeader.swift; sourceTree = "<group>"; };
+		67EBD4AC2633FE610034CAB7 /* DetailItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailItemView.swift; sourceTree = "<group>"; };
 		7F763BF86D0608575B463BDD /* Pods-muber-v2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-muber-v2.debug.xcconfig"; path = "Target Support Files/Pods-muber-v2/Pods-muber-v2.debug.xcconfig"; sourceTree = "<group>"; };
 		BF9A502226368D3800D3EF60 /* TripsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripsList.swift; sourceTree = "<group>"; };
 		BFD735262637302200D06888 /* MoverActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoverActionView.swift; sourceTree = "<group>"; };
@@ -233,6 +237,8 @@
 				BFD7352B263739DD00D06888 /* MoverConfirmView.swift */,
 				BFD7353326374DE000D06888 /* MoverWaitingView.swift */,
 				2566DF1D2631522900B8CAFE /* CalendarAndListView.swift */,
+				67912934263292C500AF98B9 /* ItemsView.swift */,
+				67EBD4AC2633FE610034CAB7 /* DetailItemView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -455,6 +461,7 @@
 				2571E54A262D2F8A008B0073 /* ViewController.swift in Sources */,
 				2571E583262D3091008B0073 /* LoginController.swift in Sources */,
 				2571E584262D3091008B0073 /* SignUpController.swift in Sources */,
+				67912935263292C500AF98B9 /* ItemsView.swift in Sources */,
 				2571E582262D3091008B0073 /* AuthButton.swift in Sources */,
 				67A699A1262E5E9C00E178BC /* MenuController.swift in Sources */,
 				67A699A6262E5ED800E178BC /* MenuHeader.swift in Sources */,
@@ -468,6 +475,7 @@
 				BFD7353426374DE000D06888 /* MoverWaitingView.swift in Sources */,
 				2573258F262D506F00FD18C6 /* HomeController.swift in Sources */,
 				2571E546262D2F8A008B0073 /* AppDelegate.swift in Sources */,
+				67EBD4AD2633FE610034CAB7 /* DetailItemView.swift in Sources */,
 				25170D72262E703C000AB39D /* User.swift in Sources */,
 				25170D6C262E7004000AB39D /* Service.swift in Sources */,
 				2571E548262D2F8A008B0073 /* SceneDelegate.swift in Sources */,

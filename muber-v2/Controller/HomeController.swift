@@ -36,6 +36,8 @@ class HomeController: UIViewController {
     private let moverConfirmView = MoverConfirmView()
     private let moverWaitingView = MoverWaitingView()
     private let calendarAndListView = CalendarAndListView()
+    private let items = ItemsView()
+    private let detailItem = DetailItemView()
     private let locationInputView = LocationInputView()
     private let tableView = UITableView()
     private var tripsListController: TripsListController!
@@ -113,6 +115,8 @@ class HomeController: UIViewController {
                     self.configureActionButton(config: .showMenu)
                     self.animateRideActionView(shouldShow: false)
                     self.animateCalendarAndListView(shouldShow: false)
+                    self.animateItemsView(shouldShow: false)
+                    self.animateDetailItemView(shouldShow: false)
                 }
             }
     }
@@ -172,6 +176,11 @@ class HomeController: UIViewController {
         
         // マップ層 MKMapView を読み出し
         configureMapView()
+        configureRideActionView()
+        configureCalendarAndListView()
+        configureItemsView()
+        configureDetailItemView()
+        
         
 //        // ライダー用画面層 class RideActionView を読み出し
 //        configureRideActionView()
@@ -226,9 +235,24 @@ class HomeController: UIViewController {
         loadedNumber += 1
         
         view.addSubview(calendarAndListView)
+        calendarAndListView.delegate = self
         calendarAndListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
         print("DEBUG: test2 Calendar And List View loaded")
     }
+
+    func configureItemsView() {
+        view.addSubview(items)
+        items.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
+        print("DEBUG: test3")
+    }
+    
+    func configureDetailItemView() {
+        view.addSubview(detailItem)
+        items.delegate = self
+        detailItem.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
+        print("DEBUG: test4")
+    }
+    
    
     // Mapを表示
     func configureMapView(){
@@ -301,6 +325,26 @@ class HomeController: UIViewController {
         
         UIView.animate(withDuration: 0.3) {
             self.calendarAndListView.frame.origin.y = yOrigin
+        }
+    }
+    
+    func animateItemsView(shouldShow: Bool) {
+        print("animateItemsView")
+        let yOrigin = shouldShow ? self.view.frame.height - self.calendarAndListViewHeight :
+            self.view.frame.height
+        
+        UIView.animate(withDuration: 0.3) {
+            self.items.frame.origin.y = yOrigin
+        }
+    }
+    
+    func animateDetailItemView(shouldShow: Bool) {
+        print("animateDetailItemView")
+        let yOrigin = shouldShow ? self.view.frame.height - self.calendarAndListViewHeight :
+            self.view.frame.height
+        
+        UIView.animate(withDuration: 0.3) {
+            self.detailItem.frame.origin.y = yOrigin
         }
     }
 }
@@ -494,7 +538,6 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension HomeController: RideActionViewDelegate {
-    
     func proceedToSetDateAndUploadAddress(_ view: RideActionView){
         guard let pickupCoordinates = locationManager?.location?.coordinate else { return }
         guard let destinationCoordinates = view.destination?.coordinate else { return }
@@ -507,6 +550,7 @@ extension HomeController: RideActionViewDelegate {
             print("DEBUG: Did upload trip successfully")
 
         }
+        print("Hello")
         self.animateCalendarAndListView(shouldShow: true)
         
     }
@@ -801,3 +845,20 @@ extension HomeController {
 //    REF_TRIPS.child(uid).updateChildValues(values , withCompletionBlock: completion)
 //    print(values, uid)
 //}
+// CalendarAndListView -> ItemsView
+extension HomeController: CalendarAndListViewDelegate {
+    func proceedToItemsView(_ view: CalendarAndListView) {
+        print("proceeding to items...")
+        self.animateItemsView(shouldShow: true)
+    }
+}
+
+// ItemsView -> DetailItemView
+extension HomeController: ItemsViewDelegate {
+    func proceedToDetailItemView(_ view: ItemsView) {
+        print("proceeding to detailitem...")
+        self.animateDetailItemView(shouldShow: true)
+    }
+}
+
+// ItemsView -> ConfirmView
