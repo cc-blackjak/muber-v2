@@ -6,6 +6,7 @@
 //
 
 import Firebase
+import FirebaseAuth
 import CoreLocation
 
 let DB_REF = Database.database().reference()
@@ -25,7 +26,16 @@ struct Service {
         }
     }
     
-    func uploadAddress(_ pickupCoordinates: CLLocationCoordinate2D, _ destinationCoordinates: CLLocationCoordinate2D, completion: @escaping(Error?, DatabaseReference) -> Void) {
+    func uploadDestinationAddressAndName(destinationAddress: String, destinationName: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        let values = ["destinationName": destinationName,"destinationAddress": destinationAddress]
+        
+        REF_TRIPS.child(uid).updateChildValues(values, withCompletionBlock: completion)
+        print(values, uid)
+    }
+    
+    func uploadCoordinates(_ pickupCoordinates: CLLocationCoordinate2D, _ destinationCoordinates: CLLocationCoordinate2D, completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         let pickupArray = [pickupCoordinates.latitude, pickupCoordinates.longitude]
@@ -33,7 +43,16 @@ struct Service {
         
         let values = ["pickupCoordinates": pickupArray, "destinationCoordinates": destinationArray]
         
-//        REF_TRIPS.child(uid).updateChildValues(values, withCompletionBlock: completion)
+        REF_TRIPS.child(uid).updateChildValues(values, withCompletionBlock: completion)
         print(values, uid)
+    }
+    
+    func uploadDate(date: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        let value = ["date": date]
+        
+        REF_TRIPS.child(uid).updateChildValues(value, withCompletionBlock: completion)
+        print(value, uid)
     }
 }

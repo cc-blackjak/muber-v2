@@ -94,5 +94,17 @@ class CalendarAndListView: UIView {
     // MARK: - Selectors
     @objc func actionButtonPressed() {
         delegate?.proceedToItemsView(self)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YY, MMM d, hh:mm"
+        dateFormatter.string(from: calendar.date)
+        
+        Service.shared.uploadDate(date: dateFormatter.string(from: calendar.date)) { (error, ref) in
+            if let error = error {
+                print("DEBUG: Failed to upload trip with error \(error)")
+                return
+            }
+            print("DEBUG: Did upload trip successfully")
+        }
     }
 }
