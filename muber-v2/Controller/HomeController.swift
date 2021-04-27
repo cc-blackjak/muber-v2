@@ -45,7 +45,6 @@ class HomeController: UIViewController {
     private var actionButttonConfig = actionButtonConfiguration()
     private var route: MKRoute?
     
-    
     var user: User? {
         didSet { locationInputView.user = user }
     }
@@ -460,6 +459,13 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
 
             self.mapView.zoomToFit(annotations: annotations)
             
+            Service.shared.uploadDestinationAddressAndName(destinationAddress: selectedPlacemark.address ?? "none", destinationName: selectedPlacemark.name ?? "none") { (error, ref) in
+                if let error = error {
+                    print("DEBUG: Failed to upload trip with error \(error)")
+                    return
+                }
+                print("DEBUG: Did upload trip successfully")
+            }
             self.animateRideActionView(shouldShow: true, destination: selectedPlacemark)
             
         }
@@ -470,8 +476,9 @@ extension HomeController: RideActionViewDelegate {
     func proceedToSetDateAndUploadAddress(_ view: RideActionView){
         guard let pickupCoordinates = locationManager?.location?.coordinate else { return }
         guard let destinationCoordinates = view.destination?.coordinate else { return }
-        
-        Service.shared.uploadAddress(pickupCoordinates, destinationCoordinates) { (error, ref) in
+
+        print(searchResults)
+        Service.shared.uploadCoordinates(pickupCoordinates, destinationCoordinates) { (error, ref) in
             if let error = error {
                 print("DEBUG: Failed to upload trip with error \(error)")
                 return
@@ -488,6 +495,7 @@ extension HomeController: RideActionViewDelegate {
 // CalendarAndListView -> ItemsView
 extension HomeController: CalendarAndListViewDelegate {
     func proceedToItemsView(_ view: CalendarAndListView) {
+        
         print("proceeding to items...")
         self.animateItemsView(shouldShow: true)
     }
