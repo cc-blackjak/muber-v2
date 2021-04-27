@@ -61,7 +61,7 @@ class DetailItemView: UIView, UITextFieldDelegate {
         tf.font = UIFont.systemFont(ofSize: 24)
         
         let paddingView = UIView()
-        paddingView.setDimentions(height: 30, width: 8)
+        paddingView.setDimensions(height: 30, width: 8)
         tf.leftView = paddingView
         tf.leftViewMode = .always
         

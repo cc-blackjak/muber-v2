@@ -63,6 +63,9 @@ class HomeController: UIViewController {
                 configureRideActionView()
                 configureCalendarAndListView()
                 configureLocationInputActivationView()
+                configureItemsView()
+                configureDetailItemView()
+                configureActionButton(config: .showMenu)
                 
                 configureTableiew()
             } else {
@@ -123,29 +126,6 @@ class HomeController: UIViewController {
     
     // MARK: - API
     
-    // ユーザ取得処理はControllerと重複して
-//    func fetchUserData() {
-//        guard let currentUid = Auth.auth().currentUser?.uid else { return }
-//        Service.shared.fetchUserData(uid: currentUid) { user in
-//            self.user = user
-//        }
-//    }
-    
-//    func checkIfUserIsLoggedIn(){
-//        print("\n\(loadedNumber). \(String(describing: type(of: self))) > extension checkIfUserIsLoggedIn is loaded.")
-//        loadedNumber += 1
-//
-//        if Auth.auth().currentUser?.uid == nil {
-//            DispatchQueue.main.async {
-//                let nav = UINavigationController(rootViewController: LoginController())
-//                nav.modalPresentationStyle = .fullScreen
-//                self.present(nav, animated: true, completion: nil)
-//            }
-//        } else {
-//            configure()
-//        }
-//    }
-    
     //MARK: - Helper Functions
 
     fileprivate func configureActionButton(config: actionButtonConfiguration) {
@@ -160,33 +140,12 @@ class HomeController: UIViewController {
         }
     }
 
-    // Rider/Mover別の処理を実現するために、Rider用のConfigureを分解、よりDidShowViewとユーザ読み込み時に分けて、細かく指定
-//    func configure() {
-//        print("\n\(loadedNumber). \(String(describing: type(of: self))) > enableLocationservices is loaded.")
-//        loadedNumber += 1
-//
-//        configureUI()
-////        fetchUserData()
-////        fetchDrivers()
-//    }
-    
     func configureUI(){
         print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureUI is loaded.")
         loadedNumber += 1
         
         // マップ層 MKMapView を読み出し
         configureMapView()
-        configureRideActionView()
-        configureCalendarAndListView()
-        configureItemsView()
-        configureDetailItemView()
-        
-        
-//        // ライダー用画面層 class RideActionView を読み出し
-//        configureRideActionView()
-        
-//        // カレンダー/リスト層 class CalendarAndListView を読み出し
-//        configureCalendarAndListView()
         
         // ハンバーガーメニューボタンを直で付け足し
         view.addSubview(actionButton)
