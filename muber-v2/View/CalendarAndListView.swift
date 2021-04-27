@@ -93,7 +93,6 @@ class CalendarAndListView: UIView {
     
     // MARK: - Selectors
     @objc func actionButtonPressed() {
-        print("items pressed!")
         delegate?.proceedToItemsView(self)
     }
 }

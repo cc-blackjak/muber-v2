@@ -31,6 +31,7 @@
 		67A69999262E5E8C00E178BC /* ContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A69998262E5E8C00E178BC /* ContainerController.swift */; };
 		67A699A1262E5E9C00E178BC /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A699A0262E5E9C00E178BC /* MenuController.swift */; };
 		67A699A6262E5ED800E178BC /* MenuHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A699A5262E5ED800E178BC /* MenuHeader.swift */; };
+		67EBD4AD2633FE610034CAB7 /* DetailItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EBD4AC2633FE610034CAB7 /* DetailItemView.swift */; };
 		87BF44608C39A2D8FC54A5FD /* Pods_muber_v2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76599282EA482C48CC3E822 /* Pods_muber_v2.framework */; };
 		C1A815E9262D6E94002B4441 /* LocationInputActivationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A815E8262D6E94002B4441 /* LocationInputActivationView.swift */; };
 		C1A815F4262E591E002B4441 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1A815F3262E591E002B4441 /* GoogleService-Info.plist */; };
@@ -86,6 +87,7 @@
 		67A69998262E5E8C00E178BC /* ContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerController.swift; sourceTree = "<group>"; };
 		67A699A0262E5E9C00E178BC /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		67A699A5262E5ED800E178BC /* MenuHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHeader.swift; sourceTree = "<group>"; };
+		67EBD4AC2633FE610034CAB7 /* DetailItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailItemView.swift; sourceTree = "<group>"; };
 		7F763BF86D0608575B463BDD /* Pods-muber-v2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-muber-v2.debug.xcconfig"; path = "Target Support Files/Pods-muber-v2/Pods-muber-v2.debug.xcconfig"; sourceTree = "<group>"; };
 		C1A815E8262D6E94002B4441 /* LocationInputActivationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInputActivationView.swift; sourceTree = "<group>"; };
 		C1A815F3262E591E002B4441 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "muber-v2/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -225,6 +227,7 @@
 				25170F012631137A000AB39D /* RideActionView.swift */,
 				2566DF1D2631522900B8CAFE /* CalendarAndListView.swift */,
 				67912934263292C500AF98B9 /* ItemsView.swift */,
+				67EBD4AC2633FE610034CAB7 /* DetailItemView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -456,6 +459,7 @@
 				2566DF1E2631522900B8CAFE /* CalendarAndListView.swift in Sources */,
 				2573258F262D506F00FD18C6 /* HomeController.swift in Sources */,
 				2571E546262D2F8A008B0073 /* AppDelegate.swift in Sources */,
+				67EBD4AD2633FE610034CAB7 /* DetailItemView.swift in Sources */,
 				25170D72262E703C000AB39D /* User.swift in Sources */,
 				25170D6C262E7004000AB39D /* Service.swift in Sources */,
 				2571E548262D2F8A008B0073 /* SceneDelegate.swift in Sources */,
