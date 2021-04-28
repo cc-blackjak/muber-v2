@@ -72,7 +72,7 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
     private lazy var addButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .black
-        button.setTitle("add", for: .normal)
+        button.setTitle("Add", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
@@ -94,7 +94,6 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
         super.init(frame: frame)
         
         backgroundColor = .white
-
         addShadow()
 
         let stack = UIStackView(arrangedSubviews: [titleLabel, promptLabel])
@@ -133,25 +132,14 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
         
         // to comfirm
         addSubview(actionButton)
-        actionButton.anchor(left: leftAnchor,
-                            bottom: safeAreaLayoutGuide.bottomAnchor,
-                            right: rightAnchor,
-                            paddingTop: 12,
-                            paddingLeft: 12,
-                            paddingBottom: 40,
-                            paddingRight: 12,
-                            height: 50)
+        actionButton.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, height: 50)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    override func updateConstraints() {
-//        print("updateConstraints is called")
-//        super.updateConstraints()
-//    }
-    
+
     func setup() {
         tableView = UITableView(frame: CGRect(x: 0, y: 120, width: 450, height: 800))
         tableView.layer.backgroundColor = UIColor.black.cgColor
@@ -164,11 +152,17 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
         print("addbutton pressed")
         delegate?.proceedToDetailItemView(self)
         selectedItemRow = nil
-//        tableView.reloadData() // Addボタン時、リロードは不要
-
     }
     
     @objc func confirmButtonPressed() {
+        Service.shared.uploadItemList(items: itemsList) { (error, ref) in
+            if let error = error {
+                print("DEBUG: Failed to upload items with error \(error)")
+                return
+            }
+            print("DEBUG: Did upload items successfully")
+        }
+        
         print("confirm button pressed")
         delegate2?.proceedToConfirmationPageView(self)
     }

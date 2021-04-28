@@ -218,11 +218,9 @@ class HomeController: UIViewController {
         
         view.addSubview(rideActionView)
         rideActionView.delegate = self
-        rideActionView.frame = CGRect(x: 0,
-                                      y: view.frame.height,
-                                      width: view.frame.width,
-                                      height: rideActionViewHeight)
-        print("DEBUG: test1 RideAction View loaded")
+        rideActionView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: rideActionViewHeight)
+        print("Configuring ride action view...")
+
     }
     
     // カレンダー/アイテムリスト表示
@@ -232,32 +230,30 @@ class HomeController: UIViewController {
         
         view.addSubview(calendarAndListView)
         calendarAndListView.delegate = self
-//        calendarAndListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
         calendarAndListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: calendarAndListViewHeight)
-        print("DEBUG: test2 Calendar And List View loaded")
+        print("Configuring calendar view...")
+
     }
 
     func configureItemsView() {
         view.addSubview(items)
         items.delegate = self
         items.delegate2 = self
-//        items.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
         items.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: calendarAndListViewHeight)
-        print("DEBUG: test3")
+        print("Configuring items view...")
     }
     
     func configureDetailItemView() {
         view.addSubview(detailItem)
         detailItem.delegate = self
-//        detailItem.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
         detailItem.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: calendarAndListViewHeight)
-        print("DEBUG: test4")
+        print("Configuring detail item view...")
     }
     
     func configureConfirmationPageView() {
         view.addSubview(confirmationPageView)
-        confirmationPageView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
-        print("DEBUG: test5")
+        confirmationPageView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: calendarAndListViewHeight)
+        print("Configuring confirmation page view...")
     }
     
     // Mapを表示
@@ -496,25 +492,23 @@ extension HomeController: LocationInputViewDelegate {
 
 extension HomeController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Search results..."
         print("\n\(loadedNumber). \(String(describing: type(of: self))) > tableView(UITableViewDelegate/dataSource) is loaded.")
         loadedNumber += 1
-        
-        return "Please select your destination."
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 2 : searchResults.count
+        return searchResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! LocationCell
-        if indexPath.section == 1 {
+        
             cell.placemark = searchResults[indexPath.row]
-        }
         return cell
     }
     
@@ -868,6 +862,7 @@ extension HomeController: ItemsViewDelegate {
 extension HomeController: ItemsViewDelegate2 {
     func proceedToConfirmationPageView(_ view: ItemsView) {
         print("proceeding to confirmation page...")
+        self.confirmationPageView.tableView.reloadData()
         self.animateConfirmationPageView(shouldShow: true)
     }
 }
