@@ -63,7 +63,7 @@ class LocationInputView: UIView {
         tf.font = UIFont.systemFont(ofSize: 14)
         
         let paddingView = UIView()
-        paddingView.setDimentions(height: 30, width: 8)
+        paddingView.setDimensions(height: 30, width: 8)
         tf.leftView = paddingView
         tf.leftViewMode = .always
         
@@ -79,7 +79,7 @@ class LocationInputView: UIView {
         tf.delegate = self
         
         let paddingView = UIView()
-        paddingView.setDimentions(height: 30, width: 8)
+        paddingView.setDimensions(height: 30, width: 8)
         tf.leftView = paddingView
         tf.leftViewMode = .always
         
@@ -111,13 +111,13 @@ class LocationInputView: UIView {
         
         addSubview(startLocationIndicatorView)
         startLocationIndicatorView.centerY(inView: startingLocationTextField, leftAnchor: leftAnchor, paddingLeft: 20)
-        startLocationIndicatorView.setDimentions(height: 6, width: 6)
+        startLocationIndicatorView.setDimensions(height: 6, width: 6)
         startLocationIndicatorView.layer.cornerRadius = 6/2
         
         
         addSubview(destinationIndicatorView)
         destinationIndicatorView.centerY(inView: destinationLocationTextField, leftAnchor: leftAnchor, paddingLeft: 20)
-        destinationIndicatorView.setDimentions(height: 6, width: 6)
+        destinationIndicatorView.setDimensions(height: 6, width: 6)
         
         addSubview(linkingView)
         linkingView.centerX(inView: startLocationIndicatorView)

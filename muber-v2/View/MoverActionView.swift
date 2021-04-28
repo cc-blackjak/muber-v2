@@ -1,18 +1,18 @@
 //
-//  RideActionView.swift
+//  MoverActionView.swift
 //  muber-v2
 //
-//  Created by LucySD on 2021/04/22.
+//  Created by Jun Gao on 2021/04/27.
 //
 
 import UIKit
 import MapKit
 
-protocol RideActionViewDelegate: class {
-    func proceedToSetDateAndUploadAddress(_ view: RideActionView)
+protocol MoverActionViewDelegate: class {
+    func proceedToConfirmView(_ view: MoverActionView)
 }
 
-class RideActionView: UIView {
+class MoverActionView: UIView {
 
     // MARK: - Properties
     
@@ -23,7 +23,9 @@ class RideActionView: UIView {
         }
     }
     
-    weak var delegate: RideActionViewDelegate?
+//    var riderTitleLabelText : String? = nil
+    
+    weak var delegate: MoverActionViewDelegate?
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -41,14 +43,14 @@ class RideActionView: UIView {
         
     }()
     
-    private lazy var infoView: UIView = {
+    lazy var infoView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
         
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 30)
         label.textColor = .white
-        label.text = "M"
+        label.text = "R"
         
         view.addSubview(label)
         label.centerX(inView: view)
@@ -57,10 +59,10 @@ class RideActionView: UIView {
         return view
     }()
     
-    private let muberLabel: UILabel = {
+    let muberLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
-        label.text = "Muber"
+        label.text = "tmpText" // tripsArray[selectedTripRow!].passengerUid ??
         label.textAlignment = .center
         return label
     }()
@@ -68,7 +70,7 @@ class RideActionView: UIView {
     private let actionButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .black
-        button.setTitle("SET DATE", for: .normal)
+        button.setTitle("See Detail", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
@@ -121,6 +123,6 @@ class RideActionView: UIView {
     // MARK: - Selectors
     
     @objc func actionButtonPressed() {
-        delegate?.proceedToSetDateAndUploadAddress(self)
+        delegate?.proceedToConfirmView(self)
     }
 }

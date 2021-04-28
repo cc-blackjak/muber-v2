@@ -66,7 +66,7 @@ class DetailItemView: UIView, UITextFieldDelegate {
         tf.font = UIFont.systemFont(ofSize: 24)
         
         let paddingView = UIView()
-        paddingView.setDimentions(height: 30, width: 8)
+        paddingView.setDimensions(height: 30, width: 8)
         tf.leftView = paddingView
         tf.leftViewMode = .always
         
@@ -162,7 +162,7 @@ class DetailItemView: UIView, UITextFieldDelegate {
     
     // MARK: - Selectors
     @objc func okButtonPressed() {
-        print("okbutton pressed!")
+        print("DetailItemView > Selectors > okButtonPressed")
         if (detailItemTitleTextField.text == ""){
             alert()
         }else{
@@ -193,7 +193,6 @@ class DetailItemView: UIView, UITextFieldDelegate {
         detailItemInformationTextField.text = ""
         
         selectedItemRow = nil
-        
         delegate?.returnToItemsView(self)
     }
 }

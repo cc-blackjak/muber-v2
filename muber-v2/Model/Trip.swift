@@ -40,7 +40,9 @@ struct Trip {
         self.destinationName = dictionary["destinationName"] as? String ?? ""
 
         self.date = dictionary["date"] as? String
-
+        
+        self.items = dictionary["items"] as? [[String:String]] ?? tmpItems
+        
         if let pickupCoordinates = dictionary["pickupCoordinates"] as? NSArray {
             guard let lat = pickupCoordinates[0] as? CLLocationDegrees else { return }
             guard let long = pickupCoordinates[1] as? CLLocationDegrees else { return }
