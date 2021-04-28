@@ -7,13 +7,37 @@
 
 import UIKit
 
-class ConfirmationPageView: UIView {
-    
+class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
     var trip: Trip? {
         didSet {
             address.text = trip?.destinationAddress
             date.text = trip?.date
         }
+    }
+    
+    
+    var tableView = UITableView()
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Your list of items"
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("count in confirmList: ", itemsList.count)
+        return itemsList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = "\(itemsList[indexPath.row]["title"] ?? "nil")"
+        print("title: ", itemsList[indexPath.row]["title"] ?? "nil")
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let item = itemsList[indexPath.row]
+        selectedItemRow = indexPath.row
+        print("selectedRow: ", selectedItemRow!)
     }
 
     private let titleLabel: UILabel = {
@@ -63,6 +87,7 @@ class ConfirmationPageView: UIView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.textAlignment = .left
+        label.numberOfLines = 0
         return label
     }()
     
@@ -73,7 +98,7 @@ class ConfirmationPageView: UIView {
         button.setTitle("CONFIRM BOOKING", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(confirmBookingPressed), for: .touchUpInside)
         return button
     }()
     
@@ -112,12 +137,23 @@ class ConfirmationPageView: UIView {
         
         let stack2 = UIStackView(arrangedSubviews: [hStack1, hStack2])
         stack2.axis = .vertical
-        stack2.spacing = 4
+        stack2.spacing = 6
         stack2.distribution = .fillEqually
         
         addSubview(stack2)
         stack2.centerX(inView: self)
         stack2.anchor(top: separatorView.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 12, paddingRight: 12)
+        
+        let separatorView2 = UIView()
+        separatorView2.backgroundColor = .lightGray
+        addSubview(separatorView2)
+        separatorView2.anchor(top: stack2.bottomAnchor, left: safeAreaLayoutGuide.leftAnchor, right: safeAreaLayoutGuide.rightAnchor, paddingTop: 12, height: 0.75)
+        
+//        configureTable()
+//        tableView.delegate = self
+//        tableView.dataSource = self
+//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+//        tableView.separatorStyle = .none
         
         addSubview(actionButton)
         actionButton.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 40, paddingRight: 12, height: 50)
@@ -127,8 +163,21 @@ class ConfirmationPageView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func actionButtonPressed() {
+    // MARK: - Helper Functions
     
+    func configureTable() {
+        
+        tableView.tableFooterView = UIView()
+        tableView.allowsSelection = false
+        tableView = UITableView(frame: CGRect(x: 0, y: 200, width: 450, height: 400))
+        tableView.layer.backgroundColor = UIColor.black.cgColor
+        addSubview(tableView)
+      }
+    
+    // MARK: - Selectors
+    
+    @objc func confirmBookingPressed() {
+        
     }
     
 }

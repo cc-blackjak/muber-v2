@@ -191,14 +191,14 @@ class HomeController: UIViewController {
         view.addSubview(rideActionView)
         rideActionView.delegate = self
         rideActionView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: rideActionViewHeight)
-        print("DEBUG: test1")
+        print("Configuring ride action view...")
     }
     
     func configureCalendarAndListView() {
         view.addSubview(calendarAndListView)
         calendarAndListView.delegate = self
-        calendarAndListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
-        print("DEBUG: test2")
+        calendarAndListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: rideActionViewHeight)
+        print("Configuring calendar view...")
     }
 
     func configureItemsView() {
@@ -206,20 +206,20 @@ class HomeController: UIViewController {
         items.delegate = self
         items.delegate2 = self
         items.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
-        print("DEBUG: test3")
+        print("Configuring items view...")
     }
     
     func configureDetailItemView() {
         view.addSubview(detailItem)
         detailItem.delegate = self
         detailItem.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
-        print("DEBUG: test4")
+        print("Configuring detail item view...")
     }
     
     func configureConfirmationPageView() {
         view.addSubview(confirmationPageView)
         confirmationPageView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
-        print("DEBUG: test5")
+        print("Configuring confirmation page view...")
     }
     
     func configureMapView(){
@@ -281,7 +281,7 @@ class HomeController: UIViewController {
     
     func animateCalendarAndListView(shouldShow: Bool) {
         print("animateCalendarAndListView")
-        let yOrigin = shouldShow ? self.view.frame.height - self.calendarAndListViewHeight :
+        let yOrigin = shouldShow ? self.view.frame.height - self.rideActionViewHeight :
             self.view.frame.height
         
         UIView.animate(withDuration: 0.3) {
@@ -443,22 +443,21 @@ extension HomeController: LocationInputViewDelegate {
 
 extension HomeController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "test"
+        return "Search results..."
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 2 : searchResults.count
+        return searchResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! LocationCell
-        if indexPath.section == 1 {
+        
             cell.placemark = searchResults[indexPath.row]
-        }
         return cell
     }
     
@@ -550,6 +549,7 @@ extension HomeController: ItemsViewDelegate {
 extension HomeController: ItemsViewDelegate2 {
     func proceedToConfirmationPageView(_ view: ItemsView) {
         print("proceeding to confirmation page...")
+        self.confirmationPageView.tableView.reloadData()
         self.animateConfirmationPageView(shouldShow: true)
     }
 }

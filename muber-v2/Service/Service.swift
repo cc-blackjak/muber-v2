@@ -32,7 +32,6 @@ struct Service {
             let uid = snapshot.key
             let trips = Trip(passengerUid: uid, dictionary: dictionary)
             completion(trips)
-//            print(trips)
         }
     }
     
@@ -64,5 +63,14 @@ struct Service {
         
         REF_TRIPS.child(uid).updateChildValues(value, withCompletionBlock: completion)
         print(value, uid)
+    }
+    
+    func uploadItemList(items: [[String:String]], completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        let values = ["items": items]
+        
+        REF_TRIPS.child(uid).updateChildValues(values, withCompletionBlock: completion)
+        print(values, uid)
     }
 }
