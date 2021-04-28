@@ -248,7 +248,7 @@ class HomeController: UIViewController {
     
     func configureDetailItemView() {
         view.addSubview(detailItem)
-        items.delegate = self
+        detailItem.delegate = self
 //        detailItem.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
         detailItem.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: calendarAndListViewHeight)
         print("DEBUG: test4")

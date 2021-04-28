@@ -179,12 +179,11 @@ class DetailItemView: UIView, UITextFieldDelegate {
             selectedItemRow = nil
             
             print("itemsList: ", itemsList)
-//            delegate?.returnToItemsView(self)
+            delegate?.returnToItemsView(self)
         }
     }
     
     @objc func deleteButtonPressed() {
-        delegate?.returnToItemsView(self)
         print("deletebutton pressed!")
         if selectedItemRow != nil {
             itemsList.remove(at: (selectedItemRow!))
@@ -194,6 +193,6 @@ class DetailItemView: UIView, UITextFieldDelegate {
         detailItemInformationTextField.text = ""
         
         selectedItemRow = nil
-        
+        delegate?.returnToItemsView(self)
     }
 }
