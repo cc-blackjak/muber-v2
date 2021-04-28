@@ -141,7 +141,7 @@ class MoverConfirmView: UIView, UITableViewDelegate, UITableViewDataSource {
         
         addSubview(stack)
         stack.centerX(inView: self)
-        stack.anchor(top: topAnchor, paddingTop:  32)
+        stack.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop:  32)
         
         addSubview(muberLabel)
         muberLabel.anchor(top: stack.bottomAnchor, paddingTop: 8)

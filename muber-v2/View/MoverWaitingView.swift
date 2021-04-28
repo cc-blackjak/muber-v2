@@ -130,7 +130,7 @@ class MoverWaitingView: UIView, UITableViewDelegate, UITableViewDataSource {
         
         addSubview(stack)
         stack.centerX(inView: self)
-        stack.anchor(top: topAnchor, paddingTop: 12)
+        stack.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 12)
 //        stack.anchor(top: scroll.topAnchor,
 //                     left: scroll.leftAnchor,
 //                     bottom: scroll.bottomAnchor,

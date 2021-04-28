@@ -93,7 +93,7 @@ class MoverActionView: UIView {
         
         addSubview(stack)
         stack.centerX(inView: self)
-        stack.anchor(top: topAnchor, paddingTop:  12)
+        stack.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop:  12)
         
         addSubview(infoView)
         infoView.centerX(inView: self)
