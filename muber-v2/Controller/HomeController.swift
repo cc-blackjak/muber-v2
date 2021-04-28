@@ -230,7 +230,7 @@ class HomeController: UIViewController {
         
         view.addSubview(calendarAndListView)
         calendarAndListView.delegate = self
-        calendarAndListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: rideActionViewHeight)
+        calendarAndListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: calendarAndListViewHeight)
         print("Configuring calendar view...")
 
     }
@@ -239,20 +239,20 @@ class HomeController: UIViewController {
         view.addSubview(items)
         items.delegate = self
         items.delegate2 = self
-        items.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
+        items.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: calendarAndListViewHeight)
         print("Configuring items view...")
     }
     
     func configureDetailItemView() {
         view.addSubview(detailItem)
         detailItem.delegate = self
-        detailItem.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
+        detailItem.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: calendarAndListViewHeight)
         print("Configuring detail item view...")
     }
     
     func configureConfirmationPageView() {
         view.addSubview(confirmationPageView)
-        confirmationPageView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
+        confirmationPageView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: calendarAndListViewHeight)
         print("Configuring confirmation page view...")
     }
     
