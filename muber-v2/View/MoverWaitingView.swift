@@ -47,7 +47,7 @@ class MoverWaitingView: UIView {
     
     let destAddressLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.font = UIFont.systemFont(ofSize: 15)
         label.text = "Tmp destAddressLabel"
         label.textAlignment = .left
         label.numberOfLines = 0

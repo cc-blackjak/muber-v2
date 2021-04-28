@@ -637,7 +637,7 @@ extension HomeController: MoverActionViewDelegate {
         moverConfirmView.dateLabel.text = "Day: \(tripsArray[selectedTripRow!].date!)"
         
         var tmpText = "Items:"
-        for item in tmpItems {
+        for item in tripsArray[selectedTripRow!].items! {
             print(item)
             tmpText += "\n\t - "
             tmpText += "\(item["title"] ?? "")"
