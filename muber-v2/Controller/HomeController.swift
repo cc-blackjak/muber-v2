@@ -323,7 +323,7 @@ class HomeController: UIViewController {
     
     func animateCalendarAndListView(shouldShow: Bool) {
         print("animateCalendarAndListView")
-        let yOrigin = shouldShow ? self.view.frame.height - self.rideActionViewHeight :
+        let yOrigin = shouldShow ? self.view.frame.height - self.calendarAndListViewHeight :
             self.view.frame.height
         
         UIView.animate(withDuration: 0.3) {
