@@ -604,6 +604,9 @@ extension HomeController: TripsListControllerDelegate {
             } else {
                 self.configureMoverWaitingView()
                 self.animateMoverWaitingView(shouldShow:true)
+                
+                // テーブルのリロードを行う
+                self.moverWaitingView.tableView.reloadData()
             }
         }
     }
@@ -825,7 +828,7 @@ extension HomeController {
     }
     
     func animateMoverWaitingView(shouldShow: Bool) {
-        let yOrigin = shouldShow ? 500 :
+        let yOrigin = shouldShow ? 400 :
             self.view.frame.height
         
 //        moverActionView.muberLabel.text = tripsArray[selectedTripRow!].passengerUid

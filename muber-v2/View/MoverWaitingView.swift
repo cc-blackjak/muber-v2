@@ -8,9 +8,46 @@
 import UIKit
 import MapKit
 
-class MoverWaitingView: UIView {
+class MoverWaitingView: UIView, UITableViewDelegate, UITableViewDataSource {
 
     // MARK: - Properties
+    
+    var tableView = UITableView()
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Your list of items"
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if reservedTrip != nil {
+            print("count in confirmList: ", reservedTrip?.items?.count ?? 0)
+            return reservedTrip?.items?.count ?? 0
+        }
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        if reservedTrip != nil {
+            cell.textLabel?.text = "\(reservedTrip?.items![indexPath.row]["title"] ?? "nil")"
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let item = itemsList[indexPath.row]
+//        selectedItemRow = indexPath.row
+//        print("selectedRow: ", selectedItemRow!)
+    }
+    
+    func configureTable() {
+        
+        tableView.tableFooterView = UIView()
+        tableView.allowsSelection = false
+        tableView.frame = CGRect(x: 0, y: 200, width: 450, height: 400)
+        tableView.layer.backgroundColor = UIColor.black.cgColor
+        addSubview(tableView)
+    }
     
     
     
@@ -119,6 +156,13 @@ class MoverWaitingView: UIView {
         separatorView.backgroundColor = .lightGray
         addSubview(separatorView)
         separatorView.anchor(top: muberLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 8, height: 0.75)
+        
+        configureTable()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.separatorStyle = .none
+        
     }
     
     required init?(coder: NSCoder) {
