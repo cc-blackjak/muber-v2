@@ -13,6 +13,8 @@ let DB_REF = Database.database().reference()
 let REF_USERS = DB_REF.child("users")
 let REF_TRIPS = DB_REF.child("trips")
 
+var loginUid : String? = nil
+
 struct Service {
     
     static let shared = Service()
@@ -22,6 +24,7 @@ struct Service {
             guard let dictionary = snapshot.value as? [String: Any] else { return }
             let uid = snapshot.key
             let user = User(uid: uid, dictionary: dictionary)
+            loginUid = user.uid
             completion(user)
         }
     }
@@ -72,5 +75,38 @@ struct Service {
         
         REF_TRIPS.child(uid).updateChildValues(values, withCompletionBlock: completion)
         print(values, uid)
+    }
+}
+
+struct DriverService {
+    static let shared = DriverService()
+    
+    // 全旅行をフェッチし、ステータスが0のものを旅行リストにいれる。処理完了後、念の為ステータスをStringで返し、テーブル表示を行う
+    func observeTrips(completion: @escaping(String) -> Void) {
+        print("\n\(loadedNumber). DriverService > observeTrips is loaded.")
+        loadedNumber += 1
+        
+        REF_TRIPS.observe(.value) { (snapshot) in
+            for child in snapshot.children {
+                print("child: ", child)
+                guard let childData = child as? DataSnapshot else { return }
+                guard let dictionary = childData.value as? NSDictionary else { return }
+                let puid = childData.key
+                
+                let trip = Trip(passengerUid: puid, dictionary: dictionary as! [String : Any])
+                // ステータスが 1 = 予約済みで、MoverUIDがログイン中のMoverのものがあれば保存、表示判定に利用
+                if trip.state.rawValue == 2 && trip.driverUid == loginUid! {
+                    reservedTrip = trip
+                }
+                
+                // Moverとして予約済みのものがないのであれば、ステータスが 0 = 未予約のものを全て取得
+                if trip.state.rawValue < 2 && reservedTrip == nil {
+                    tripsArray.append(trip)
+                }
+            }
+            completion("Done")
+            print("observeTrips in Driver service DONE.")
+        }
+        
     }
 }
