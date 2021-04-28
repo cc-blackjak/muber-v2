@@ -6,6 +6,7 @@
 //
 
 import Firebase
+import FirebaseAuth
 import CoreLocation
 
 let DB_REF = Database.database().reference()
@@ -28,7 +29,26 @@ struct Service {
         }
     }
     
-    func uploadAddress(_ pickupCoordinates: CLLocationCoordinate2D, _ destinationCoordinates: CLLocationCoordinate2D, completion: @escaping(Error?, DatabaseReference) -> Void) {
+    func fetchUserTripData(uid: String, completion: @escaping(Trip) -> Void) {
+        REF_TRIPS.child(uid).observeSingleEvent(of: .value) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            let uid = snapshot.key
+            let trips = Trip(passengerUid: uid, dictionary: dictionary)
+            completion(trips)
+//            print(trips)
+        }
+    }
+    
+    func uploadDestinationAddressAndName(destinationAddress: String, destinationName: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        let values = ["destinationName": destinationName,"destinationAddress": destinationAddress]
+        
+        REF_TRIPS.child(uid).updateChildValues(values, withCompletionBlock: completion)
+        print(values, uid)
+    }
+    
+    func uploadCoordinates(_ pickupCoordinates: CLLocationCoordinate2D, _ destinationCoordinates: CLLocationCoordinate2D, completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         let pickupArray = [pickupCoordinates.latitude, pickupCoordinates.longitude]
@@ -36,8 +56,17 @@ struct Service {
         
         let values = ["pickupCoordinates": pickupArray, "destinationCoordinates": destinationArray]
         
-//        REF_TRIPS.child(uid).updateChildValues(values, withCompletionBlock: completion)
+        REF_TRIPS.child(uid).updateChildValues(values, withCompletionBlock: completion)
         print(values, uid)
+    }
+    
+    func uploadDate(date: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        let value = ["date": date]
+        
+        REF_TRIPS.child(uid).updateChildValues(value, withCompletionBlock: completion)
+        print(value, uid)
     }
 }
 

@@ -7,36 +7,48 @@
 
 import UIKit
 
-protocol ItemsViewDelegate: class {
+protocol ItemsViewDelegate: AnyObject {
     func proceedToDetailItemView(_ view: ItemsView)
 }
 
-//var itemsList: [String] = ["jun", "bilaal","kakeru", "arisa"]
-    var itemsList: [[String : String]] = []
+protocol ItemsViewDelegate2: AnyObject {
+    func proceedToConfirmationPageView(_ view: ItemsView)
+}
 
-var selectedRow: Int? = nil
+//var itemsList: [String] = ["jun", "bilaal","kakeru", "arisa"]
+var itemsList: [[String : String]] = []
+
+var selectedItemRow: Int? = nil
 
 class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - Properties
     
     weak var delegate: ItemsViewDelegate?
+    weak var delegate2: ItemsViewDelegate2?
+
     
     var tableView = UITableView()
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("count: ", itemsList.count)
         return itemsList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-        cell.textLabel?.text = itemsList[indexPath.row]["title"]
+        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = "\(itemsList[indexPath.row]["title"] ?? "nil")"
+        print("title: ", itemsList[indexPath.row]["title"] ?? "nil")
         return cell
     }
+    
+    
     // 選択したアイテムの行番号を取得
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = itemsList[indexPath.row]
-        print("item: ", item)
+//        let item = itemsList[indexPath.row]
+        selectedItemRow = indexPath.row
+        print("selectedRow: ", selectedItemRow!)
+        delegate?.proceedToDetailItemView(self)
     }
 
     private let titleLabel: UILabel = {
@@ -57,7 +69,7 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
 
     }()
     
-    private let addButton: UIButton = {
+    private lazy var addButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .black
         button.setTitle("add", for: .normal)
@@ -68,19 +80,19 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
     }()
     
     // to comfirm
-    private let actionButton: UIButton = {
+    private lazy var actionButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .black
-        button.setTitle("confirm", for: .normal)
+        button.setTitle("PROCEED TO CONFIRMATION", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(confirmButtonPressed), for: .touchUpInside)
         return button
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        
         backgroundColor = .white
 
         addShadow()
@@ -135,6 +147,11 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
         fatalError("init(coder:) has not been implemented")
     }
     
+//    override func updateConstraints() {
+//        print("updateConstraints is called")
+//        super.updateConstraints()
+//    }
+    
     func setup() {
         tableView = UITableView(frame: CGRect(x: 0, y: 120, width: 450, height: 800))
         tableView.layer.backgroundColor = UIColor.black.cgColor
@@ -144,13 +161,15 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
     // MARK: - Selectors
     
     @objc func addButtonPressed() {
-        selectedRow = nil
-        delegate?.proceedToDetailItemView(self)
         print("addbutton pressed")
+        delegate?.proceedToDetailItemView(self)
+        selectedItemRow = nil
+//        tableView.reloadData() // Addボタン時、リロードは不要
 
     }
     
-    @objc func actionButtonPressed() {
-        print("button pressed to comfirm!")
+    @objc func confirmButtonPressed() {
+        print("confirm button pressed")
+        delegate2?.proceedToConfirmationPageView(self)
     }
 }

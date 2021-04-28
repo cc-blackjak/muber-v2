@@ -7,13 +7,18 @@
 
 import UIKit
 
-//protocol DetailItemViewDelegate: class {
-//    func presentDetailInputView()
+protocol DetailItemViewDelegate: AnyObject {
+    func returnToItemsView(_ view: DetailItemView)
+}
+
+//protocol DetailItemViewDelegate2: AnyObject {
+//    func refreshItemList(_ view: DetailItemView)
 //}
 
 class DetailItemView: UIView, UITextFieldDelegate {
     
-//    weak var delegate: DetailItemViewDelegate?
+    weak var delegate: DetailItemViewDelegate?
+//    weak var delegate2: DetailItemViewDelegate2?
 
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -36,7 +41,7 @@ class DetailItemView: UIView, UITextFieldDelegate {
     private let okButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .black
-        button.setTitle("ok", for: .normal)
+        button.setTitle("OK", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(okButtonPressed), for: .touchUpInside)
@@ -46,7 +51,7 @@ class DetailItemView: UIView, UITextFieldDelegate {
     private let deleteButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .black
-        button.setTitle("delete", for: .normal)
+        button.setTitle("delete or back", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
@@ -126,35 +131,69 @@ class DetailItemView: UIView, UITextFieldDelegate {
                                     left: leftAnchor,
                                     right: rightAnchor,
                                     paddingTop: 12,
-                                    paddingLeft: 40,
-                                    paddingRight: 40,
-                                    height: 40)
+                                    paddingLeft: 12,
+                                    paddingRight: 12,
+                                    height: 50)
 
         addSubview(detailItemInformationTextField)
         detailItemInformationTextField.anchor(top: detailItemTitleTextField.bottomAnchor,
                                     left: leftAnchor,
                                     right: rightAnchor,
                                     paddingTop: 12,
-                                    paddingLeft: 40,
-                                    paddingRight: 40,
-                                    height: 400)
+                                    paddingLeft: 12,
+                                    paddingRight: 12,
+                                    height: 500)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    //もしtitleに入力がなかったらエラー発火
+    func alert(){
+        let alertController = UIAlertController(title: "please enter a item.",
+                                              message: "and enter details of a item.",
+                                              preferredStyle: UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "OK",
+                                                style: .default,
+                                                handler: nil))
+        UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true, completion: nil)
+    }
+
+    
     // MARK: - Selectors
     @objc func okButtonPressed() {
         print("okbutton pressed!")
-        if(selectedRow == nil){
-            itemsList.append(["title":detailItemTitleTextField.text!, "memo":detailItemInformationTextField.text])
-        } else {
-            itemsList[selectedRow!]["title"]! = detailItemTitleTextField.text!
-            itemsList[selectedRow!]["memo"]! = detailItemInformationTextField.text
+        if (detailItemTitleTextField.text == ""){
+            alert()
+        }else{
+            if(selectedItemRow == nil){
+                itemsList.append(["title":detailItemTitleTextField.text!, "memo":detailItemInformationTextField.text])
+            } else {
+                itemsList[selectedItemRow!]["title"] = detailItemTitleTextField.text
+                itemsList[selectedItemRow!]["memo"] = detailItemInformationTextField.text
+            }
+            
+            detailItemTitleTextField.text = ""
+            detailItemInformationTextField.text = ""
+            
+            selectedItemRow = nil
+            
+            print("itemsList: ", itemsList)
+            delegate?.returnToItemsView(self)
         }
     }
     
     @objc func deleteButtonPressed() {
         print("deletebutton pressed!")
+        if selectedItemRow != nil {
+            itemsList.remove(at: (selectedItemRow!))
+        }
+        
+        detailItemTitleTextField.text = ""
+        detailItemInformationTextField.text = ""
+        
+        selectedItemRow = nil
+        
+        delegate?.returnToItemsView(self)
     }
 }

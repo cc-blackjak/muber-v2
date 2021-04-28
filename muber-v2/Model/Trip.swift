@@ -7,6 +7,7 @@
 
 import CoreLocation
 
+
 enum TripState: Int {
     case requested // 0
     case accepted // 1
@@ -30,6 +31,8 @@ struct Trip {
         self.passengerUid = passengerUid
         self.driverUid = dictionary["driverUid"] as? String ?? ""
         
+    //    self.items = dictionary["items"] as? [[String:String]] ??
+            
         self.pickupLocationAddress = dictionary["pickupLocationAddress"] as? String ?? ""
 
         self.destinationAddress = dictionary["destinationAddress"] as? String ?? ""

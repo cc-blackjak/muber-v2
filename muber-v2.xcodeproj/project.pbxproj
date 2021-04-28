@@ -14,6 +14,7 @@
 		25170F022631137A000AB39D /* RideActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25170F012631137A000AB39D /* RideActionView.swift */; };
 		2566DF1E2631522900B8CAFE /* CalendarAndListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2566DF1D2631522900B8CAFE /* CalendarAndListView.swift */; };
 		2566DF332631755200B8CAFE /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2566DF322631755200B8CAFE /* Trip.swift */; };
+		2566DFBF26380D0E00B8CAFE /* ConfirmationPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2566DFBE26380D0E00B8CAFE /* ConfirmationPageView.swift */; };
 		2571E546262D2F8A008B0073 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E545262D2F8A008B0073 /* AppDelegate.swift */; };
 		2571E548262D2F8A008B0073 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E547262D2F8A008B0073 /* SceneDelegate.swift */; };
 		2571E54A262D2F8A008B0073 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571E549262D2F8A008B0073 /* ViewController.swift */; };
@@ -68,6 +69,7 @@
 		25170F012631137A000AB39D /* RideActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideActionView.swift; sourceTree = "<group>"; };
 		2566DF1D2631522900B8CAFE /* CalendarAndListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAndListView.swift; sourceTree = "<group>"; };
 		2566DF322631755200B8CAFE /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
+		2566DFBE26380D0E00B8CAFE /* ConfirmationPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationPageView.swift; sourceTree = "<group>"; };
 		2571E542262D2F8A008B0073 /* muber-v2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "muber-v2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2571E545262D2F8A008B0073 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2571E547262D2F8A008B0073 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				2566DF1D2631522900B8CAFE /* CalendarAndListView.swift */,
 				67912934263292C500AF98B9 /* ItemsView.swift */,
 				67EBD4AC2633FE610034CAB7 /* DetailItemView.swift */,
+				2566DFBE26380D0E00B8CAFE /* ConfirmationPageView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -460,6 +463,7 @@
 				2566DF332631755200B8CAFE /* Trip.swift in Sources */,
 				2571E54A262D2F8A008B0073 /* ViewController.swift in Sources */,
 				2571E583262D3091008B0073 /* LoginController.swift in Sources */,
+				2566DFBF26380D0E00B8CAFE /* ConfirmationPageView.swift in Sources */,
 				2571E584262D3091008B0073 /* SignUpController.swift in Sources */,
 				67912935263292C500AF98B9 /* ItemsView.swift in Sources */,
 				2571E582262D3091008B0073 /* AuthButton.swift in Sources */,

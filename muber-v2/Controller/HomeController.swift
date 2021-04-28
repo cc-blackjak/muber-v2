@@ -38,6 +38,7 @@ class HomeController: UIViewController {
     private let calendarAndListView = CalendarAndListView()
     private let items = ItemsView()
     private let detailItem = DetailItemView()
+    private let confirmationPageView = ConfirmationPageView()
     private let locationInputView = LocationInputView()
     private let tableView = UITableView()
     private var tripsListController: TripsListController!
@@ -48,7 +49,6 @@ class HomeController: UIViewController {
 
     private var actionButttonConfig = actionButtonConfiguration()
     private var route: MKRoute?
-    
     
     var user: User? {
         didSet {
@@ -80,6 +80,10 @@ class HomeController: UIViewController {
                 observeTrips()
             }
         }
+    }
+    
+    var trip: Trip? {
+        didSet { confirmationPageView.trip = trip}
     }
     
     private let actionButton: UIButton = {
@@ -118,11 +122,40 @@ class HomeController: UIViewController {
                     self.animateCalendarAndListView(shouldShow: false)
                     self.animateItemsView(shouldShow: false)
                     self.animateDetailItemView(shouldShow: false)
+                    self.animateConfirmationPageView(shouldShow: false)
                 }
             }
     }
     
     // MARK: - API
+    
+    func fetchUserData() {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        Service.shared.fetchUserData(uid: currentUid) { user in
+            self.user = user
+        }
+    }
+    
+    func fetchUserTripData() {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        Service.shared.fetchUserTripData(uid: currentUid) { trip in
+            self.trip = trip
+        }
+    }
+    
+    func checkIfUserIsLoggedIn(){
+        if Auth.auth().currentUser?.uid == nil {
+            DispatchQueue.main.async {
+                let nav = UINavigationController(rootViewController: LoginController())
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true, completion: nil)
+            }
+        } else {
+            configure()
+        }
+    }
+    
+    
     
     //MARK: - Helper Functions
 
@@ -138,12 +171,25 @@ class HomeController: UIViewController {
         }
     }
 
+    
+    func configure() {
+        configureUI()
+        fetchUserData()
+        fetchUserTripData()
+//        fetchDrivers()
+    }
+    
     func configureUI(){
         print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureUI is loaded.")
         loadedNumber += 1
         
         // マップ層 MKMapView を読み出し
         configureMapView()
+        configureRideActionView()
+        configureCalendarAndListView()
+        configureItemsView()
+        configureConfirmationPageView()
+        configureDetailItemView()
         
         // ハンバーガーメニューボタンを直で付け足し
         view.addSubview(actionButton)
@@ -197,6 +243,8 @@ class HomeController: UIViewController {
 
     func configureItemsView() {
         view.addSubview(items)
+        items.delegate = self
+        items.delegate2 = self
 //        items.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
         items.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: calendarAndListViewHeight)
         print("DEBUG: test3")
@@ -210,7 +258,12 @@ class HomeController: UIViewController {
         print("DEBUG: test4")
     }
     
-   
+    func configureConfirmationPageView() {
+        view.addSubview(confirmationPageView)
+        confirmationPageView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
+        print("DEBUG: test5")
+    }
+    
     // Mapを表示
     func configureMapView(){
         print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureMapView is loaded.")
@@ -277,6 +330,7 @@ class HomeController: UIViewController {
     }
     
     func animateCalendarAndListView(shouldShow: Bool) {
+        print("animateCalendarAndListView")
         let yOrigin = shouldShow ? self.view.frame.height - self.calendarAndListViewHeight :
             self.view.frame.height
         
@@ -302,6 +356,16 @@ class HomeController: UIViewController {
         
         UIView.animate(withDuration: 0.3) {
             self.detailItem.frame.origin.y = yOrigin
+        }
+    }
+    
+    func animateConfirmationPageView(shouldShow: Bool) {
+        print("animateConfirmationPageView")
+        let yOrigin = shouldShow ? self.view.frame.height - self.calendarAndListViewHeight :
+            self.view.frame.height
+        
+        UIView.animate(withDuration: 0.3) {
+            self.confirmationPageView.frame.origin.y = yOrigin
         }
     }
 }
@@ -488,6 +552,13 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
 
             self.mapView.zoomToFit(annotations: annotations)
             
+            Service.shared.uploadDestinationAddressAndName(destinationAddress: selectedPlacemark.address ?? "none", destinationName: selectedPlacemark.name ?? "none") { (error, ref) in
+                if let error = error {
+                    print("DEBUG: Failed to upload trip with error \(error)")
+                    return
+                }
+                print("DEBUG: Did upload trip successfully")
+            }
             self.animateRideActionView(shouldShow: true, destination: selectedPlacemark)
             
         }
@@ -498,8 +569,9 @@ extension HomeController: RideActionViewDelegate {
     func proceedToSetDateAndUploadAddress(_ view: RideActionView){
         guard let pickupCoordinates = locationManager?.location?.coordinate else { return }
         guard let destinationCoordinates = view.destination?.coordinate else { return }
-        
-        Service.shared.uploadAddress(pickupCoordinates, destinationCoordinates) { (error, ref) in
+
+        print(searchResults)
+        Service.shared.uploadCoordinates(pickupCoordinates, destinationCoordinates) { (error, ref) in
             if let error = error {
                 print("DEBUG: Failed to upload trip with error \(error)")
                 return
@@ -806,6 +878,7 @@ extension HomeController {
 // CalendarAndListView -> ItemsView
 extension HomeController: CalendarAndListViewDelegate {
     func proceedToItemsView(_ view: CalendarAndListView) {
+        
         print("proceeding to items...")
         self.animateItemsView(shouldShow: true)
     }
@@ -815,8 +888,32 @@ extension HomeController: CalendarAndListViewDelegate {
 extension HomeController: ItemsViewDelegate {
     func proceedToDetailItemView(_ view: ItemsView) {
         print("proceeding to detailitem...")
+        
+        // selectedRow がnil でない場合、DetailItemViewのTextBoxを入れておく
+        if selectedItemRow != nil {
+            self.detailItem.detailItemTitleTextField.text = itemsList[selectedItemRow!]["title"]!
+            self.detailItem.detailItemInformationTextField.text = itemsList[selectedItemRow!]["memo"]!
+        }
+        
         self.animateDetailItemView(shouldShow: true)
     }
 }
 
 // ItemsView -> ConfirmView
+extension HomeController: ItemsViewDelegate2 {
+    func proceedToConfirmationPageView(_ view: ItemsView) {
+        print("proceeding to confirmation page...")
+        self.animateConfirmationPageView(shouldShow: true)
+    }
+}
+
+// DetailItemView -> ItemsView
+extension HomeController: DetailItemViewDelegate {
+    func returnToItemsView(_ view: DetailItemView) {
+        self.items.tableView.reloadData()
+        self.animateDetailItemView(shouldShow: false)
+        print("HomeController > returnToItemsView called.")
+    }
+}
+
+
