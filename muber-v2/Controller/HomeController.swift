@@ -65,6 +65,7 @@ class HomeController: UIViewController {
                 configureLocationInputActivationView()
                 configureItemsView()
                 configureDetailItemView()
+                configureConfirmationPageView()
                 configureActionButton(config: .showMenu)
                 
                 configureTableiew()
@@ -129,12 +130,12 @@ class HomeController: UIViewController {
     
     // MARK: - API
     
-    func fetchUserData() {
-        guard let currentUid = Auth.auth().currentUser?.uid else { return }
-        Service.shared.fetchUserData(uid: currentUid) { user in
-            self.user = user
-        }
-    }
+//    func fetchUserData() {
+//        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+//        Service.shared.fetchUserData(uid: currentUid) { user in
+//            self.user = user
+//        }
+//    }
     
     func fetchUserTripData() {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
@@ -143,17 +144,17 @@ class HomeController: UIViewController {
         }
     }
     
-    func checkIfUserIsLoggedIn(){
-        if Auth.auth().currentUser?.uid == nil {
-            DispatchQueue.main.async {
-                let nav = UINavigationController(rootViewController: LoginController())
-                nav.modalPresentationStyle = .fullScreen
-                self.present(nav, animated: true, completion: nil)
-            }
-        } else {
-            configure()
-        }
-    }
+//    func checkIfUserIsLoggedIn(){
+//        if Auth.auth().currentUser?.uid == nil {
+//            DispatchQueue.main.async {
+//                let nav = UINavigationController(rootViewController: LoginController())
+//                nav.modalPresentationStyle = .fullScreen
+//                self.present(nav, animated: true, completion: nil)
+//            }
+//        } else {
+//            configure()
+//        }
+//    }
     
     
     
@@ -172,12 +173,12 @@ class HomeController: UIViewController {
     }
 
     
-    func configure() {
-        configureUI()
-        fetchUserData()
-        fetchUserTripData()
-//        fetchDrivers()
-    }
+//    func configure() {
+//        configureUI()
+//        fetchUserData()
+//        fetchUserTripData()
+////        fetchDrivers()
+//    }
     
     func configureUI(){
         print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureUI is loaded.")
@@ -185,11 +186,6 @@ class HomeController: UIViewController {
         
         // マップ層 MKMapView を読み出し
         configureMapView()
-        configureRideActionView()
-        configureCalendarAndListView()
-        configureItemsView()
-        configureConfirmationPageView()
-        configureDetailItemView()
         
         // ハンバーガーメニューボタンを直で付け足し
         view.addSubview(actionButton)
@@ -845,37 +841,6 @@ extension HomeController {
     }
 }
 
-
-//
-//func uploadAddress(_ pickupCoordinates: CLLocationCoordinate2D, _ destinationCoordinates: CLLocationCoordinate2D, completion: @escaping(Error?, DatabaseReference) -> Void) {
-//    guard let uid = Auth.auth().currentUser?.uid else { return }
-//
-//    let pickupArray = [pickupCoordinates.latitude, pickupCoordinates.longitude]
-//    let destinationArray = [destinationCoordinates.latitude, destinationCoordinates.longitude]
-//
-////        let tmpDate = Date()
-////        let tmpDateString = Timestamp(date: Date())
-//
-//    let record = Date()
-//    let encoder = JSONEncoder()
-//    var jsonstr : String?
-//    do {
-//        let data = try encoder.encode(record)
-//        jsonstr = String(data: data, encoding: .utf8)!
-//        print(jsonstr)
-//    } catch {
-//        print(error.localizedDescription)
-//    }
-//
-//    let values = ["pickupCoordinates": pickupArray,
-//                  "destinationCoordinates": destinationArray,
-//                  "state": TripState.requested.rawValue,
-//                  "timeAndDate": jsonstr!] as [String : Any]
-//
-//    REF_TRIPS.child(uid).updateChildValues(values , withCompletionBlock: completion)
-//    print(values, uid)
-//}
-// CalendarAndListView -> ItemsView
 extension HomeController: CalendarAndListViewDelegate {
     func proceedToItemsView(_ view: CalendarAndListView) {
         
@@ -910,9 +875,10 @@ extension HomeController: ItemsViewDelegate2 {
 // DetailItemView -> ItemsView
 extension HomeController: DetailItemViewDelegate {
     func returnToItemsView(_ view: DetailItemView) {
+        print("HomeController > returnToItemsView called start.")
         self.items.tableView.reloadData()
         self.animateDetailItemView(shouldShow: false)
-        print("HomeController > returnToItemsView called.")
+        print("HomeController > returnToItemsView called end.")
     }
 }
 

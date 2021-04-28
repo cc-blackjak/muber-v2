@@ -162,7 +162,7 @@ class DetailItemView: UIView, UITextFieldDelegate {
     
     // MARK: - Selectors
     @objc func okButtonPressed() {
-        print("okbutton pressed!")
+        print("DetailItemView > Selectors > okButtonPressed")
         if (detailItemTitleTextField.text == ""){
             alert()
         }else{
@@ -179,11 +179,12 @@ class DetailItemView: UIView, UITextFieldDelegate {
             selectedItemRow = nil
             
             print("itemsList: ", itemsList)
-            delegate?.returnToItemsView(self)
+//            delegate?.returnToItemsView(self)
         }
     }
     
     @objc func deleteButtonPressed() {
+        delegate?.returnToItemsView(self)
         print("deletebutton pressed!")
         if selectedItemRow != nil {
             itemsList.remove(at: (selectedItemRow!))
@@ -194,6 +195,5 @@ class DetailItemView: UIView, UITextFieldDelegate {
         
         selectedItemRow = nil
         
-        delegate?.returnToItemsView(self)
     }
 }
