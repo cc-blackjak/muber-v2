@@ -710,6 +710,7 @@ extension HomeController: MoverActionViewDelegate {
         }
         moverConfirmView.itemsLabel.text = tmpText
         
+        moverConfirmView.tableView.reloadData()
         animateMoverActionView(shouldShow: false)
         animateMoverConfirmView(shouldShow: true)
     }
