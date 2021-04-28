@@ -10,6 +10,7 @@ import UIKit
 class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
     var trip: Trip? {
         didSet {
+            addressName.text = trip?.destinationName
             address.text = trip?.destinationAddress
             date.text = trip?.date
         }
@@ -56,6 +57,22 @@ class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
         label.text = "Please confirm all details before booking"
         return label
         
+    }()
+    
+    private let addressNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.textAlignment = .left
+        label.text = "Destination Name"
+        return label
+    }()
+    
+    private let addressName: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        return label
     }()
     
     private let addressLabel: UILabel = {
@@ -123,6 +140,10 @@ class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
         addSubview(separatorView)
         separatorView.anchor(top: stack.bottomAnchor, left: safeAreaLayoutGuide.leftAnchor, right: safeAreaLayoutGuide.rightAnchor, paddingTop: 8, height: 0.75)
         
+        let hStack0 = UIStackView(arrangedSubviews: [addressNameLabel, addressName])
+        hStack0.axis = .horizontal
+        hStack0.spacing = 0
+        hStack0.distribution = .fillEqually
         
         let hStack1 = UIStackView(arrangedSubviews: [addressLabel, address])
         hStack1.axis = .horizontal
@@ -135,7 +156,7 @@ class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
         hStack2.distribution = .fillEqually
         
         
-        let stack2 = UIStackView(arrangedSubviews: [hStack1, hStack2])
+        let stack2 = UIStackView(arrangedSubviews: [hStack0, hStack1, hStack2])
         stack2.axis = .vertical
         stack2.spacing = 6
         stack2.distribution = .fillEqually
@@ -169,7 +190,7 @@ class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
         
         tableView.tableFooterView = UIView()
         tableView.allowsSelection = false
-        tableView = UITableView(frame: CGRect(x: 0, y: 200, width: 450, height: 400))
+        tableView = UITableView(frame: CGRect(x: 0, y: 220, width: 450, height: 400))
         tableView.layer.backgroundColor = UIColor.black.cgColor
         addSubview(tableView)
       }
