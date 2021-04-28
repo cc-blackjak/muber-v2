@@ -44,7 +44,7 @@ class HomeController: UIViewController {
     private var searchResults = [MKPlacemark]()
     private final let locationInputViewHeight: CGFloat = 200
     private final let rideActionViewHeight: CGFloat = 300
-    private final let calendarAndListViewHeight: CGFloat = 800
+    private final let calendarAndListViewHeight: CGFloat = 720
 
     private var actionButttonConfig = actionButtonConfiguration()
     private var route: MKRoute?
@@ -190,20 +190,23 @@ class HomeController: UIViewController {
         
         view.addSubview(calendarAndListView)
         calendarAndListView.delegate = self
-        calendarAndListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
+//        calendarAndListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
+        calendarAndListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: calendarAndListViewHeight)
         print("DEBUG: test2 Calendar And List View loaded")
     }
 
     func configureItemsView() {
         view.addSubview(items)
-        items.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
+//        items.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
+        items.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: calendarAndListViewHeight)
         print("DEBUG: test3")
     }
     
     func configureDetailItemView() {
         view.addSubview(detailItem)
         items.delegate = self
-        detailItem.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
+//        detailItem.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: view.frame.height)
+        detailItem.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: calendarAndListViewHeight)
         print("DEBUG: test4")
     }
     

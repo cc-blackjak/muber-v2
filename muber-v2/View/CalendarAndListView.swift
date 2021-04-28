@@ -36,7 +36,7 @@ class CalendarAndListView: UIView {
     }()
     
     private let calendar: UIDatePicker = {
-        let calendar1 = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
+        let calendar1 = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 500, height: 400))
         calendar1.preferredDatePickerStyle = .compact
         return calendar1
     }()
