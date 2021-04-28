@@ -4,9 +4,7 @@
 //
 //  Created by 中路亜理沙 on 16/04/2021.
 //
-
 //import Foundation
-
 import UIKit
 import FirebaseAuth
 
@@ -152,7 +150,6 @@ class ContainerController: UIViewController{
 }
 
 //MARK: -HomeControllerDelegate
-
 extension ContainerController: HomeControllerDelegate{
     func handleMenuToggle() {
         isExpanded.toggle()
@@ -161,7 +158,6 @@ extension ContainerController: HomeControllerDelegate{
 }
 
 //MARK: -MenuControllerDelegate
-
 extension ContainerController: MenuControllerDelegate {
     func didSelect(option: MenuOptions) {
         isExpanded.toggle()
