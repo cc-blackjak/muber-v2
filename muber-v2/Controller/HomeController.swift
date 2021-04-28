@@ -863,6 +863,7 @@ extension HomeController: ItemsViewDelegate2 {
     func proceedToConfirmationPageView(_ view: ItemsView) {
         print("proceeding to confirmation page...")
         self.confirmationPageView.tableView.reloadData()
+        fetchUserTripData()
         self.animateConfirmationPageView(shouldShow: true)
     }
 }
