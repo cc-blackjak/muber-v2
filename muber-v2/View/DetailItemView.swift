@@ -53,7 +53,7 @@ class DetailItemView: UIView, UITextFieldDelegate {
         return button
     }()
     
-    private lazy var detailItemTitleTextField: UITextField = {
+    lazy var detailItemTitleTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Please enter item.."
         tf.backgroundColor = .systemGroupedBackground
@@ -68,7 +68,7 @@ class DetailItemView: UIView, UITextFieldDelegate {
         return tf
     }()
     
-    private lazy var detailItemInformationTextField: UITextView = {
+    lazy var detailItemInformationTextField: UITextView = {
         let tf = UITextView()
         tf.backgroundColor = .systemGroupedBackground
         tf.returnKeyType = .search

@@ -58,12 +58,12 @@ struct DriverService {
                 
                 let trip = Trip(passengerUid: puid, dictionary: dictionary as! [String : Any])
                 // ステータスが 1 = 予約済みで、MoverUIDがログイン中のMoverのものがあれば保存、表示判定に利用
-                if trip.state.rawValue == 1 && trip.driverUid == loginUid! {
+                if trip.state.rawValue == 2 && trip.driverUid == loginUid! {
                     reservedTrip = trip
                 }
                 
                 // Moverとして予約済みのものがないのであれば、ステータスが 0 = 未予約のものを全て取得
-                if trip.state.rawValue == 0 && reservedTrip == nil {
+                if trip.state.rawValue < 2 && reservedTrip == nil {
                     tripsArray.append(trip)
                 }
             }

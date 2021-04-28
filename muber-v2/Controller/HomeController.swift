@@ -100,9 +100,7 @@ class HomeController: UIViewController {
         print("\n\(loadedNumber). HomeController > viewDidLoad is loaded.")
         loadedNumber += 1
         
-//        checkIfUserIsLoggedIn()
         enableLocationservices()
-//        configure()
         configureUI()
     }
     
@@ -155,9 +153,6 @@ class HomeController: UIViewController {
         UIView.animate(withDuration: 2) {
             self.inputActivationView.alpha = 1
         }
-
-//        // ライダー用のテーブルビュー
-//        configureTableiew()
     }
     
     // ライダー用 入力画面 Where部分
@@ -509,7 +504,7 @@ extension HomeController: RideActionViewDelegate {
             print("DEBUG: Did upload trip successfully")
 
         }
-        print("Hello")
+        print("DEBUG: RideActionViewDelegate")
         self.animateCalendarAndListView(shouldShow: true)
         
     }
@@ -542,7 +537,6 @@ extension HomeController: TripsListControllerDelegate {
             if reservedTrip == nil {
                 self.configureTripsListView()
             } else {
-                self.configureMoverWaitingView()
                 self.configureMoverWaitingView()
                 self.animateMoverWaitingView(shouldShow:true)
             }
@@ -619,7 +613,7 @@ extension HomeController: MoverActionViewDelegate {
         let yOrigin = shouldShow ? self.view.frame.height - self.rideActionViewHeight :
             self.view.frame.height
         
-        moverActionView.muberLabel.text = tripsArray[selectedTripRow!].passengerUid
+        moverActionView.muberLabel.text = tripsArray[selectedTripRow!].destinationName
         
         if shouldShow {
             guard let destination = destination else { return }
@@ -637,9 +631,10 @@ extension HomeController: MoverActionViewDelegate {
         loadedNumber += 1
         
         // Format detail
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy年MM月dd日 H:mm"
-        moverConfirmView.dateLabel.text = "Day: \(formatter.string(from: Date()))"
+        
+        moverConfirmView.destNameLabel.text = "Destination: \(tripsArray[selectedTripRow!].destinationName!)"
+        moverConfirmView.destAddressLabel.text = "\(tripsArray[selectedTripRow!].destinationAddress!)"
+        moverConfirmView.dateLabel.text = "Day: \(tripsArray[selectedTripRow!].date!)"
         
         var tmpText = "Items:"
         for item in tmpItems {
@@ -687,9 +682,8 @@ extension HomeController: MoverConfirmViewDelegate {
         
         // 更新すべき内容記載してアップロードする
         let updateDic = [
-            "someaddkey" : "someaddval",
             "driverUid" : loginUid!,
-            "state" : 1
+            "state" : 2
         ] as [String : Any]
         
         REF_TRIPS.child(tripsArray[selectedTripRow!].passengerUid).updateChildValues(updateDic)
@@ -711,9 +705,11 @@ extension HomeController {
                                       height: view.frame.height)
         
         // reservedTrip より内容を反映
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy年MM月dd日 H:mm"
-        moverWaitingView.dateLabel.text = "Day: \(formatter.string(from: Date()))"
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "yyyy年MM月dd日 H:mm"
+        moverWaitingView.destNameLabel.text = "Destination: \(reservedTrip!.destinationName!)"
+        moverWaitingView.destAddressLabel.text = "\(reservedTrip!.destinationAddress!)"
+        moverWaitingView.dateLabel.text = "Day: \(reservedTrip!.date!)"
         
         var tmpText = "Items:"
         for item in reservedTrip?.items as! [[String:String]] {

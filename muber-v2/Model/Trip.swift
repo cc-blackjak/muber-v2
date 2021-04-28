@@ -17,9 +17,10 @@ enum TripState: Int {
 struct Trip {
     var pickupCoodinates: CLLocationCoordinate2D!
     var destinationCoordinates: CLLocationCoordinate2D!
-//    let pickupLocationAddress: String!
-//    let destinationAddress: String!
-//    let dateAndTime: Date!
+    let pickupLocationAddress: String!
+    let destinationAddress: String!
+    let destinationName: String!
+    let date: String!
     let passengerUid: String!
     var driverUid: String?
     var state: TripState!
@@ -27,15 +28,18 @@ struct Trip {
 
     init(passengerUid: String, dictionary: [String: Any]) {
         self.passengerUid = passengerUid
+        self.driverUid = dictionary["driverUid"] as? String ?? ""
+        
+        self.pickupLocationAddress = dictionary["pickupLocationAddress"] as? String ?? ""
 
-//        self.pickupLocationAddress = dictionary["pickupLocationAddress"] as? String ?? ""
-//
-//        self.destinationAddress = dictionary["destinationAddress"] as? String ?? ""
-//
-//        self.dateAndTime = dictionary["dateAndTime"] as? Date
+        self.destinationAddress = dictionary["destinationAddress"] as? String ?? ""
+        
+        self.destinationName = dictionary["destinationName"] as? String ?? ""
 
+        self.date = dictionary["date"] as? String
+        
         self.items = dictionary["items"] as? [[String:String]] ?? tmpItems
-
+        
         if let pickupCoordinates = dictionary["pickupCoordinates"] as? NSArray {
             guard let lat = pickupCoordinates[0] as? CLLocationDegrees else { return }
             guard let long = pickupCoordinates[1] as? CLLocationDegrees else { return }
@@ -49,8 +53,6 @@ struct Trip {
             self.destinationCoordinates = CLLocationCoordinate2D(latitude: lat, longitude: long)
 
         }
-
-        self.driverUid = dictionary["driverUid"] as? String ?? ""
 
         if let state = dictionary["state"] as? Int {
             self.state = TripState(rawValue: state)

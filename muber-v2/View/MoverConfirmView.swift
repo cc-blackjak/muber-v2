@@ -42,6 +42,24 @@ class MoverConfirmView: UIView {
         return label
     }()
     
+    let destNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.text = "Tmp destNameLabel"
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    let destAddressLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.text = "Tmp destAddressLabel"
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        return label
+    }()
+    
     let dateLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
@@ -92,8 +110,14 @@ class MoverConfirmView: UIView {
         muberLabel.anchor(top: stack.bottomAnchor, paddingTop: 8)
         muberLabel.centerX(inView: self)
         
+        addSubview(destNameLabel)
+        destNameLabel.anchor(top: muberLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 30, paddingLeft: 20, paddingRight: 20)
+        
+        addSubview(destAddressLabel)
+        destAddressLabel.anchor(top: destNameLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 20, paddingRight: 20)
+        
         addSubview(dateLabel)
-        dateLabel.anchor(top: muberLabel.bottomAnchor, left: leftAnchor, paddingTop: 30, paddingLeft: 20)
+        dateLabel.anchor(top: destAddressLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 30, paddingLeft: 20, paddingRight: 20)
         
         addSubview(itemsLabel)
         itemsLabel.anchor(top: dateLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 20, paddingRight: 20)

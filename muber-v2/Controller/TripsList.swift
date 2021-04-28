@@ -68,7 +68,7 @@ extension TripsListController {
         
 //        guard let option = MenuOptions(rawValue: indexPath.row) else { return UITableViewCell() }
 //        cell.textLabel?.text = tmpTrips[indexPath.row]
-        cell.textLabel?.text = "\(indexPath.row) / \(tripsArray[indexPath.row].passengerUid!)"
+        cell.textLabel?.text = "\(tripsArray[indexPath.row].destinationAddress!)"
         
         return cell
     }
