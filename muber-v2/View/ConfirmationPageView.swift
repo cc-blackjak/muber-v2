@@ -199,6 +199,7 @@ class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
         
         addSubview(buttonStack)
         buttonStack.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, height: 50)
+
     }
     
     required init?(coder: NSCoder) {
