@@ -11,7 +11,7 @@ var reservedTrip : Trip? = nil
 
 import UIKit
 
-protocol TripsListControllerDelegate: class {
+protocol TripsListControllerDelegate: AnyObject {
     func tripSelected(selectedRow: Int)
 }
 
@@ -32,10 +32,6 @@ class TripsListController: UITableViewController {
 //    }()
     
     // MARK: - Lifecycle
-    
-//    init(user: User) {
-//        super.init(nibName: nil, bundle: nil)
-//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

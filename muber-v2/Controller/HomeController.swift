@@ -593,6 +593,8 @@ extension HomeController: RideActionViewDelegate {
 
 // MARK: - Mover's actions / TripsListControllerDelegate
 
+var isLoadTripsListCon : Bool = false
+
 extension HomeController: TripsListControllerDelegate {
     // Mover用 ListItemsを表示
     func configureTripsListView() {
@@ -606,6 +608,7 @@ extension HomeController: TripsListControllerDelegate {
         view.insertSubview(tripsListController.view!, at: 1)
         self.tripsListController.view.alpha = 1
         tripsListController.delegate = self
+        tripsListController.tableView.reloadData()
     }
     
     func observeTrips() {
@@ -616,7 +619,11 @@ extension HomeController: TripsListControllerDelegate {
             print("observeTrips > print tripsArray: ", tripsArray)
             print("observeTrips > print reservedTrip: ", reservedTrip)
             if reservedTrip == nil {
-                self.configureTripsListView()
+                if !isLoadTripsListCon {
+                    self.configureTripsListView()
+                    isLoadTripsListCon = true
+                }
+                self.tripsListController?.tableView.reloadData()
             } else {
                 self.configureMoverWaitingView()
                 self.animateMoverWaitingView(shouldShow:true)

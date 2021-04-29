@@ -15,7 +15,13 @@ let REF_TRIPS = DB_REF.child("trips")
 
 var loginUid : String? = nil
 
+protocol serviceDelegate : AnyObject {
+    func reloadTable()
+}
+
 struct Service {
+    
+    weak var delegate: serviceDelegate?
     
     static let shared = Service()
     
