@@ -35,7 +35,7 @@ class TripsListController: UITableViewController {
     
     func configureTableView() {
         tableView.backgroundColor = .white
-        tableView.separatorStyle = .none
+//        tableView.separatorStyle = .none
         tableView.isScrollEnabled = true
         tableView.rowHeight = 60
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TripsMenuCell")
@@ -57,7 +57,6 @@ extension TripsListController {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
 //        guard let option = MenuOptions(rawValue: indexPath.row) else { return UITableViewCell() }
 //        cell.textLabel?.text = tmpTrips[indexPath.row]
-        
         cell.textLabel?.text = "\(tripsArray[indexPath.row].destinationName!)"
         cell.detailTextLabel?.text = "\(tripsArray[indexPath.row].destinationAddress!)"
         
