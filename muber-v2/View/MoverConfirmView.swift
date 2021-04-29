@@ -12,11 +12,48 @@ protocol MoverConfirmViewDelegate: class {
     func proceedToConfirmAndUpload(_ view: MoverConfirmView)
 }
 
-class MoverConfirmView: UIView {
+class MoverConfirmView: UIView, UITableViewDelegate, UITableViewDataSource {
 
     // MARK: - Properties
     
     weak var delegate: MoverConfirmViewDelegate?
+    
+    var tableView = UITableView()
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Your list of items"
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if selectedTripRow != nil {
+            print("count in confirmList: ", tripsArray[selectedTripRow!].items?.count ?? 0)
+            return tripsArray[selectedTripRow!].items!.count
+        }
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        if selectedTripRow != nil {
+            cell.textLabel?.text = "\(tripsArray[selectedTripRow!].items![indexPath.row]["title"] ?? "nil")"
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let item = itemsList[indexPath.row]
+//        selectedItemRow = indexPath.row
+//        print("selectedRow: ", selectedItemRow!)
+    }
+    
+    func configureTable() {
+        
+        tableView.tableFooterView = UIView()
+        tableView.allowsSelection = false
+        tableView.frame = CGRect(x: 0, y: 220, width: 450, height: 400)
+        tableView.layer.backgroundColor = UIColor.black.cgColor
+        addSubview(tableView)
+    }
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -126,6 +163,12 @@ class MoverConfirmView: UIView {
         separatorView.backgroundColor = .lightGray
         addSubview(separatorView)
         separatorView.anchor(top: muberLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 8, height: 0.75)
+        
+        configureTable()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.separatorStyle = .none
         
         addSubview(actionButton)
         actionButton.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, height: 50)
