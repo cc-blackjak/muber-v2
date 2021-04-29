@@ -45,7 +45,7 @@ class HomeController: UIViewController {
     private var searchResults = [MKPlacemark]()
     private final let locationInputViewHeight: CGFloat = 200
     private final let rideActionViewHeight: CGFloat = 300
-    private final let calendarAndListViewHeight: CGFloat = 720
+    private var calendarAndListViewHeight: CGFloat = 720
 
     private var actionButttonConfig = actionButtonConfiguration()
     private var route: MKRoute?
@@ -55,6 +55,9 @@ class HomeController: UIViewController {
             locationInputView.user = user
             
             if user?.accountType == .passenger {
+                
+                self.calendarAndListViewHeight = view.frame.height / 1.06
+
                 // Riderが必要な画面
                 print("\n\(loadedNumber). \(String(describing: type(of: self))) > User didSet > .passenger is loaded.")
                 loadedNumber += 1
