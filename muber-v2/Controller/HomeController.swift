@@ -73,6 +73,8 @@ class HomeController: UIViewController {
                 configureActionButton(config: .showMenu)
                 
                 configureTableiew()
+                
+                oberveCurrentTrip()
             } else {
                 // Moverが必要な画面
                 print("\n\(loadedNumber). \(String(describing: type(of: self))) > User didSet > else is loaded.")
@@ -89,7 +91,12 @@ class HomeController: UIViewController {
     }
     
     var trip: Trip? {
-        didSet { confirmationPageView.trip = trip}
+        didSet {
+            confirmationPageView.trip = trip
+            
+//            guard let user = user else { return }
+            
+        }
     }
     
     private let actionButton: UIButton = {
@@ -155,26 +162,22 @@ class HomeController: UIViewController {
 //        }
 //    }
     
+    func oberveCurrentTrip() {
+        Service.shared.observeCurrentTrip { trip in
+            self.trip = trip
+            
+            if trip.state == .accepted {
+                print("Trip accepted")
+            }
+        }
+    }
+    
     func fetchUserTripData() {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
         Service.shared.fetchUserTripData(uid: currentUid) { trip in
             self.trip = trip
         }
     }
-    
-//    func checkIfUserIsLoggedIn(){
-//        if Auth.auth().currentUser?.uid == nil {
-//            DispatchQueue.main.async {
-//                let nav = UINavigationController(rootViewController: LoginController())
-//                nav.modalPresentationStyle = .fullScreen
-//                self.present(nav, animated: true, completion: nil)
-//            }
-//        } else {
-//            configure()
-//        }
-//    }
-    
-    
     
     //MARK: - Helper Functions
 
@@ -258,7 +261,6 @@ class HomeController: UIViewController {
     func configureItemsView() {
         view.addSubview(items)
         items.delegate = self
-        items.delegate2 = self
         items.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: calendarAndListViewHeight)
         print("Configuring items view...")
     }
@@ -272,6 +274,7 @@ class HomeController: UIViewController {
     
     func configureConfirmationPageView() {
         view.addSubview(confirmationPageView)
+        confirmationPageView.delegate = self
         confirmationPageView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: calendarAndListViewHeight)
         print("Configuring confirmation page view...")
     }
@@ -575,6 +578,8 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+
+// MARK: - RideActionViewDelegate
 extension HomeController: RideActionViewDelegate {
     func proceedToSetDateAndUploadAddress(_ view: RideActionView){
         guard let pickupCoordinates = locationManager?.location?.coordinate else { return }
@@ -592,6 +597,73 @@ extension HomeController: RideActionViewDelegate {
         print("DEBUG: RideActionViewDelegate")
         self.animateCalendarAndListView(shouldShow: true)
         
+    }
+}
+
+// MARK: - CalendarAndListViewDelegate
+extension HomeController: CalendarAndListViewDelegate {
+    func proceedToItemsView(_ view: CalendarAndListView) {
+        
+        print("proceeding to items...")
+        self.animateItemsView(shouldShow: true)
+        self.animateCalendarAndListView(shouldShow: false)
+    }
+}
+
+
+// MARK: - ItemsViewDelegate
+extension HomeController: ItemsViewDelegate {
+    func goBackToPreviousPageView(_ view: ItemsView) {
+        self.animateCalendarAndListView(shouldShow: true)
+        self.animateItemsView(shouldShow: false)
+    }
+    
+    func proceedToConfirmationPageView(_ view: ItemsView) {
+        print("proceeding to confirmation page...")
+        self.confirmationPageView.tableView.reloadData()
+        fetchUserTripData()
+        self.animateConfirmationPageView(shouldShow: true)
+        self.animateItemsView(shouldShow: false)
+    }
+    
+    func proceedToDetailItemView(_ view: ItemsView) {
+        print("proceeding to detailitem...")
+        
+        // selectedRow がnil でない場合、DetailItemViewのTextBoxを入れておく
+        if selectedItemRow != nil {
+            self.detailItem.detailItemTitleTextField.text = itemsList[selectedItemRow!]["title"]!
+            self.detailItem.detailItemInformationTextField.text = itemsList[selectedItemRow!]["memo"]!
+        }
+        
+        self.animateDetailItemView(shouldShow: true)
+    }
+}
+
+// MARK: - DetailItemViewDelegate
+extension HomeController: DetailItemViewDelegate {
+    func returnToItemsView(_ view: DetailItemView) {
+        print("HomeController > returnToItemsView called start.")
+        self.items.tableView.reloadData()
+        self.animateDetailItemView(shouldShow: false)
+        print("HomeController > returnToItemsView called end.")
+    }
+}
+
+
+// MARK: - ConfirmationPageViewDelegate
+extension HomeController: ConfirmationPageViewDelegate {
+    func presentLoadingPageView(_ view: ConfirmationPageView) {
+        shouldPresentLoadingView(true, message: "Finding you a mover..")
+        
+        UIView.animate(withDuration: 0.3) {
+            self.rideActionView.frame.origin.y = self.view.frame.height
+            self.confirmationPageView.frame.origin.y = self.view.frame.height
+        }
+    }
+    
+    func goBackToPreviousPageView(_ view: ConfirmationPageView) {
+        self.animateConfirmationPageView(shouldShow: false)
+        self.animateItemsView(shouldShow: true)
     }
 }
 
@@ -863,47 +935,3 @@ extension HomeController {
         }
     }
 }
-
-extension HomeController: CalendarAndListViewDelegate {
-    func proceedToItemsView(_ view: CalendarAndListView) {
-        
-        print("proceeding to items...")
-        self.animateItemsView(shouldShow: true)
-    }
-}
-
-// ItemsView -> DetailItemView
-extension HomeController: ItemsViewDelegate {
-    func proceedToDetailItemView(_ view: ItemsView) {
-        print("proceeding to detailitem...")
-        
-        // selectedRow がnil でない場合、DetailItemViewのTextBoxを入れておく
-        if selectedItemRow != nil {
-            self.detailItem.detailItemTitleTextField.text = itemsList[selectedItemRow!]["title"]!
-            self.detailItem.detailItemInformationTextField.text = itemsList[selectedItemRow!]["memo"]!
-        }
-        
-        self.animateDetailItemView(shouldShow: true)
-    }
-}
-
-// ItemsView -> ConfirmView
-extension HomeController: ItemsViewDelegate2 {
-    func proceedToConfirmationPageView(_ view: ItemsView) {
-        print("proceeding to confirmation page...")
-        self.confirmationPageView.tableView.reloadData()
-        fetchUserTripData()
-        self.animateConfirmationPageView(shouldShow: true)
-    }
-}
-
-// DetailItemView -> ItemsView
-extension HomeController: DetailItemViewDelegate {
-    func returnToItemsView(_ view: DetailItemView) {
-        self.items.tableView.reloadData()
-        self.animateDetailItemView(shouldShow: false)
-        print("HomeController > returnToItemsView called.")
-    }
-}
-
-

@@ -9,13 +9,10 @@ import UIKit
 
 protocol ItemsViewDelegate: AnyObject {
     func proceedToDetailItemView(_ view: ItemsView)
-}
-
-protocol ItemsViewDelegate2: AnyObject {
     func proceedToConfirmationPageView(_ view: ItemsView)
+    func goBackToPreviousPageView(_ view: ItemsView)
 }
 
-//var itemsList: [String] = ["jun", "bilaal","kakeru", "arisa"]
 var itemsList: [[String : String]] = []
 
 var selectedItemRow: Int? = nil
@@ -25,7 +22,6 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
     // MARK: - Properties
     
     weak var delegate: ItemsViewDelegate?
-    weak var delegate2: ItemsViewDelegate2?
 
     
     var tableView = UITableView()
@@ -79,14 +75,23 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
         return button
     }()
     
-    // to comfirm
-    private lazy var actionButton: UIButton = {
+    private lazy var confirmButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .black
-        button.setTitle("PROCEED TO CONFIRMATION", for: .normal)
+        button.setTitle("Confirm", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(confirmButtonPressed), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var backButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .black
+        button.setTitle("Back", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
         return button
     }()
 
@@ -124,15 +129,19 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
                          paddingRight: 12,
                          height: 30)
         
-        // itemsのTableViewの設定
+//         itemsのTableViewの設定
         setup()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
-        // to comfirm
-        addSubview(actionButton)
-        actionButton.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, height: 50)
+        let buttonStack = UIStackView(arrangedSubviews: [confirmButton, backButton])
+        buttonStack.axis = .horizontal
+        buttonStack.spacing = 4
+        buttonStack.distribution = .fillEqually
+        
+        addSubview(buttonStack)
+        buttonStack.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, height: 50)
     }
 
     required init?(coder: NSCoder) {
@@ -164,6 +173,10 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
         
         print("confirm button pressed")
-        delegate2?.proceedToConfirmationPageView(self)
+        delegate?.proceedToConfirmationPageView(self)
+    }
+    
+    @objc func backButtonPressed() {
+        delegate?.goBackToPreviousPageView(self)
     }
 }
