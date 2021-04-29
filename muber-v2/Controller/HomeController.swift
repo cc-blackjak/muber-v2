@@ -83,6 +83,7 @@ class HomeController: UIViewController {
                 configureMoverActionView()
                 configureMoverDetailView()
                 observeTrips()
+                tripsListController?.view.alpha = 1
             }
         }
     }
@@ -609,7 +610,7 @@ extension HomeController: TripsListControllerDelegate {
         tripsListController.didMove(toParent: self)
         tripsListController.view.frame = CGRect(x: 0, y: 120, width: self.view.frame.width, height: self.view.frame.height)
         view.insertSubview(tripsListController.view!, at: 1)
-        self.tripsListController.view.alpha = 1
+        tripsListController.view.alpha = 1
         tripsListController.delegate = self
     }
     
@@ -899,10 +900,9 @@ extension HomeController: ItemsViewDelegate2 {
 // DetailItemView -> ItemsView
 extension HomeController: DetailItemViewDelegate {
     func returnToItemsView(_ view: DetailItemView) {
-        print("HomeController > returnToItemsView called start.")
         self.items.tableView.reloadData()
         self.animateDetailItemView(shouldShow: false)
-        print("HomeController > returnToItemsView called end.")
+        print("HomeController > returnToItemsView called.")
     }
 }
 

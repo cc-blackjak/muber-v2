@@ -51,7 +51,7 @@ class ContainerController: UIViewController{
     func signOut() {
         do {
             homeController.inputActivationView.alpha = 0
-            homeController.tripsListController.view.alpha = 0
+            homeController.tripsListController?.view.alpha = 0
             try Auth.auth().signOut()
             presentLoginController()
         } catch {
