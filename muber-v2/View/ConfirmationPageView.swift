@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ConfirmationPageViewDelegate: AnyObject {
-//    func proceedToConfirmationPageView(_ view: ItemsView)
+    func presentLoadingPageView(_ view: ConfirmationPageView)
     func goBackToPreviousPageView(_ view: ConfirmationPageView)
 }
 
@@ -219,7 +219,7 @@ class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
     // MARK: - Selectors
     
     @objc func confirmBookingPressed() {
-        
+        delegate?.presentLoadingPageView(self)
     }
     
     @objc func backButtonPressed() {
