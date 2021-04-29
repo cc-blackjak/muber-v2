@@ -31,7 +31,7 @@ class HomeController: UIViewController {
     // MARK: - Properties
     private let locationManager = LocationHandler.shared.locationManager
     private let mapView = MKMapView()
-    private let inputActivationView = LocatationInputActivationView()
+    let inputActivationView = LocatationInputActivationView()
     private let rideActionView = RideActionView()
     private let moverActionView = MoverActionView()
     private let moverConfirmView = MoverConfirmView()
@@ -42,7 +42,7 @@ class HomeController: UIViewController {
     private let confirmationPageView = ConfirmationPageView()
     private let locationInputView = LocationInputView()
     private let tableView = UITableView()
-    private var tripsListController: TripsListController!
+    var tripsListController: TripsListController!
     private var searchResults = [MKPlacemark]()
     private final let locationInputViewHeight: CGFloat = 200
     private final let rideActionViewHeight: CGFloat = 300
@@ -85,6 +85,7 @@ class HomeController: UIViewController {
                 configureMoverActionView()
                 configureMoverDetailView()
                 observeTrips()
+                tripsListController?.view.alpha = 1
             }
         }
     }
@@ -681,7 +682,7 @@ extension HomeController: TripsListControllerDelegate {
         tripsListController.didMove(toParent: self)
         tripsListController.view.frame = CGRect(x: 0, y: 120, width: self.view.frame.width, height: self.view.frame.height)
         view.insertSubview(tripsListController.view!, at: 1)
-        self.tripsListController.view.alpha = 1
+        tripsListController.view.alpha = 1
         tripsListController.delegate = self
     }
     
@@ -934,7 +935,3 @@ extension HomeController {
         }
     }
 }
-
-
-
-
