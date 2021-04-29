@@ -238,7 +238,6 @@ class HomeController: UIViewController {
     func configureItemsView() {
         view.addSubview(items)
         items.delegate = self
-        items.delegate2 = self
         items.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: calendarAndListViewHeight)
         print("Configuring items view...")
     }
@@ -252,6 +251,7 @@ class HomeController: UIViewController {
     
     func configureConfirmationPageView() {
         view.addSubview(confirmationPageView)
+        confirmationPageView.delegate = self
         confirmationPageView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: calendarAndListViewHeight)
         print("Configuring confirmation page view...")
     }
@@ -844,11 +844,26 @@ extension HomeController: CalendarAndListViewDelegate {
         
         print("proceeding to items...")
         self.animateItemsView(shouldShow: true)
+        self.animateCalendarAndListView(shouldShow: false)
     }
 }
 
-// ItemsView -> DetailItemView
+
+// MARK: - ItemsViewDelegate
 extension HomeController: ItemsViewDelegate {
+    func goBackToPreviousPageView(_ view: ItemsView) {
+        self.animateCalendarAndListView(shouldShow: true)
+        self.animateItemsView(shouldShow: false)
+    }
+    
+    func proceedToConfirmationPageView(_ view: ItemsView) {
+        print("proceeding to confirmation page...")
+        self.confirmationPageView.tableView.reloadData()
+        fetchUserTripData()
+        self.animateConfirmationPageView(shouldShow: true)
+        self.animateItemsView(shouldShow: false)
+    }
+    
     func proceedToDetailItemView(_ view: ItemsView) {
         print("proceeding to detailitem...")
         
@@ -862,23 +877,20 @@ extension HomeController: ItemsViewDelegate {
     }
 }
 
-// ItemsView -> ConfirmView
-extension HomeController: ItemsViewDelegate2 {
-    func proceedToConfirmationPageView(_ view: ItemsView) {
-        print("proceeding to confirmation page...")
-        self.confirmationPageView.tableView.reloadData()
-        fetchUserTripData()
-        self.animateConfirmationPageView(shouldShow: true)
-    }
-}
-
-// DetailItemView -> ItemsView
+// MARK: - DetailItemViewDelegate
 extension HomeController: DetailItemViewDelegate {
     func returnToItemsView(_ view: DetailItemView) {
         print("HomeController > returnToItemsView called start.")
         self.items.tableView.reloadData()
         self.animateDetailItemView(shouldShow: false)
         print("HomeController > returnToItemsView called end.")
+    }
+}
+
+extension HomeController: ConfirmationPageViewDelegate {
+    func goBackToPreviousPageView(_ view: ConfirmationPageView) {
+        self.animateConfirmationPageView(shouldShow: false)
+        self.animateItemsView(shouldShow: true)
     }
 }
 

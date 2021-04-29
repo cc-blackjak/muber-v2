@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol ConfirmationPageViewDelegate: AnyObject {
+//    func proceedToConfirmationPageView(_ view: ItemsView)
+    func goBackToPreviousPageView(_ view: ConfirmationPageView)
+}
+
 class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
     var trip: Trip? {
         didSet {
@@ -16,6 +21,7 @@ class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    weak var delegate: ConfirmationPageViewDelegate?
     
     var tableView = UITableView()
     
@@ -109,13 +115,23 @@ class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
     }()
     
     
-    private let actionButton: UIButton = {
+    private let confirmButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .black
-        button.setTitle("CONFIRM BOOKING", for: .normal)
+        button.setTitle("Confirm", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(confirmBookingPressed), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var backButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .black
+        button.setTitle("Back", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
         return button
     }()
     
@@ -176,8 +192,13 @@ class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.separatorStyle = .none
         
-        addSubview(actionButton)
-        actionButton.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 40, paddingRight: 12, height: 50)
+        let buttonStack = UIStackView(arrangedSubviews: [confirmButton, backButton])
+        buttonStack.axis = .horizontal
+        buttonStack.spacing = 4
+        buttonStack.distribution = .fillEqually
+        
+        addSubview(buttonStack)
+        buttonStack.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, height: 50)
     }
     
     required init?(coder: NSCoder) {
@@ -199,6 +220,10 @@ class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     @objc func confirmBookingPressed() {
         
+    }
+    
+    @objc func backButtonPressed() {
+        delegate?.goBackToPreviousPageView(self)
     }
     
 }

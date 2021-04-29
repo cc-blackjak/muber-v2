@@ -68,7 +68,7 @@ class RideActionView: UIView {
     private let actionButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .black
-        button.setTitle("SET DATE", for: .normal)
+        button.setTitle("Set date", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)

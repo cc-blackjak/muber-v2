@@ -44,12 +44,14 @@ class CalendarAndListView: UIView {
     private let actionButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .black
-        button.setTitle("items", for: .normal)
+        button.setTitle("Add items", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
         return button
     }()
+    
+
 
  
     // MARK: - Lifecycle
@@ -79,11 +81,8 @@ class CalendarAndListView: UIView {
         addSubview(separatorView)
         separatorView.anchor(top: calendar.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 8, height: 0.75)
         
-        // itemsを入れたい
-//        _ = UICollectionViewFlowLayout()
-        
         addSubview(actionButton)
-        actionButton.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 40, paddingRight: 12, height: 50)
+        actionButton.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, height: 50)
 
     }
     
@@ -106,5 +105,6 @@ class CalendarAndListView: UIView {
             print("DEBUG: Did upload date successfully")
         }
     }
+    
 }
 
