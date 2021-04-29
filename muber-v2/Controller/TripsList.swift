@@ -45,16 +45,22 @@ class TripsListController: UITableViewController {
 // MARK: - UITableViewDelegate/DataSource
 
 extension TripsListController {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Waiting trips list"
+    }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tripsArray.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TripsMenuCell", for: indexPath)
-        
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "TripsMenuCell", for: indexPath)
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
 //        guard let option = MenuOptions(rawValue: indexPath.row) else { return UITableViewCell() }
 //        cell.textLabel?.text = tmpTrips[indexPath.row]
-        cell.textLabel?.text = "\(tripsArray[indexPath.row].destinationAddress!)"
+        
+        cell.textLabel?.text = "\(tripsArray[indexPath.row].destinationName!)"
+        cell.detailTextLabel?.text = "\(tripsArray[indexPath.row].destinationAddress!)"
+        
         
         return cell
     }
