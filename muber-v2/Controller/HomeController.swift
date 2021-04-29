@@ -57,7 +57,7 @@ class HomeController: UIViewController {
             
             if user?.accountType == .passenger {
                 
-                self.calendarAndListViewHeight = view.frame.height / 1.06
+                self.calendarAndListViewHeight = view.frame.height / 1.12
 
                 // Riderが必要な画面
                 print("\n\(loadedNumber). \(String(describing: type(of: self))) > User didSet > .passenger is loaded.")
