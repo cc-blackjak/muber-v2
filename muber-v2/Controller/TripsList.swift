@@ -19,17 +19,7 @@ class TripsListController: UITableViewController {
     
     // MARK: - Properties
     
-//    private let user: User
     weak var delegate: TripsListControllerDelegate?
-    
-//    private lazy var menuHeader: MenuHeader = {
-//        let frame = CGRect(x: 0,
-//                           y: 0,
-//                           width: self.view.frame.width,
-//                           height: 140)
-//        let view = MenuHeader(user: user, frame: frame)
-//        return view
-//    }()
     
     // MARK: - Lifecycle
     

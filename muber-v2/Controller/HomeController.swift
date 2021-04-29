@@ -608,7 +608,6 @@ extension HomeController: TripsListControllerDelegate {
         view.insertSubview(tripsListController.view!, at: 1)
         self.tripsListController.view.alpha = 1
         tripsListController.delegate = self
-        tripsListController.tableView.reloadData()
     }
     
     func observeTrips() {
