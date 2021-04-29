@@ -31,7 +31,7 @@ class HomeController: UIViewController {
     // MARK: - Properties
     private let locationManager = LocationHandler.shared.locationManager
     private let mapView = MKMapView()
-    private let inputActivationView = LocatationInputActivationView()
+    let inputActivationView = LocatationInputActivationView()
     private let rideActionView = RideActionView()
     private let moverActionView = MoverActionView()
     private let moverConfirmView = MoverConfirmView()
@@ -42,7 +42,7 @@ class HomeController: UIViewController {
     private let confirmationPageView = ConfirmationPageView()
     private let locationInputView = LocationInputView()
     private let tableView = UITableView()
-    private var tripsListController: TripsListController!
+    var tripsListController: TripsListController!
     private var searchResults = [MKPlacemark]()
     private final let locationInputViewHeight: CGFloat = 200
     private final let rideActionViewHeight: CGFloat = 300
