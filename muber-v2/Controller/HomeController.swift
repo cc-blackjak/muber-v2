@@ -17,6 +17,7 @@ private let reuseIdentifier = "LocationCell"
 private enum actionButtonConfiguration {
     case showMenu
     case dismissActionView
+    case dismissMoverActionView
     
     init() {
         self = .showMenu
@@ -112,8 +113,10 @@ class HomeController: UIViewController {
     @objc func actionButtonPressed() {
         switch actionButttonConfig {
         case .showMenu:
+            print("HomeController > actionButtonPressed > showMenu called")
             delegate?.handleMenuToggle()
         case .dismissActionView:
+            print("HomeController > actionButtonPressed > dismissActionView called")
             removeAnnotationsAndOverlays()
             mapView.showAnnotations(mapView.annotations, animated: true)
             UIView.animate(withDuration: 0.3) {
@@ -125,6 +128,17 @@ class HomeController: UIViewController {
                     self.animateDetailItemView(shouldShow: false)
                     self.animateConfirmationPageView(shouldShow: false)
                 }
+        case .dismissMoverActionView:
+            print("HomeController > actionButtonPressed > dismissMoverActionView called")
+            removeAnnotationsAndOverlays()
+            mapView.showAnnotations(mapView.annotations, animated: true)
+            UIView.animate(withDuration: 0.3) {
+                self.tripsListController.view.alpha = 1
+                self.configureActionButton(config: .showMenu)
+                self.animateMoverConfirmView(shouldShow: false)
+                self.animateMoverActionView(shouldShow: false)
+                self.animateMoverWaitingView(shouldShow: false)
+            }
             }
     }
     
@@ -168,7 +182,9 @@ class HomeController: UIViewController {
         case .dismissActionView:
             actionButton.setImage(#imageLiteral(resourceName: "baseline_arrow_back_black_36dp-1").withRenderingMode(.alwaysOriginal), for: .normal)
             actionButttonConfig = .dismissActionView
-            
+        case .dismissMoverActionView:
+            actionButton.setImage(#imageLiteral(resourceName: "baseline_arrow_back_black_36dp-1").withRenderingMode(.alwaysOriginal), for: .normal)
+            actionButttonConfig = .dismissMoverActionView
         }
     }
 
@@ -620,13 +636,12 @@ extension HomeController: TripsListControllerDelegate {
         UIView.animate(withDuration: 0.3) {
             self.tripsListController.view.alpha = 0
         }
-        tripsListController.view.removeFromSuperview()
         
         // マップにルートを表示させる
         var annotations = [MKAnnotation]()
         
         // 戻るボタン。Mover用に要改変
-        configureActionButton(config: .dismissActionView)
+        configureActionButton(config: .dismissMoverActionView)
         
         // 行き先は元から指定していたので、流用
         let selectedPlacemark = MKPlacemark(coordinate: tripsArray[selectedRow].destinationCoordinates)
@@ -731,11 +746,11 @@ extension HomeController: MoverConfirmViewDelegate {
         moverConfirmView.frame = CGRect(x: 0,
                                       y: view.frame.height,
                                       width: view.frame.width,
-                                      height: view.frame.height)
+                                      height: 720)
     }
     
     func animateMoverConfirmView(shouldShow: Bool) {
-        let yOrigin = shouldShow ? 0 :
+        let yOrigin = shouldShow ? self.view.frame.height - 720 :
             self.view.frame.height
         
 //        moverActionView.muberLabel.text = tripsArray[selectedTripRow!].passengerUid
@@ -792,8 +807,8 @@ extension HomeController {
         // マップにルートを表示させる
         var annotations = [MKAnnotation]()
         
-//        // 戻るボタン。Mover用に要改変
-//        configureActionButton(config: .dismissActionView)
+        // 戻るボタン。Mover用に要改変
+        configureActionButton(config: .dismissMoverActionView)
         
         // 行き先は元から指定していたので、流用
         let selectedPlacemark = MKPlacemark(coordinate: (reservedTrip?.destinationCoordinates)!)
