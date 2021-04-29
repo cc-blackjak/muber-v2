@@ -177,7 +177,7 @@ class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
         tableView.separatorStyle = .none
         
         addSubview(actionButton)
-        actionButton.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 40, paddingRight: 12, height: 50)
+        actionButton.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, height: 50)
     }
     
     required init?(coder: NSCoder) {
