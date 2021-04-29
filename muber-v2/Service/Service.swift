@@ -87,6 +87,7 @@ struct DriverService {
         loadedNumber += 1
         
         REF_TRIPS.observe(.value) { (snapshot) in
+            var tmpAry : [Trip] = []
             for child in snapshot.children {
                 print("child: ", child)
                 guard let childData = child as? DataSnapshot else { return }
@@ -100,10 +101,12 @@ struct DriverService {
                 }
                 
                 // Moverとして予約済みのものがないのであれば、ステータスが 0 = 未予約のものを全て取得
+                
                 if trip.state.rawValue < 2 && reservedTrip == nil {
-                    tripsArray.append(trip)
+                    tmpAry.append(trip)
                 }
             }
+            tripsArray = tmpAry
             completion("Done")
             print("observeTrips in Driver service DONE.")
         }
