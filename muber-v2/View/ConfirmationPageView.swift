@@ -29,8 +29,12 @@ class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        var cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        print("cell")
+        cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "cell")
         cell.textLabel?.text = "\(itemsList[indexPath.row]["title"] ?? "nil")"
+        cell.detailTextLabel?.text = "\(itemsList[indexPath.row]["memo"] ?? "nil")"
+        cell.detailTextLabel?.numberOfLines = 0
         print("title: ", itemsList[indexPath.row]["title"] ?? "nil")
         return cell
     }
@@ -174,7 +178,7 @@ class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.separatorStyle = .none
+//        tableView.separatorStyle = .none
         
         addSubview(actionButton)
         actionButton.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, height: 50)
