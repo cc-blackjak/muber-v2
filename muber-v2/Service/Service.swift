@@ -77,6 +77,15 @@ struct Service {
         print(values, uid)
     }
     
+    func uploadTripState(state: Int,completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        let values = ["state": state]
+        
+        REF_TRIPS.child(uid).updateChildValues(values, withCompletionBlock: completion)
+        print(values, uid)
+    }
+    
     func observeCurrentTrip(completion: @escaping(Trip) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         REF_TRIPS.child(uid).observe(.value) { (snapshot) in
@@ -113,7 +122,7 @@ struct DriverService {
                 
                 // Moverとして予約済みのものがないのであれば、ステータスが 0 = 未予約のものを全て取得
                 
-                if trip.state.rawValue < 2 && reservedTrip == nil {
+                if trip.state.rawValue == 1 && reservedTrip == nil {
                     tmpAry.append(trip)
                 }
             }
