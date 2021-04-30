@@ -33,9 +33,13 @@ class MoverConfirmView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        var cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "cell")
+        
         if selectedTripRow != nil {
             cell.textLabel?.text = "\(tripsArray[selectedTripRow!].items![indexPath.row]["title"] ?? "nil")"
+            cell.detailTextLabel?.text = "\(tripsArray[selectedTripRow!].items![indexPath.row]["memo"] ?? "nil")"
+            cell.detailTextLabel?.numberOfLines = 0
         }
         return cell
     }
@@ -168,7 +172,7 @@ class MoverConfirmView: UIView, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.separatorStyle = .none
+//        tableView.separatorStyle = .none
         
         addSubview(actionButton)
         actionButton.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, height: 50)
