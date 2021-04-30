@@ -61,7 +61,7 @@ struct Trip {
             self.state = .requested
         } else {
             let tmp = dictionary["state"] as? Int
-            self.state = TripState(rawValue: tmp ?? 0)
+            self.state = TripState(rawValue: tmp!)
         }
     }
 }
