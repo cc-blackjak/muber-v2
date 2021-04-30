@@ -45,6 +45,7 @@ class DetailItemView: UIView, UITextFieldDelegate {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(okButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(UIView.endEditing), for: .touchUpInside)
         return button
     }()
     
@@ -55,6 +56,7 @@ class DetailItemView: UIView, UITextFieldDelegate {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(UIView.endEditing), for: .touchUpInside)
         return button
     }()
     
