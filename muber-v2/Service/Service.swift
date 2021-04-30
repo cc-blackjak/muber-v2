@@ -41,7 +41,11 @@ struct Service {
     func uploadDestinationAddressAndName(destinationAddress: String, destinationName: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        let values = ["destinationName": destinationName,"destinationAddress": destinationAddress]
+        let values = [
+            "destinationName": destinationName,
+            "destinationAddress": destinationAddress,
+            "state": 0
+        ] as [String : Any]
         
         REF_TRIPS.child(uid).updateChildValues(values, withCompletionBlock: completion)
         print(values, uid)
