@@ -53,7 +53,11 @@ struct Service {
         let pickupArray = [pickupCoordinates.latitude, pickupCoordinates.longitude]
         let destinationArray = [destinationCoordinates.latitude, destinationCoordinates.longitude]
         
-        let values = ["pickupCoordinates": pickupArray, "destinationCoordinates": destinationArray]
+        let values = [
+            "pickupCoordinates": pickupArray,
+            "destinationCoordinates": destinationArray,
+            "state": 0
+        ] as [String : Any]
         
         REF_TRIPS.child(uid).updateChildValues(values, withCompletionBlock: completion)
         print(values, uid)
@@ -62,7 +66,10 @@ struct Service {
     func uploadDate(date: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        let value = ["date": date]
+        let value = [
+            "date": date,
+            "state": 0
+        ] as [String : Any]
         
         REF_TRIPS.child(uid).updateChildValues(value, withCompletionBlock: completion)
         print(value, uid)
@@ -71,7 +78,19 @@ struct Service {
     func uploadItemList(items: [[String:String]], completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        let values = ["items": items]
+        let values = [
+            "items": items,
+            "state": 0
+        ] as [String : Any]
+        
+        REF_TRIPS.child(uid).updateChildValues(values, withCompletionBlock: completion)
+        print(values, uid)
+    }
+    
+    func uploadTripState(state: Int,completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        let values = ["state": state]
         
         REF_TRIPS.child(uid).updateChildValues(values, withCompletionBlock: completion)
         print(values, uid)
@@ -113,7 +132,7 @@ struct DriverService {
                 
                 // Moverとして予約済みのものがないのであれば、ステータスが 0 = 未予約のものを全て取得
                 
-                if trip.state.rawValue < 2 && reservedTrip == nil {
+                if trip.state.rawValue == 1 && reservedTrip == nil {
                     tmpAry.append(trip)
                 }
             }

@@ -890,7 +890,7 @@ extension HomeController {
         var annotations = [MKAnnotation]()
         
         // 戻るボタン。Mover用に要改変
-        configureActionButton(config: .dismissMoverActionView)
+        configureActionButton(config: .showMenu)
         
         // 行き先は元から指定していたので、流用
         let selectedPlacemark = MKPlacemark(coordinate: (reservedTrip?.destinationCoordinates)!)

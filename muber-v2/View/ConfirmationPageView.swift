@@ -220,6 +220,16 @@ class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
     // MARK: - Selectors
     
     @objc func confirmBookingPressed() {
+        Service.shared.uploadTripState(state: 1) { (error, ref) in
+            if let error = error {
+                print("DEBUG: Failed to upload items with error \(error)")
+                return
+            }
+            print("DEBUG: Did upload items successfully")
+        }
+        
+        print("ConfirmationPageView > confirm Booking Pressed")
+        
         delegate?.presentLoadingPageView(self)
     }
     
