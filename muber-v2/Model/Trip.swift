@@ -57,6 +57,11 @@ struct Trip {
 
         }
 
-        self.state = dictionary["state"] as? TripState ?? .requested
+        if dictionary["state"] == nil {
+            self.state = .requested
+        } else {
+            let tmp = dictionary["state"] as? Int
+            self.state = TripState(rawValue: tmp ?? 0)
+        }
     }
 }
