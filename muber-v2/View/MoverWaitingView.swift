@@ -27,9 +27,13 @@ class MoverWaitingView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        var cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "cell")
         if reservedTrip != nil {
             cell.textLabel?.text = "\(reservedTrip?.items![indexPath.row]["title"] ?? "nil")"
+            cell.detailTextLabel?.text = "\(reservedTrip?.items![indexPath.row]["memo"] ?? "nil")"
+            cell.detailTextLabel?.numberOfLines = 0
+            
         }
         return cell
     }
@@ -161,7 +165,7 @@ class MoverWaitingView: UIView, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.separatorStyle = .none
+//        tableView.separatorStyle = .none
         
     }
     
