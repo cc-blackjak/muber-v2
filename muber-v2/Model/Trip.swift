@@ -9,10 +9,11 @@ import CoreLocation
 
 
 enum TripState: Int {
-    case requested // 0
-    case accepted // 1
-    case inProgress // 2
-    case completed // 3
+    case requesting //0
+    case requested // 1
+    case accepted // 2
+    case inProgress // 3
+    case completed // 4
 }
 
 struct Trip {

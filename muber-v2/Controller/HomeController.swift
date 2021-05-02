@@ -166,10 +166,8 @@ class HomeController: UIViewController {
         Service.shared.observeCurrentTrip { trip in
             self.trip = trip
             
-            print(trip.state)
-            
             if trip.state == .accepted {
-                print("Trip accepted")
+                self.shouldPresentLoadingView(false, message: "")
             }
         }
     }
