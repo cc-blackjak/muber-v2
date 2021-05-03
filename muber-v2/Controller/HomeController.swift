@@ -917,7 +917,6 @@ extension HomeController {
                     }
                 }
 
-            self.mapView.zoomToFit(annotations: annotations)
         }
         
     }
