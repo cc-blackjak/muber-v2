@@ -167,7 +167,7 @@ class HomeController: UIViewController {
             self.trip = trip
             
             if trip.state == .accepted {
-                print("Trip accepted")
+                self.shouldPresentLoadingView(false, message: "")
             }
         }
     }
@@ -516,8 +516,6 @@ extension HomeController: LocationInputViewDelegate {
 extension HomeController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Search results..."
-        print("\n\(loadedNumber). \(String(describing: type(of: self))) > tableView(UITableViewDelegate/dataSource) is loaded.")
-        loadedNumber += 1
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -849,7 +847,7 @@ extension HomeController: MoverConfirmViewDelegate {
         // 更新すべき内容記載してアップロードする
         let updateDic = [
             "driverUid" : loginUid!,
-            "state" : 2
+            "state" : TripState.accepted.rawValue
         ] as [String : Any]
         
         REF_TRIPS.child(tripsArray[selectedTripRow!].passengerUid).updateChildValues(updateDic)

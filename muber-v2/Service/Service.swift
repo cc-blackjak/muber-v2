@@ -44,7 +44,7 @@ struct Service {
         let values = [
             "destinationName": destinationName,
             "destinationAddress": destinationAddress,
-            "state": 0
+            "state": TripState.requesting.rawValue
         ] as [String : Any]
         
         REF_TRIPS.child(uid).updateChildValues(values, withCompletionBlock: completion)
@@ -60,7 +60,7 @@ struct Service {
         let values = [
             "pickupCoordinates": pickupArray,
             "destinationCoordinates": destinationArray,
-            "state": 0
+            "state": TripState.requesting.rawValue
         ] as [String : Any]
         
         REF_TRIPS.child(uid).updateChildValues(values, withCompletionBlock: completion)
@@ -72,7 +72,7 @@ struct Service {
         
         let value = [
             "date": date,
-            "state": 0
+            "state": TripState.requesting.rawValue
         ] as [String : Any]
         
         REF_TRIPS.child(uid).updateChildValues(value, withCompletionBlock: completion)
@@ -84,7 +84,7 @@ struct Service {
         
         let values = [
             "items": items,
-            "state": 0
+            "state": TripState.requesting.rawValue
         ] as [String : Any]
         
         REF_TRIPS.child(uid).updateChildValues(values, withCompletionBlock: completion)
