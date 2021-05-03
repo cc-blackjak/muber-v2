@@ -62,7 +62,7 @@ class DetailItemView: UIView, UITextFieldDelegate {
     
     lazy var detailItemTitleTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Please enter item.."
+        tf.placeholder = "Please enter item/reward.."
         tf.backgroundColor = .systemGroupedBackground
         tf.returnKeyType = .search
         tf.font = UIFont.systemFont(ofSize: 24)
