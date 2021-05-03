@@ -65,10 +65,21 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
 
     }()
     
+    private let prompt2Label: UILabel = {
+        let label = UILabel()
+        label.textColor = .lightGray
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .center
+        label.text = "Please add your move reward"
+        label.numberOfLines = 0
+        return label
+
+    }()
+    
     private lazy var addButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .black
-        button.setTitle("Add", for: .normal)
+        button.setTitle("Add item or reward", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
@@ -101,7 +112,7 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
         backgroundColor = .white
         addShadow()
 
-        let stack = UIStackView(arrangedSubviews: [titleLabel, promptLabel])
+        let stack = UIStackView(arrangedSubviews: [titleLabel, promptLabel, prompt2Label])
         stack.axis = .vertical
         stack.spacing = 4
         stack.distribution = .fillEqually
@@ -150,7 +161,7 @@ class ItemsView: UIView, UITableViewDelegate, UITableViewDataSource {
     
 
     func setup() {
-        tableView = UITableView(frame: CGRect(x: 0, y: 120, width: 450, height: 800))
+        tableView = UITableView(frame: CGRect(x: 0, y: 140, width: 450, height: 800))
         tableView.layer.backgroundColor = UIColor.black.cgColor
         addSubview(tableView)
       }
