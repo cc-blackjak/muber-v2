@@ -45,16 +45,11 @@ class MoverConfirmView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let item = itemsList[indexPath.row]
-//        selectedItemRow = indexPath.row
-//        print("selectedRow: ", selectedItemRow!)
     }
     
     func configureTable() {
-        
         tableView.tableFooterView = UIView()
         tableView.allowsSelection = false
-//        tableView.frame = CGRect(x: 0, y: 220, width: 450, height: 400)
         tableView.layer.backgroundColor = UIColor.black.cgColor
         addSubview(tableView)
     }
@@ -63,59 +58,67 @@ class MoverConfirmView: UIView, UITableViewDelegate, UITableViewDataSource {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.textAlignment = .center
+        label.text = "Confirmation Page"
         return label
     }()
     
-    private let addressLabel: UILabel = {
+    private let promptLabel: UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
         label.font = UIFont.systemFont(ofSize: 16)
         label.textAlignment = .center
+        label.text = "Please confirm all details before booking"
         return label
-        
     }()
     
-    let muberLabel: UILabel = {
+    private let addressNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.text = "Moving details"
-        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.textAlignment = .left
+        label.text = "Destination Name"
         return label
     }()
     
     let destNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.text = "Tmp destNameLabel"
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textAlignment = .left
         label.numberOfLines = 0
+        label.text = "Tmp destNameLabel"
+        return label
+    }()
+    
+    private let addressLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.textAlignment = .left
+        label.text = "Destination Address"
         return label
     }()
     
     let destAddressLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15)
-        label.text = "Tmp destAddressLabel"
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textAlignment = .left
         label.numberOfLines = 0
+        label.text = "Tmp destAddressLabel"
+        return label
+    }()
+    
+    private let dateTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.textAlignment = .left
+        label.text = "Date of Move"
         return label
     }()
     
     let dateLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.text = "TmpRiderName"
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textAlignment = .left
         label.numberOfLines = 0
-        return label
-    }()
-    
-    let itemsLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.text = "TmpRiderName"
-        label.textAlignment = .left
-        label.numberOfLines = 0
+        label.text = "Tmp dateLabel"
         return label
     }()
     
@@ -138,45 +141,56 @@ class MoverConfirmView: UIView, UITableViewDelegate, UITableViewDataSource {
         backgroundColor = .white
         addShadow()
         
-        let stack = UIStackView(arrangedSubviews: [titleLabel, addressLabel])
+        let stack = UIStackView(arrangedSubviews: [titleLabel, promptLabel])
         stack.axis = .vertical
         stack.spacing = 4
         stack.distribution = .fillEqually
         
         addSubview(stack)
         stack.centerX(inView: self)
-        stack.anchor(top: topAnchor, paddingTop:  32)
-        
-        addSubview(muberLabel)
-        muberLabel.anchor(top: stack.bottomAnchor, paddingTop: 8)
-        muberLabel.centerX(inView: self)
-        
-        addSubview(destNameLabel)
-        destNameLabel.anchor(top: muberLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 30, paddingLeft: 20, paddingRight: 20)
-        
-        addSubview(destAddressLabel)
-        destAddressLabel.anchor(top: destNameLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 20, paddingRight: 20)
-        
-        addSubview(dateLabel)
-        dateLabel.anchor(top: destAddressLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 30, paddingLeft: 20, paddingRight: 20)
-        
-        addSubview(itemsLabel)
-        itemsLabel.anchor(top: dateLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 20, paddingRight: 20)
+        stack.anchor(top: topAnchor, paddingTop:  12)
         
         let separatorView = UIView()
         separatorView.backgroundColor = .lightGray
         addSubview(separatorView)
-        separatorView.anchor(top: muberLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 8, height: 0.75)
+        separatorView.anchor(top: stack.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 8, height: 0.75)
+        
+        let hStack0 = UIStackView(arrangedSubviews: [addressNameLabel, destNameLabel])
+        hStack0.axis = .horizontal
+        hStack0.spacing = 0
+        hStack0.distribution = .fillEqually
+        
+        let hStack1 = UIStackView(arrangedSubviews: [addressLabel, destAddressLabel])
+        hStack1.axis = .horizontal
+        hStack1.spacing = 0
+        hStack1.distribution = .fillEqually
+        
+        let hStack2 = UIStackView(arrangedSubviews: [dateTitleLabel, dateLabel])
+        hStack2.axis = .horizontal
+        hStack2.spacing = 0
+        hStack2.distribution = .fillEqually
+        
+        let stack2 = UIStackView(arrangedSubviews: [hStack0, hStack1, hStack2])
+        stack2.axis = .vertical
+        stack2.spacing = 6
+        stack2.distribution = .fillEqually
+        addSubview(stack2)
+        stack2.centerX(inView: self)
+        stack2.anchor(top: separatorView.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 12, paddingRight: 12)
         
         configureTable()
-        tableView.anchor(top: dateLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 20, paddingBottom: 12)
+        tableView.anchor(top: stack2.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 12, paddingBottom: 12)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-//        tableView.separatorStyle = .none
         
-        addSubview(actionButton)
-        actionButton.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, height: 50)
+        let buttonStack = UIStackView(arrangedSubviews: [actionButton])
+        buttonStack.axis = .horizontal
+        buttonStack.spacing = 4
+        buttonStack.distribution = .fillEqually
+        
+        addSubview(buttonStack)
+        buttonStack.anchor(top: tableView.bottomAnchor, left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, height: 50)
         
     }
     

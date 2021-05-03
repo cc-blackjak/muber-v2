@@ -799,15 +799,6 @@ extension HomeController: MoverActionViewDelegate {
         moverConfirmView.destAddressLabel.text = "\(tripsArray[selectedTripRow!].destinationAddress!)"
         moverConfirmView.dateLabel.text = "Day: \(tripsArray[selectedTripRow!].date!)"
         
-        var tmpText = "Items:"
-        for item in tripsArray[selectedTripRow!].items! {
-            print(item)
-            tmpText += "\n\t - "
-            tmpText += "\(item["title"] ?? "")"
-            tmpText += "\n\t\t - \(item["memo"] ?? "")"
-        }
-        moverConfirmView.itemsLabel.text = tmpText
-        
         moverConfirmView.tableView.reloadData()
         animateMoverActionView(shouldShow: false)
         animateMoverConfirmView(shouldShow: true)
