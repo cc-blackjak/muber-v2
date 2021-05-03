@@ -185,13 +185,13 @@ class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
         stack2.centerX(inView: self)
         stack2.anchor(top: separatorView.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 12, paddingRight: 12)
         
-        let separatorView2 = UIView()
-        separatorView2.backgroundColor = .lightGray
-        addSubview(separatorView2)
-        separatorView2.anchor(top: stack2.bottomAnchor, left: safeAreaLayoutGuide.leftAnchor, right: safeAreaLayoutGuide.rightAnchor, paddingTop: 12, height: 0.75)
+//        let separatorView2 = UIView()
+//        separatorView2.backgroundColor = .lightGray
+//        addSubview(separatorView2)
+//        separatorView2.anchor(top: stack2.bottomAnchor, left: safeAreaLayoutGuide.leftAnchor, right: safeAreaLayoutGuide.rightAnchor, paddingTop: 12, height: 0.75)
         
         configureTable()
-        tableView.anchor(top: dateLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingBottom: 12)
+        tableView.anchor(top: stack2.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 12, paddingBottom: 12)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -203,7 +203,7 @@ class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
         buttonStack.distribution = .fillEqually
         
         addSubview(buttonStack)
-        buttonStack.anchor(top: tableView.bottomAnchor, left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, height: 50)
+        buttonStack.anchor(top: tableView.bottomAnchor, left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, height: 50)
 
     }
     
