@@ -795,9 +795,9 @@ extension HomeController: MoverActionViewDelegate {
         
         // Format detail
         
-        moverConfirmView.destNameLabel.text = "Destination: \(tripsArray[selectedTripRow!].destinationName!)"
+        moverConfirmView.destNameLabel.text = "\(tripsArray[selectedTripRow!].destinationName!)"
         moverConfirmView.destAddressLabel.text = "\(tripsArray[selectedTripRow!].destinationAddress!)"
-        moverConfirmView.dateLabel.text = "Day: \(tripsArray[selectedTripRow!].date!)"
+        moverConfirmView.dateLabel.text = "\(tripsArray[selectedTripRow!].date!)"
         
         moverConfirmView.tableView.reloadData()
         animateMoverActionView(shouldShow: false)
@@ -849,6 +849,7 @@ extension HomeController: MoverConfirmViewDelegate {
         
         REF_TRIPS.child(tripsArray[selectedTripRow!].passengerUid).updateChildValues(updateDic)
         animateMoverConfirmView(shouldShow: false)
+        
     }
 }
 
@@ -868,18 +869,9 @@ extension HomeController {
         // reservedTrip より内容を反映
 //        let formatter = DateFormatter()
 //        formatter.dateFormat = "yyyy年MM月dd日 H:mm"
-        moverWaitingView.destNameLabel.text = "Destination: \(reservedTrip!.destinationName!)"
+        moverWaitingView.destNameLabel.text = "\(reservedTrip!.destinationName!)"
         moverWaitingView.destAddressLabel.text = "\(reservedTrip!.destinationAddress!)"
-        moverWaitingView.dateLabel.text = "Day: \(reservedTrip!.date!)"
-        
-        var tmpText = "Items:"
-        for item in reservedTrip?.items as! [[String:String]] {
-            print(item)
-            tmpText += "\n\t - "
-            tmpText += "\(item["title"] ?? "")"
-            tmpText += "\n\t\t - \(item["memo"] ?? "")"
-        }
-        moverWaitingView.itemsLabel.text = tmpText
+        moverWaitingView.dateLabel.text = "\(reservedTrip!.date!)"
         
         // マップにルートを表示させる
         var annotations = [MKAnnotation]()
