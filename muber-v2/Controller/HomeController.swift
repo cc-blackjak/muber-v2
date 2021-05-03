@@ -776,15 +776,15 @@ extension HomeController: MoverActionViewDelegate {
         let yOrigin = shouldShow ? self.view.frame.height - self.rideActionViewHeight :
             self.view.frame.height
         
+        UIView.animate(withDuration: 0.3) {
+            self.moverActionView.frame.origin.y = yOrigin
+        }
+        
         moverActionView.muberLabel.text = tripsArray[selectedTripRow!].destinationName
         
         if shouldShow {
             guard let destination = destination else { return }
             moverActionView.destination = destination
-        }
-        
-        UIView.animate(withDuration: 0.3) {
-            self.moverActionView.frame.origin.y = yOrigin
         }
     }
     
@@ -807,6 +807,7 @@ extension HomeController: MoverActionViewDelegate {
 }
 
 extension HomeController: MoverConfirmViewDelegate {
+    
     // Mover用のマップルートビューを表示
     func configureMoverDetailView() {
         print("\n\(loadedNumber). \(String(describing: type(of: self))) > configureMoverDetailView is loaded.")
@@ -829,6 +830,11 @@ extension HomeController: MoverConfirmViewDelegate {
         UIView.animate(withDuration: 0.3) {
             self.moverConfirmView.frame.origin.y = yOrigin
         }
+    }
+    
+    func goBackToMoverActionView(_ view: MoverConfirmView) {
+        animateMoverConfirmView(shouldShow: false)
+        animateMoverActionView(shouldShow: true)
     }
     
     func proceedToConfirmAndUpload(_ view: MoverConfirmView) {

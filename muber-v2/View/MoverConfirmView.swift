@@ -10,6 +10,7 @@ import MapKit
 
 protocol MoverConfirmViewDelegate: class {
     func proceedToConfirmAndUpload(_ view: MoverConfirmView)
+    func goBackToMoverActionView(_ view: MoverConfirmView)
 }
 
 class MoverConfirmView: UIView, UITableViewDelegate, UITableViewDataSource {
@@ -125,13 +126,22 @@ class MoverConfirmView: UIView, UITableViewDelegate, UITableViewDataSource {
     private let actionButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .black
-        button.setTitle("Confirm the moving", for: .normal)
+        button.setTitle("Confirm", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
         return button
     }()
     
+    private lazy var backButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .black
+        button.setTitle("Back", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
+        return button
+    }()
     
     // MARK: - Lifecycle
 
@@ -184,14 +194,13 @@ class MoverConfirmView: UIView, UITableViewDelegate, UITableViewDataSource {
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
-        let buttonStack = UIStackView(arrangedSubviews: [actionButton])
+        let buttonStack = UIStackView(arrangedSubviews: [actionButton, backButton])
         buttonStack.axis = .horizontal
         buttonStack.spacing = 4
         buttonStack.distribution = .fillEqually
         
         addSubview(buttonStack)
         buttonStack.anchor(top: tableView.bottomAnchor, left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, height: 50)
-        
     }
     
     required init?(coder: NSCoder) {
@@ -204,6 +213,11 @@ class MoverConfirmView: UIView, UITableViewDelegate, UITableViewDataSource {
     @objc func actionButtonPressed() {
         delegate?.proceedToConfirmAndUpload(self)
     }
+    
+    @objc func backButtonPressed() {
+        delegate?.goBackToMoverActionView(self)
+    }
+    
 }
 
 
