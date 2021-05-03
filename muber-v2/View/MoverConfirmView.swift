@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-protocol MoverConfirmViewDelegate: class {
+protocol MoverConfirmViewDelegate: AnyObject {
     func proceedToConfirmAndUpload(_ view: MoverConfirmView)
     func goBackToMoverActionView(_ view: MoverConfirmView)
 }
