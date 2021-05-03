@@ -253,7 +253,7 @@ class HomeController: UIViewController {
         
         view.addSubview(calendarAndListView)
         calendarAndListView.delegate = self
-        calendarAndListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: calendarAndListViewHeight)
+        calendarAndListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width , height: rideActionViewHeight)
         print("Configuring calendar view...")
 
     }
@@ -346,7 +346,7 @@ class HomeController: UIViewController {
     
     func animateCalendarAndListView(shouldShow: Bool) {
         print("animateCalendarAndListView")
-        let yOrigin = shouldShow ? self.view.frame.height - self.calendarAndListViewHeight :
+        let yOrigin = shouldShow ? self.view.frame.height - self.rideActionViewHeight :
             self.view.frame.height
         
         UIView.animate(withDuration: 0.3) {
