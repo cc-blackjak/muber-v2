@@ -866,7 +866,7 @@ extension HomeController {
         moverWaitingView.frame = CGRect(x: 0,
                                       y: view.frame.height,
                                       width: view.frame.width,
-                                      height: view.frame.height)
+                                      height: view.frame.height / 2)
         
         // reservedTrip より内容を反映
 //        let formatter = DateFormatter()
@@ -923,7 +923,7 @@ extension HomeController {
     }
     
     func animateMoverWaitingView(shouldShow: Bool) {
-        let yOrigin = shouldShow ? 400 :
+        let yOrigin = shouldShow ? self.view.frame.height / 2 :
             self.view.frame.height
         
 //        moverActionView.muberLabel.text = tripsArray[selectedTripRow!].passengerUid

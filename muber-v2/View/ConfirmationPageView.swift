@@ -191,6 +191,7 @@ class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
         separatorView2.anchor(top: stack2.bottomAnchor, left: safeAreaLayoutGuide.leftAnchor, right: safeAreaLayoutGuide.rightAnchor, paddingTop: 12, height: 0.75)
         
         configureTable()
+        tableView.anchor(top: dateLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingBottom: 12)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -202,7 +203,7 @@ class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
         buttonStack.distribution = .fillEqually
         
         addSubview(buttonStack)
-        buttonStack.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, height: 50)
+        buttonStack.anchor(top: tableView.bottomAnchor, left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 12, paddingBottom: 12, paddingRight: 12, height: 50)
 
     }
     
@@ -216,7 +217,7 @@ class ConfirmationPageView: UIView, UITableViewDelegate, UITableViewDataSource {
         
         tableView.tableFooterView = UIView()
         tableView.allowsSelection = false
-        tableView = UITableView(frame: CGRect(x: 0, y: 220, width: 450, height: 400))
+//        tableView = UITableView(frame: CGRect(x: 0, y: 220, width: 450, height: 400))
         tableView.layer.backgroundColor = UIColor.black.cgColor
         addSubview(tableView)
       }

@@ -54,7 +54,7 @@ class MoverConfirmView: UIView, UITableViewDelegate, UITableViewDataSource {
         
         tableView.tableFooterView = UIView()
         tableView.allowsSelection = false
-        tableView.frame = CGRect(x: 0, y: 220, width: 450, height: 400)
+//        tableView.frame = CGRect(x: 0, y: 220, width: 450, height: 400)
         tableView.layer.backgroundColor = UIColor.black.cgColor
         addSubview(tableView)
     }
@@ -169,6 +169,7 @@ class MoverConfirmView: UIView, UITableViewDelegate, UITableViewDataSource {
         separatorView.anchor(top: muberLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 8, height: 0.75)
         
         configureTable()
+        tableView.anchor(top: dateLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 20, paddingBottom: 12)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")

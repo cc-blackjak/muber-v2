@@ -48,7 +48,7 @@ class MoverWaitingView: UIView, UITableViewDelegate, UITableViewDataSource {
         
         tableView.tableFooterView = UIView()
         tableView.allowsSelection = false
-        tableView.frame = CGRect(x: 0, y: 200, width: 450, height: 400)
+//        tableView.frame = CGRect(x: 0, y: 200, width: 450, height: 200)
         tableView.layer.backgroundColor = UIColor.black.cgColor
         addSubview(tableView)
     }
@@ -134,34 +134,35 @@ class MoverWaitingView: UIView, UITableViewDelegate, UITableViewDataSource {
         
         addSubview(stack)
         stack.centerX(inView: self)
-        stack.anchor(top: topAnchor, paddingTop: 12)
+        stack.anchor(top: topAnchor, paddingTop: 6)
 //        stack.anchor(top: scroll.topAnchor,
 //                     left: scroll.leftAnchor,
 //                     bottom: scroll.bottomAnchor,
 //                     right: scroll.rightAnchor)
         
         addSubview(muberLabel)
-        muberLabel.anchor(top: stack.bottomAnchor, paddingTop: 8)
+        muberLabel.anchor(top: stack.bottomAnchor)
         muberLabel.centerX(inView: self)
-        
-        addSubview(destNameLabel)
-        destNameLabel.anchor(top: muberLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 30, paddingLeft: 20, paddingRight: 20)
-        
-        addSubview(destAddressLabel)
-        destAddressLabel.anchor(top: destNameLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 20, paddingRight: 20)
-        
-        addSubview(dateLabel)
-        dateLabel.anchor(top: destAddressLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 30, paddingLeft: 20, paddingRight: 20)
-
-        addSubview(itemsLabel)
-        itemsLabel.anchor(top: dateLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 20, paddingRight: 20)
         
         let separatorView = UIView()
         separatorView.backgroundColor = .lightGray
         addSubview(separatorView)
         separatorView.anchor(top: muberLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 8, height: 0.75)
         
+        addSubview(destNameLabel)
+        destNameLabel.anchor(top: muberLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 20, paddingRight: 20)
+        
+        addSubview(destAddressLabel)
+        destAddressLabel.anchor(top: destNameLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 4, paddingLeft: 20, paddingRight: 20)
+        
+        addSubview(dateLabel)
+        dateLabel.anchor(top: destAddressLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 20, paddingRight: 20)
+
+//        addSubview(itemsLabel)
+//        itemsLabel.anchor(top: dateLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 20, paddingRight: 20)
+        
         configureTable()
+        tableView.anchor(top: dateLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 20, paddingBottom: 12)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
